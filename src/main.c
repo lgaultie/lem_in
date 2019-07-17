@@ -18,9 +18,9 @@
 
 int		main(void)
 {
-	t_lem_in	*farm;
+	t_farm	*farm;
 
-	if (!(farm = ft_memalloc(sizeof(t_lem_in))))
+	if (!(farm = ft_memalloc(sizeof(t_farm))))
 		return (-1);
 	if (read_input(farm) == -1)
 		ft_putstr("ERROR\n");

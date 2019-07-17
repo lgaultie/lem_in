@@ -12,7 +12,7 @@
 
 #include <lem_in.h>
 
-void	parse_rooms(char **rooms, t_lem_in *farm)
+static void parse_rooms(char **rooms, t_farm *farm)
 {
 	(void)rooms;
 	(void)farm;
@@ -20,7 +20,7 @@ void	parse_rooms(char **rooms, t_lem_in *farm)
 	return ;
 }
 
-void	parse_paths(t_lem_in *farm)
+static void parse_paths(t_farm *farm)
 {
 	(void)farm;
 	ft_putstr("path\n");
@@ -32,7 +32,7 @@ void	parse_paths(t_lem_in *farm)
 ** si il y a des espaces dans les noms des salles--> gg wp
 */
 
-int		check_format(t_lem_in *farm, int line_nb, char *line)
+int		    check_format(t_farm *farm, int line_nb, char *line)
 {
 	char	**rooms;
 

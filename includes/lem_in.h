@@ -21,11 +21,17 @@
 # define ERROR -1
 # define ERROR_MSG "ERROR"
 
+typedef struct          s_links
+{
+    struct s_links      *next;
+    char                *name;
+}                       t_links;
+
 typedef struct			s_rooms
 {
 	char				*room;
-	// t_links				*links;
-	int					room_nb;
+	t_links				*links;
+	int					room_id;
 	int					x_pos;
 	int					y_pos;
 	int					start_end;
@@ -37,16 +43,18 @@ typedef struct			s_rooms
 	struct s_rooms		*parent;
 }						t_rooms;
 
-typedef struct			s_lem_in
+typedef struct			s_farm
 {
 	int					ants;
 	int					total_rooms;
 	// t_queue				*queue;
 	t_rooms				*rooms;
 	// t_paths				*paths;
-}						t_lem_in;
+}						t_farm;
 
-int		read_input(t_lem_in *farm);
-int		check_format(t_lem_in *farm, int line_nb, char *line);
+int		read_input(t_farm *farm);
+int		check_format(t_farm *farm, int line_nb, char *line);
+int     add_link(t_farm *farm, char **tab);
+int     add_room(t_farm *farm, char **tab, int startend);
 
 #endif

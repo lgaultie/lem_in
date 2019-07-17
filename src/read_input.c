@@ -22,7 +22,7 @@
 ** d'avant, au lieu de putstr direct en fait
 */
 
-int		read_input(t_lem_in *farm)
+int		read_input(t_farm *farm)
 {
 	int			ret;
 	char		*line;

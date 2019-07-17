@@ -22,7 +22,8 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 LIB = $(LIBDIR)/libft.a
 SRCS =	main.c			\
 		read_input.c	\
-		parsing.c
+		parsing.c       \
+		fill_farm.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
