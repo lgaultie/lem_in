@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/16 15:01:16 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/17 18:49:01 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,9 @@ INC = ./includes/
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 #voir GNU 8.3 Functions for File Names
 LIB = $(LIBDIR)/libft.a
-SRCS =	main.c
+SRCS =	main.c			\
+		read_input.c	\
+		parsing.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m

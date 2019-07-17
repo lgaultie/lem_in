@@ -79,7 +79,8 @@ SRC = ft_memset.c \
 	ft_sqrt_rounded.c \
 	get_next_line.c \
 	get_next_line_custom.c \
-	ft_swap.c
+	ft_swap.c \
+	ft_free_tab.c
 OBJ = $(SRC:.c=.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror

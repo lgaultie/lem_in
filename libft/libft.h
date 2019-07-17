@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/08 09:47:18 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/02 08:59:00 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/07/17 18:30:07 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int				ft_sqrt_rounded(int nb);
 int				get_next_line(const int fd, char **line);
 int				get_next_line_custom(const int fd, char **line);
 void			ft_swap(int *a, int *b);
+void			ft_free_tab(char **tab);
 
 #endif

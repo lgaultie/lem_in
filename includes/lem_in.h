@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/17 16:41:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/17 18:48:51 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LEM_IN_H
 
 # include "../libft/libft.h"
+#include <stdio.h>
 
 # define SUCCESS 1
 # define FAILURE 0
@@ -44,5 +45,8 @@ typedef struct			s_lem_in
 	t_rooms				*rooms;
 	// t_paths				*paths;
 }						t_lem_in;
+
+int		read_input(t_lem_in *farm);
+int		check_format(t_lem_in *farm, int line_nb, char *line);
 
 #endif
