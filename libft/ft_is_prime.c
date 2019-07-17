@@ -1,24 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrealloc.c                                    :+:      :+:    :+:   */
+/*   ft_is_prime.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/22 16:14:59 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/16 15:06:26 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/22 08:01:30 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 08:01:51 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrealloc(char *str, int len)
+int	ft_is_prime(int nb)
 {
-	char	*newstr;
+	int counter;
 
-	if (!(newstr = malloc(sizeof(char) * (ft_strlen(str) + len + 1))))
-		return (NULL);
-	ft_bzero(newstr, ft_strlen(str) + len + 1);
-	ft_strcpy(newstr, str);
-	return (newstr);
+	counter = 3;
+	if (nb <= 1 || (nb % 2 == 0 && nb != 2))
+		return (0);
+	if (nb == 2 || nb == 2147483647)
+		return (1);
+	while (counter < nb)
+	{
+		if (nb % counter == 0)
+			return (0);
+		counter += 2;
+	}
+	return (1);
 }

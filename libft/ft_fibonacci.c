@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstprintstr.c                                   :+:      :+:    :+:   */
+/*   ft_fibonacci.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/23 14:25:20 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/23 14:25:23 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/22 07:55:48 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 07:56:30 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_lstprintstr(t_list *list)
+int	ft_fibonacci(int index)
 {
-	while (list != NULL)
-	{
-		ft_putstr(list->content);
-		ft_putchar('\n');
-		list = list->next;
-	}
+	int element;
+
+	element = 0;
+	if (index < 0)
+		return (-1);
+	else if (index == 0)
+		return (0);
+	else if (index == 1 || index == 2)
+		return (1);
+	else
+		element = ft_fibonacci(index - 1) + ft_fibonacci(index - 2);
+	return (element);
 }
