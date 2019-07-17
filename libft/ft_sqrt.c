@@ -3,25 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/22 18:00:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/23 13:59:35 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/22 08:05:38 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 08:06:00 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_sqrt(int nb)
+int	ft_sqrt(int nb)
 {
-	int racine;
+	int counter;
 
-	racine = 1;
-	if (nb < 0)
+	counter = 0;
+	if (nb <= 0)
 		return (0);
-	while (racine * racine < nb)
-		racine++;
-	if (racine * racine == nb)
-		return (racine);
+	if (nb == 1)
+		return (1);
+	while (counter <= nb && counter <= 46340)
+	{
+		if (counter * counter == nb)
+			return (counter);
+		counter++;
+	}
 	return (0);
 }

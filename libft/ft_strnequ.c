@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 15:19:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/15 19:04:36 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/16 14:41:47 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 10:25:17 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_strnequ(char const *s1, char const *s2, size_t n)
+int	ft_strnequ(char const *s1, char const *s2, size_t n)
 {
-	size_t	i;
+	unsigned int	c;
 
-	i = 0;
+	c = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (0);
-	if (n == 0)
-		return (1);
-	while (i < n - 1 && s1[i] == s2[i] && (s1[i] != '\0' && s2[i] != '\0'))
-		i++;
-	if ((unsigned char)s1[i] - (unsigned char)s2[i] == 0)
-		return (1);
-	return (0);
+	while (c < n)
+	{
+		if (s1[c] != s2[c])
+			return (0);
+		if (s1[c] == '\0' && s2[c] == '\0')
+			return (1);
+		c++;
+	}
+	return (1);
 }

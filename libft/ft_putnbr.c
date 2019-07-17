@@ -3,38 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 10:50:53 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/17 12:17:37 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/19 08:22:17 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/19 08:31:12 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int n)
+static void		ft_putnbr_max(void)
 {
-	if (n > 2147483647 || n < -2147483648)
-		return ;
+	ft_putchar('-');
+	ft_putchar('2');
+	ft_putchar('1');
+	ft_putchar('4');
+	ft_putchar('7');
+	ft_putchar('4');
+	ft_putchar('8');
+	ft_putchar('3');
+	ft_putchar('6');
+	ft_putchar('4');
+	ft_putchar('8');
+}
+
+void			ft_putnbr(int n)
+{
+	int	quotient;
+	int	remainder;
+
+	quotient = 0;
+	remainder = 0;
+	if (n < 0 && n != -2147483648)
+	{
+		ft_putchar('-');
+		n = n * -1;
+	}
 	if (n == -2147483648)
 	{
-		ft_putstr("-2147483648");
+		ft_putnbr_max();
 		return ;
 	}
-	if (n < 0)
+	quotient = n / 10;
+	if (quotient != 0)
 	{
-		n = n * (-1);
-		ft_putchar('-');
+		ft_putnbr(quotient);
 	}
-	if (n < 10)
-	{
-		ft_putchar(n + 48);
-		return ;
-	}
-	if (n >= 10)
-	{
-		ft_putnbr(n / 10);
-		ft_putchar((n % 10) + 48);
-		return ;
-	}
+	remainder = n % 10;
+	ft_putchar(remainder + 48);
 }

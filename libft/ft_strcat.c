@@ -3,31 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/11 14:34:34 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/17 15:12:52 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/12 09:03:57 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/15 08:13:21 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strcat(char *dst, const char *src)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	int				i;
-	int				j;
-	unsigned char	*srcs;
+	int	count_s1;
+	int	count_s2;
 
-	i = 0;
-	j = 0;
-	srcs = (unsigned char*)src;
-	while (dst[i] != '\0')
-		i++;
-	while (srcs[j] != '\0')
+	count_s1 = 0;
+	count_s2 = 0;
+	while (s1[count_s1] != '\0')
+		count_s1++;
+	while (s2[count_s2] != '\0')
 	{
-		dst[i + j] = srcs[j];
-		j++;
+		s1[count_s1] = s2[count_s2];
+		count_s1++;
+		count_s2++;
 	}
-	dst[i + j] = '\0';
-	return (dst);
+	s1[count_s1] = '\0';
+	return (s1);
 }

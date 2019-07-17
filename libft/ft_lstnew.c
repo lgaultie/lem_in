@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/20 12:26:36 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/23 14:44:59 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/21 07:57:04 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/21 11:08:22 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,24 @@
 
 t_list	*ft_lstnew(void const *content, size_t content_size)
 {
-	t_list	*new_maillon;
+	t_list	*new_link;
 
-	if (!(new_maillon = (t_list*)malloc(sizeof(t_list))))
+	new_link = (t_list*)malloc(sizeof(t_list));
+	if (new_link == NULL)
 		return (NULL);
-	if (content)
+	if (content == NULL)
 	{
-		if (content_size > 0)
-		{
-			if (!(new_maillon->content = (void*)malloc(content_size)))
-				return (NULL);
-			ft_memcpy(new_maillon->content, content, content_size);
-		}
-		else
-			new_maillon->content = (void*)content;
-		new_maillon->content_size = content_size;
+		new_link->content = NULL;
+		new_link->content_size = 0;
 	}
 	else
 	{
-		new_maillon->content = NULL;
-		new_maillon->content_size = 0;
+		new_link->content = (void*)malloc(content_size);
+		if (new_link->content == NULL)
+			return (NULL);
+		ft_memcpy(new_link->content, content, content_size);
+		new_link->content_size = content_size;
 	}
-	new_maillon->next = NULL;
-	return (new_maillon);
+	new_link->next = NULL;
+	return (new_link);
 }
