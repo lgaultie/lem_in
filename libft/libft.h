@@ -6,13 +6,14 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 15:01:17 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/06/21 16:04:47 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/17 17:49:11 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFF_SIZE 11
+# define BUFF_SIZE 1000
+# define FD_MAX 4864
 
 # include <unistd.h>
 # include <stdlib.h>
@@ -55,6 +56,7 @@ int				ft_isalnum(int c);
 void			ft_putstr(char const *s);
 void			ft_strclr(char *s);
 void			ft_putchar(char c);
+void			ft_free_tab(char **tab);
 void			*ft_memalloc(size_t size);
 char			*ft_strnew(size_t size);
 void			ft_strdel(char **as);

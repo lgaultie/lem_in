@@ -12,7 +12,7 @@
 
 NAME = libft.a
 CC = @clang
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 SRCS =	ft_atoi.c			\
 		ft_strlen.c			\
 		ft_strcmp.c			\
@@ -79,7 +79,8 @@ SRCS =	ft_atoi.c			\
 		ft_display_array.c	\
 		ft_intlen.c			\
 		ft_strndup.c		\
-		get_next_line.c
+		get_next_line.c		\
+		ft_free_tab.c
 
 OBJ = $(SRCS:.c=.o)
 HEADER = .
