@@ -13,7 +13,40 @@
 #include <lem_in.h>
 
 /*
-** free_links() free les links quand ils existent.
+static void    free_paths(t_farm *farm)
+{
+    t_paths *tmp;
+    t_paths *new;
+
+    tmp = farm->paths;
+    while (tmp)
+    {
+        new = tmp->next;
+        ft_memdel((void**)&tmp->path);
+        ft_memdel((void**)&tmp);
+        tmp = new;
+    }
+}
+*/
+
+/*
+static void    free_queue(t_farm *farm)
+{
+    t_queue *tmp;
+    t_queue *new;
+
+    tmp = farm->queue;
+    while (tmp)
+    {
+        new = tmp->next;
+        ft_memdel((void**)&tmp);
+        tmp = new;
+    }
+}
+*/
+
+/*
+** free_links() free les liens quand ils existent.
 */
 
 static void		free_links(t_links *links)
@@ -56,5 +89,7 @@ static void		free_rooms(t_rooms *rooms)
 void            free_farm(t_farm *farm)
 {
     free_rooms(farm->rooms);
+    //free_queue(farm);
+    //free_paths(farm);
     free(farm);
 }
