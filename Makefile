@@ -23,7 +23,6 @@ LIB = $(LIBDIR)/libft.a
 SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
-		fill_farm.c		\
 		free.c
 
 _GREEN=\e[32m

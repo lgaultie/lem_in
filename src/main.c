@@ -20,11 +20,12 @@ int		main(void)
 {
 	t_farm	*farm;
 
-	if (!(farm = ft_memalloc(sizeof(t_farm))))
-		return (-1);
-	if (read_input(farm) == -1)
-		ft_putstr("ERROR\n");
+	if (!(farm = ft_memalloc(sizeof(t_farm))) || read_input(farm) == -1)
+    {
+        ft_putendl(ERROR_MSG);
+	    return (ERROR);
+    }
 	free_list(farm->rooms);
 	free(farm);
-	return (0);
+	return (FAILURE);
 }
