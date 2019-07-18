@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/18 16:34:45 by lgaultie         ###   ########.fr       */
+/*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
+/*   Updated: 2019/07/18 18:35:42 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-/*
-** main: crée structure pour la colonie, lance le read, free structure.
-*/
-
-int		main(void)
+void		free_list(t_rooms *rooms)
 {
-	t_farm	*farm;
+	t_rooms		*tmp;
+	// t_links		*tmp2;
 
-	if (!(farm = ft_memalloc(sizeof(t_farm))))
-		return (-1);
-	if (read_input(farm) == -1)
-		ft_putstr("ERROR\n");
-	free_list(farm->rooms);
-	free(farm);
-	return (0);
+	while (rooms)
+	{
+		tmp = rooms;
+		rooms = rooms->next;
+		// if (rooms->links)
+		// {
+		// 	while (rooms->links && rooms->links->next)
+		// 	{
+		// 		tmp2 = rooms->links;
+		// 		rooms->links = rooms->links->next;
+		// 		free(tmp2->name);
+		// 		free(tmp2);
+		// 	}
+		// }
+		free(tmp->name);
+		free(tmp);
+	}
 }

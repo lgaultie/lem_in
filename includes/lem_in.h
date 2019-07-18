@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/17 18:48:51 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/18 16:28:34 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@
 # define ERROR -1
 # define ERROR_MSG "ERROR"
 
-typedef struct          s_links
+typedef struct			s_links
 {
-    struct s_links      *next;
-    char                *name;
-}                       t_links;
+	struct s_links      *next;
+	char                *name;
+}						t_links;
 
 typedef struct			s_rooms
 {
-	char				*room;
+	char				*name;
 	t_links				*links;
 	int					room_id;
 	int					x_pos;
@@ -53,8 +53,8 @@ typedef struct			s_farm
 }						t_farm;
 
 int		read_input(t_farm *farm);
-int		check_format(t_farm *farm, int line_nb, char *line);
-int     add_link(t_farm *farm, char **tab);
-int     add_room(t_farm *farm, char **tab, int startend);
+int		parse(t_farm *farm, int line_nb, char *line, int start_end);
+int		add_link(t_farm *farm, char **tab);
+void	free_list(t_rooms *rooms);
 
 #endif

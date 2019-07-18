@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/17 18:49:01 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/18 16:35:54 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIB = $(LIBDIR)/libft.a
 SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
-		fill_farm.c
+		fill_farm.c		\
+		free.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
@@ -34,8 +35,9 @@ _END=\e[0m
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@printf "$(_YELLOW)Compilation... $(_END)"
+	@printf "$(_YELLOW)Compiling libft... $(_END)"
 	@cd $(LIBDIR) && make
+	@printf "$(_YELLOW)Compilation... $(_END)"
 	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -I$(INC) -o $(NAME)
 	@printf "$(_GREEN)lem_in done [✓]$(_END)\n"
 
@@ -58,9 +60,10 @@ clean:
 
 fclean: clean
 	@printf "$(_YELLOW)fclean... $(_END)"
-	@cd $(LIBDIR) && rm -f $(LIB)
+	@cd $(LIBDIR) && make fclean
 	@rm -rf $(NAME)
 	@printf "$(_CYAN)done $(_END)\n"
 
 re: fclean all clean
+
 .PHONY: clean fclean all re

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/17 18:58:36 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/18 18:30:12 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,7 @@
 ** int error existe pour ne pas return directement en cas d'erreur: besoin
 ** d'imprimer toute la colonie. Si error = 1 -->fin aquisition fourmiliere
 ** mais traitement normal ensuite!
-** start_end -> start = 1, end = 2  : faudrait stocker pour verifier la ligne
-** d'avant, au lieu de putstr direct en fait
+** start_end -> start = 1, end = 2
 */
 
 int		read_input(t_farm *farm)
@@ -41,17 +40,35 @@ int		read_input(t_farm *farm)
 			free(line);
 		ret = get_next_line(0, &line);
 		ft_putstr(line);
+		if (line && ft_strcmp(line, "##start") == 0)
+			start_end = 1;
+		else if (line && ft_strcmp(line, "##end") == 0)
+			start_end = 2;
 		if (ret != 0)
 			ft_putchar('\n');
-		if (ret > 0 && error == 0 && line[0] != '#')
+		if (line && error == 0 && line[0] != '#')
 		{
-			if (check_format(farm, line_nb, line) == ERROR)
+			if (parse(farm, line_nb, line, start_end) == ERROR)
 				error = -1;
+			start_end = 0;
 		}
-		if (ret > 0 && line[0] == '#' && line[1] != '#')
+		if (line && line[0] == '#' && line[1] != '#')
 			line_nb--;
 		line_nb++;
 		ft_memdel((void**)&line);
 	}
+	// while (farm->rooms)
+	// {
+	// 	printf("x_pos = %d, y_pos = %d, name = %s, id = %d, start-end = %d\n", farm->rooms->x_pos, farm->rooms->y_pos, farm->rooms->name, farm->rooms->room_id, farm->rooms->start_end);
+	// 	if (farm->rooms->links)
+	// 	{
+	// 		while (farm->rooms->links)
+	// 		{
+	// 			printf("\nlinks-name = %s, farm->room->name = %s\n\n", farm->rooms->links->name,  farm->rooms->name);
+	// 			farm->rooms->links = farm->rooms->links->next;
+	// 		}
+	// 	}
+	// 	farm->rooms = farm->rooms->next;
+	// }
 	return (error);
 }
