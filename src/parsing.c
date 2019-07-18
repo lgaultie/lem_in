@@ -19,7 +19,7 @@
 ** Initialise les salles.
 */
 
-int			add_room(t_farm *farm, char **tab, int startend)
+static int	add_room(t_farm *farm, char **tab, int startend)
 {
 	t_rooms		*tmp;
 	t_rooms		*new;
@@ -84,7 +84,7 @@ static int	new_link(t_rooms *room, char *name)
 ** probleme dans les cas où plusieurs liaisons, y'a des links qui se perdent
 */
 
-int		add_link(t_farm *farm, char **tab)
+static int	add_link(t_farm *farm, char **tab)
 {
 	t_rooms	*tmp;
 

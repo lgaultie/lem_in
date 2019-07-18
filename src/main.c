@@ -25,7 +25,6 @@ int		main(void)
         ft_putendl(ERROR_MSG);
 	    return (ERROR);
     }
-	free_list(farm->rooms);
-	free(farm);
+	free_farm(farm);
 	return (FAILURE);
 }

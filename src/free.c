@@ -12,7 +12,11 @@
 
 #include <lem_in.h>
 
-void		free_links(t_links *links)
+/*
+** free_links() free les links quand ils existent.
+*/
+
+static void		free_links(t_links *links)
 {
 	t_links		*tmp;
 
@@ -31,10 +35,10 @@ void		free_links(t_links *links)
 }
 
 /*
-** free_list: free les links quand ils existent
+** free_rooms() free les rooms quand elles existent.
 */
 
-void		free_list(t_rooms *rooms)
+static void		free_rooms(t_rooms *rooms)
 {
 	t_rooms		*tmp;
 
@@ -47,4 +51,10 @@ void		free_list(t_rooms *rooms)
 		free(tmp->name);
 		free(tmp);
 	}
+}
+
+void            free_farm(t_farm *farm)
+{
+    free_rooms(farm->rooms);
+    free(farm);
 }

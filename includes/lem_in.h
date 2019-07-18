@@ -54,7 +54,6 @@ typedef struct			s_farm
 
 int		read_input(t_farm *farm);
 int		parse(t_farm *farm, int line_nb, char *line, int start_end);
-int		add_link(t_farm *farm, char **tab);
-void	free_list(t_rooms *rooms);
+void	free_farm(t_farm *farm);
 
 #endif
