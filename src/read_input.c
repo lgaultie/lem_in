@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/18 19:14:24 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/19 12:43:33 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int		read_input(t_farm *farm)
 			start_end = 1;
 		else if (line && ft_strcmp(line, "##end") == 0)
 			start_end = 2;
+		if (line_nb == 1 && (start_end == 1 || start_end == 2))
+			error = -1;
 		if (ret != 0)
 			ft_putchar('\n');
 		if (line && error == 0 && line[0] != '#')

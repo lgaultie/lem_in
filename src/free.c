@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/18 19:31:00 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/19 12:16:34 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void		free_links(t_links *links)
 ** free_rooms() free les rooms quand elles existent.
 */
 
-static void		free_rooms(t_rooms *rooms)
+void			free_rooms(t_rooms *rooms)
 {
 	t_rooms		*tmp;
 
@@ -86,10 +86,10 @@ static void		free_rooms(t_rooms *rooms)
 	}
 }
 
-void            free_farm(t_farm *farm)
+void			free_farm(t_farm *farm)
 {
-    free_rooms(farm->rooms);
-    //free_queue(farm);
-    //free_paths(farm);
-    free(farm);
+	free_rooms(farm->rooms);
+	//free_queue(farm);
+	//free_paths(farm);
+	free(farm);
 }

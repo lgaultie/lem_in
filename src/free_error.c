@@ -1,31 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free_error.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/19 12:17:05 by lgaultie         ###   ########.fr       */
+/*   Created: 2019/07/19 12:15:48 by lgaultie          #+#    #+#             */
+/*   Updated: 2019/07/19 12:20:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-/*
-** main: crée structure pour la colonie, lance le read, free structure.
-*/
-
-int		main(void)
+void			free_farm_error(t_farm *farm)
 {
-	t_farm	*farm;
+	free_rooms(farm->rooms);
+	free(farm);
+}
 
-	if (!(farm = ft_memalloc(sizeof(t_farm))) || read_input(farm) == -1)
-	{
-		free_farm_error(farm);
-		ft_putendl(ERROR_MSG);
-		return (ERROR);
-	}
-	free_farm(farm);
-	return (FAILURE);
+int			free_tab_error(char **links)
+{
+	ft_free_tab(links);
+	return (ERROR);
 }

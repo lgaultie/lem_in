@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:48:27 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/18 18:26:41 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/19 13:10:14 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,11 @@ static int	add_link(t_farm *farm, char **tab)
 		{
 			if (new_link(tmp, tab[0]) == ERROR)
 				return (ERROR);
-			// printf("dans 1 if --- name = %s		link->name = %s\n", tmp->name, tmp->links->name);
 		}
 		if ((ft_strcmp(tmp->name, tab[0])) == 0)
 		{
 			if (new_link(tmp, tab[1]) == ERROR)
 				return (ERROR);
-			// printf("dans 2 if --- name = %s		link->name = %s\n", tmp->name, tmp->links->name);
 		}
 		tmp = tmp->next;
 	}
@@ -109,15 +107,33 @@ static int	add_link(t_farm *farm, char **tab)
 }
 
 /*
-** check_format: check si premiere ligne viable = nb de fourmis positif.
-** si il y a des espaces dans les noms des salles--> gg wp
-** lance le parsing des rooms et links entre rooms.
+** check_tab_of_three: check if the tab for room is made of 3 parts, if it is
+** not, returns ERROR. Prevents wrong rooms such as: "start 1 2 3 4 5" or
+** wrong links such as: "3-4 1".
+*/
+
+int			check_tab_of_three(char **rooms)
+{
+	int		i;
+
+	i = 0;
+	while (rooms[i])
+		i++;
+	if (i != 3)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+/*
+** check_format: checks if on line 1 there is a positive number of ants.
+** Checks data and calls room and links parsing.
+** si il y a des espaces dans les noms des salles--> je lance error
 */
 
 int		    parse(t_farm *farm, int line_nb, char *line, int start_end)
 {
-	char		**rooms;
-	char		**links;
+	char		**room;
+	char		**link;
 
 	if (line_nb == 1)
 	{
@@ -128,17 +144,20 @@ int		    parse(t_farm *farm, int line_nb, char *line, int start_end)
 	if (line_nb > 1 && ft_strchr(line, ' '))
 	{
 		farm->total_rooms++;
-		if (!(rooms = ft_strsplit(line, ' ')))
+		if (!(room = ft_strsplit(line, ' ')))
 			return (ERROR);
-		add_room(farm, rooms, start_end);
-		ft_free_tab(rooms);
+		if ((check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
+		|| (add_room(farm, room, start_end) == ERROR))
+			return (free_tab_error(room));
+		ft_free_tab(room);
 	}
-	if (line_nb > 1 && ft_strchr(line, '-') && !(ft_strchr(line, ' ')))
+	else if (line_nb > 1 && ft_strchr(line, '-'))
 	{
-		if (!(links = ft_strsplit(line, '-')))
+		if (!(link = ft_strsplit(line, '-')))
 			return (ERROR);
-		add_link(farm, links);
-		ft_free_tab(links);
+		if (add_link(farm, link) == ERROR)
+			return (free_tab_error(link));
+		ft_free_tab(link);
 	}
 	return (SUCCESS);
 }

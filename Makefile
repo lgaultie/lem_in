@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/18 16:35:54 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/19 12:21:19 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ LIB = $(LIBDIR)/libft.a
 SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
-		free.c
+		free.c			\
+		free_error.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
