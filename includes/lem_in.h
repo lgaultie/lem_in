@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/19 12:20:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/19 14:01:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 # define FAILURE 0
 # define ERROR -1
 # define ERROR_MSG "ERROR"
+
+typedef struct			s_paths
+{
+	int					id_ant;
+	int					length;
+	int					*path;
+	struct s_paths		*next;
+}						t_paths;
+
+typedef struct			s_queue
+{
+	int					id;
+	struct s_queue		*next;
+}						t_queue;
 
 typedef struct			s_links
 {
@@ -47,9 +61,9 @@ typedef struct			s_farm
 {
 	int					ants;
 	int					total_rooms;
-	// t_queue				*queue;
+	t_queue				*queue;
 	t_rooms				*rooms;
-	// t_paths				*paths;
+	t_paths				*paths;
 }						t_farm;
 
 int		read_input(t_farm *farm);

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/19 12:43:33 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/19 13:38:13 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 ** d'imprimer toute la colonie. Si error = 1 -->fin aquisition fourmiliere
 ** mais traitement normal ensuite!
 ** start_end -> start = 1, end = 2
+** attention dans le cas de ##start et ##end a la suite, start va etre
+** ignoré, il n'existera pas -->probleme pour l'algo
 */
 
 int		read_input(t_farm *farm)
