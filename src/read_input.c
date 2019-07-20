@@ -12,6 +12,26 @@
 
 #include <lem_in.h>
 
+static int  check_input(t_farm *farm)
+{
+    int     error;
+    int     check_startend;
+    t_rooms *tmp_rooms;
+
+    error = 0;
+    check_startend = 0;
+    tmp_rooms = farm->rooms;
+    while (tmp_rooms)
+    {
+        if (tmp_rooms->start_end == 1 || tmp_rooms->start_end == 2)
+            check_startend++;
+        tmp_rooms = tmp_rooms->next;
+    }
+    if (check_startend != 2)
+        error = -1;
+    return (error);
+}
+
 /*
 ** read_input: line_nb note les lignes par numéro (sauf les comments), pour
 ** analyser dans le check_format (ex: premiere ligne = nb ant).
@@ -23,7 +43,7 @@
 ** ignoré, il n'existera pas -->probleme pour l'algo
 */
 
-int		read_input(t_farm *farm)
+int		    read_input(t_farm *farm)
 {
 	int			ret;
 	char		*line;
@@ -41,18 +61,16 @@ int		read_input(t_farm *farm)
 		if (line)
 			free(line);
 		ret = get_next_line(0, &line);
-		ft_putstr(line);
+		ft_putendl(line);
 		if (line && ft_strcmp(line, "##start") == 0)
 			start_end = 1;
 		else if (line && ft_strcmp(line, "##end") == 0)
 			start_end = 2;
-		if (line_nb == 1 && (start_end == 1 || start_end == 2))
-			error = -1;
-		if (ret != 0)
-			ft_putchar('\n');
+		if (line_nb == 1)
+		    error = check_ants(farm, line);
 		if (line && error == 0 && line[0] != '#')
 		{
-			if (parse(farm, line_nb, line, start_end) == ERROR)
+			if (parse(farm, line, start_end) == ERROR)
 				error = -1;
 			start_end = 0;
 		}
@@ -61,18 +79,20 @@ int		read_input(t_farm *farm)
 		line_nb++;
 		ft_memdel((void**)&line);
 	}
-	// while (farm->rooms)
-	// {
-	// 	printf("x_pos = %d, y_pos = %d, name = %s, id = %d, start-end = %d\n", farm->rooms->x_pos, farm->rooms->y_pos, farm->rooms->name, farm->rooms->room_id, farm->rooms->start_end);
-	// 	if (farm->rooms->links)
-	// 	{
-	// 		while (farm->rooms->links)
-	// 		{
-	// 			printf("\nlinks-name = %s, farm->room->name = %s\n\n", farm->rooms->links->name,  farm->rooms->name);
-	// 			farm->rooms->links = farm->rooms->links->next;
-	// 		}
-	// 	}
-	// 	farm->rooms = farm->rooms->next;
-	// }
+    error = check_input(farm);
+
+	/*while (farm->rooms)
+    {
+        printf("x_pos = %d, y_pos = %d, name = %s, id = %d, start-end = %d\n", farm->rooms->x_pos, farm->rooms->y_pos, farm->rooms->name, farm->rooms->room_id, farm->rooms->start_end);
+        if (farm->rooms->links)
+        {
+            while (farm->rooms->links)
+            {
+                printf("links-name = %s\n", farm->rooms->links->name);
+                farm->rooms->links = farm->rooms->links->next;
+            }
+        }
+        farm->rooms = farm->rooms->next;
+	}*/
 	return (error);
 }

@@ -125,23 +125,37 @@ int			check_tab_of_three(char **rooms)
 }
 
 /*
-** check_format: checks if on line 1 there is a positive number of ants.
-** Checks data and calls room and links parsing.
+** check_ants() checks if the first line is a number. If it is, this is the
+** number of ants in the farm. If not, it returns ERROR.
+*/
+
+int         check_ants(t_farm *farm, char *line)
+{
+    int i = 0;
+
+    while (line[i])
+    {
+        if (!(ft_isdigit(line[i])))
+            return (ERROR);
+        i++;
+    }
+    farm->ants = ft_atoi(line);
+    if (farm->ants <= 0)
+        return (ERROR);
+    return (SUCCESS);
+}
+
+/*
+** check_format: checks data and calls room and links parsing.
 ** si il y a des espaces dans les noms des salles--> je lance error
 */
 
-int		    parse(t_farm *farm, int line_nb, char *line, int start_end)
+int		    parse(t_farm *farm, char *line, int start_end)
 {
 	char		**room;
 	char		**link;
 
-	if (line_nb == 1)
-	{
-		farm->ants = ft_atoi(line);
-		if (farm->ants <= 0)
-			return (ERROR);
-	}
-	if (line_nb > 1 && ft_strchr(line, ' '))
+	if (ft_strchr(line, ' '))
 	{
 		farm->total_rooms++;
 		if (!(room = ft_strsplit(line, ' ')))
@@ -151,7 +165,7 @@ int		    parse(t_farm *farm, int line_nb, char *line, int start_end)
 			return (free_tab_error(room));
 		ft_free_tab(room);
 	}
-	else if (line_nb > 1 && ft_strchr(line, '-'))
+	else if (ft_strchr(line, '-'))
 	{
 		if (!(link = ft_strsplit(line, '-')))
 			return (ERROR);
