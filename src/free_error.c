@@ -12,10 +12,14 @@
 
 #include <lem_in.h>
 
-void			free_farm_error(t_farm *farm)
+int			free_farm_error(t_farm *farm)
 {
 	free_rooms(farm->rooms);
+    //free_queue(farm);
+    //free_paths(farm);
 	free(farm);
+    ft_putendl(ERROR_MSG);
+    return (ERROR);
 }
 
 int			free_tab_error(char **links)

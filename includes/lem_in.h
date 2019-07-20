@@ -70,7 +70,7 @@ int		read_input(t_farm *farm);
 int		parse(t_farm *farm, int line_nb, char *line, int start_end);
 void	free_farm(t_farm *farm);
 void	free_rooms(t_rooms *rooms);
-void	free_farm_error(t_farm *farm);
+int 	free_farm_error(t_farm *farm);
 int		free_tab_error(char **links);
 
 #endif

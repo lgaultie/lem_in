@@ -20,18 +20,8 @@ int		main(void)
 {
 	t_farm	*farm;
 
-	if (!(farm = ft_memalloc(sizeof(t_farm))) || read_input(farm) == ERROR)
-	{
-		free_farm_error(farm);
-		ft_putendl(ERROR_MSG);
-		return (ERROR);
-	}
-	// if (find_paths(farm) == ERROR)
-	// {
-	// 	free_farm_error(farm);
-	// 	ft_putendl(ERROR_MSG);
-	// 	return (ERROR);
-	// }
+	if (!(farm = ft_memalloc(sizeof(t_farm))) || read_input(farm) == ERROR) // find_paths(farm) == ERROR
+		return(free_farm_error(farm));
 	free_farm(farm);
 	return (FAILURE);
 }
