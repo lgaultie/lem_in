@@ -51,11 +51,11 @@ int		    read_input(t_farm *farm)
 	int			error;
 	int			start_end;
 
-	start_end = 0;
-	error = 0;
 	ret = 1;
-	line_nb = 1;
 	line = NULL;
+	line_nb = 1;
+	error = 0;
+	start_end = 0;
 	while (ret != 0)
 	{
 		if (line)

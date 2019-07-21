@@ -142,11 +142,11 @@ int         check_ants(t_farm *farm, char *line)
     farm->ants = ft_atoi(line);
     if (farm->ants <= 0)
         return (ERROR);
-    return (SUCCESS);
+    return (FAILURE);
 }
 
 /*
-** check_format: checks data and calls room and links parsing.
+** parse() checks data and calls room and links parsing.
 ** si il y a des espaces dans les noms des salles--> je lance error
 */
 
