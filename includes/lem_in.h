@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 16:34:47 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 17:45:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct			s_farm
 }						t_farm;
 
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
-int     check_nb_ants(int line_nb, t_farm *farm, char *line);
+int     check_nb_ants(int line_nb, t_farm *farm, char *line, int ret);
 int		parse(t_farm *farm, char *line, int start_end);
 void	free_farm(t_farm *farm);
 void	free_rooms(t_rooms *rooms);

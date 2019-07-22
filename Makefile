@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/22 16:10:41 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/22 17:07:09 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
 		bfs.c           \
-		paths.c         \
 		free.c			\
 		free_error.c	\
 		parse_links.c	\

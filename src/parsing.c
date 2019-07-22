@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:48:27 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 16:34:40 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 17:45:56 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 ** number of ants in the farm. If not, it returns ERROR.
 */
 
-int			check_nb_ants(int line_nb, t_farm *farm, char *line)
+int			check_nb_ants(int line_nb, t_farm *farm, char *line, int ret)
 {
 	int i;
 
 	i = 0;
-	if (line_nb == 1)
+	if (ret != 0 && line_nb == 1)
 	{
 		while (line[i])
 		{
