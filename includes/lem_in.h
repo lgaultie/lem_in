@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/19 14:01:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 15:24:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 # define ERROR -1
 # define ERROR_MSG "ERROR"
 
+typedef struct			s_queue
+{
+	int					id;
+	struct s_queue		*next;
+}						t_queue;
+
 typedef struct			s_paths
 {
 	int					id_ant;
@@ -28,12 +34,6 @@ typedef struct			s_paths
 	int					*path;
 	struct s_paths		*next;
 }						t_paths;
-
-typedef struct			s_queue
-{
-	int					id;
-	struct s_queue		*next;
-}						t_queue;
 
 typedef struct			s_links
 {
@@ -73,5 +73,6 @@ void	free_farm(t_farm *farm);
 void	free_rooms(t_rooms *rooms);
 int 	free_farm_error(t_farm *farm);
 int		free_tab_error(char **links);
+int		bfs(t_farm *farm);
 
 #endif

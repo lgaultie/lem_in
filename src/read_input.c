@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 11:57:39 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 15:36:14 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ static int	check_start_end(int error, t_farm *farm)
 ** start_end -> start = 1, end = 2
 ** attention dans le cas de ##start et ##end a la suite, start va etre
 ** ignoré, il n'existera pas -->probleme pour l'algo
+** order: 1-->nb fourmi, 2-->rooms, 3-->links.
 */
 
 int		    read_input(t_farm *farm)
@@ -67,6 +68,8 @@ int		    read_input(t_farm *farm)
 		if (line)
 			free(line);
 		ret = get_next_line(0, &line);
+		if (line && ft_strcmp(line, "") == 0)
+			error = -1;
 		if (ret > 0)
 			ft_putendl(line);
 		if (line && ft_strcmp(line, "##start") == 0)
@@ -75,7 +78,7 @@ int		    read_input(t_farm *farm)
 			start_end = 2;
 		if (line_nb == 1)
 			error = check_ants(farm, line);
-		if (line && error == 0 && line[0] != '#')
+		if (line && error == 0 && line_nb > 1 && line[0] != '#')
 		{
 			if (parse(farm, line, start_end) == ERROR)
 				error = -1;

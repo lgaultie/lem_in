@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:48:27 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/19 13:10:14 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 15:35:44 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,18 +131,18 @@ int			check_tab_of_three(char **rooms)
 
 int         check_ants(t_farm *farm, char *line)
 {
-    int i = 0;
+	int i = 0;
 
-    while (line[i])
-    {
-        if (!(ft_isdigit(line[i])))
-            return (ERROR);
-        i++;
-    }
-    farm->ants = ft_atoi(line);
-    if (farm->ants <= 0)
-        return (ERROR);
-    return (FAILURE);
+	while (line[i])
+	{
+		if (!(ft_isdigit(line[i])))
+			return (ERROR);
+		i++;
+	}
+	farm->ants = ft_atoi(line);
+	if (farm->ants <= 0)
+		return (ERROR);
+	return (FAILURE);
 }
 
 /*
@@ -154,9 +154,15 @@ int		    parse(t_farm *farm, char *line, int start_end)
 {
 	char		**room;
 	char		**link;
+	static int		order;
 
+	if (!(ft_strchr(line, ' ')) && !(ft_strchr(line, '-')))
+		return (ERROR);
 	if (ft_strchr(line, ' '))
 	{
+		if (order == 3)
+			return (ERROR);
+		order = 2;
 		farm->total_rooms++;
 		if (!(room = ft_strsplit(line, ' ')))
 			return (ERROR);
@@ -167,6 +173,9 @@ int		    parse(t_farm *farm, char *line, int start_end)
 	}
 	else if (ft_strchr(line, '-'))
 	{
+		if (order == 1)
+			return (ERROR);
+		order = 3;
 		if (!(link = ft_strsplit(line, '-')))
 			return (ERROR);
 		if (add_link(farm, link) == ERROR)
