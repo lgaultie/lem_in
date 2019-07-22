@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 15:36:14 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 16:37:15 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,24 @@ static int	check_start_end(int error, t_farm *farm)
 	return (error);
 }
 
+int			is_line_start_end(int start_end, char *line)
+{
+	if (line && ft_strcmp(line, "##start") == 0)
+		start_end = 1;
+	else if (line && ft_strcmp(line, "##end") == 0)
+		start_end = 2;
+	return (start_end);
+}
+
+int			check_empty_line_putstr(int error, char *line, int ret)
+{
+	if (line && ft_strcmp(line, "") == 0)
+		error = -1;
+	if (ret > 0)
+		ft_putendl(line);
+	return (error);
+}
+
 /*
 ** read_input: line_nb note les lignes par numéro (sauf les comments), pour
 ** analyser dans le check_format (ex: premiere ligne = nb ant).
@@ -47,37 +65,23 @@ static int	check_start_end(int error, t_farm *farm)
 ** start_end -> start = 1, end = 2
 ** attention dans le cas de ##start et ##end a la suite, start va etre
 ** ignoré, il n'existera pas -->probleme pour l'algo
-** order: 1-->nb fourmi, 2-->rooms, 3-->links.
 */
 
-int		    read_input(t_farm *farm)
+int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 {
-	int			ret;
 	char		*line;
-	int			line_nb;
-	int			error;
-	int			start_end;
+	int			ret;
 
-	ret = 1;
 	line = NULL;
-	line_nb = 1;
-	error = 0;
-	start_end = 0;
+	ret = 1;
 	while (ret != 0)
 	{
 		if (line)
 			free(line);
 		ret = get_next_line(0, &line);
-		if (line && ft_strcmp(line, "") == 0)
-			error = -1;
-		if (ret > 0)
-			ft_putendl(line);
-		if (line && ft_strcmp(line, "##start") == 0)
-			start_end = 1;
-		else if (line && ft_strcmp(line, "##end") == 0)
-			start_end = 2;
-		if (line_nb == 1)
-			error = check_ants(farm, line);
+		error = check_empty_line_putstr(error, line, ret);
+		start_end = is_line_start_end(start_end, line);
+		error = check_nb_ants(line_nb, farm, line);
 		if (line && error == 0 && line_nb > 1 && line[0] != '#')
 		{
 			if (parse(farm, line, start_end) == ERROR)
@@ -87,22 +91,22 @@ int		    read_input(t_farm *farm)
 		if (line && line[0] == '#' && line[1] != '#')
 			line_nb--;
 		line_nb++;
-		ft_memdel((void**)&line);
 	}
 	error = check_start_end(error, farm);
-
-	/*while (farm->rooms)
-	{
-		printf("x_pos = %d, y_pos = %d, name = %s, id = %d, start-end = %d\n", farm->rooms->x_pos, farm->rooms->y_pos, farm->rooms->name, farm->rooms->room_id, farm->rooms->start_end);
-		if (farm->rooms->links)
-		{
-			while (farm->rooms->links)
-			{
-				printf("links-name = %s\n", farm->rooms->links->name);
-				farm->rooms->links = farm->rooms->links->next;
-			}
-		}
-		farm->rooms = farm->rooms->next;
-	}*/
 	return (error);
 }
+
+/* while (farm->rooms)
+{
+	printf("x_pos = %d, y_pos = %d, name = %s, id = %d, start-end = %d\n", farm->rooms->x_pos, farm->rooms->y_pos, farm->rooms->name, farm->rooms->room_id, farm->rooms->start_end);
+	if (farm->rooms->links)
+	{
+		while (farm->rooms->links)
+		{
+			printf("links-name = %s\n", farm->rooms->links->name);
+			farm->rooms->links = farm->rooms->links->next;
+		}
+	}
+	farm->rooms = farm->rooms->next;
+}
+*/

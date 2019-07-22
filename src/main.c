@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 15:04:35 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/22 16:35:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,16 @@
 
 int		main(void)
 {
-	t_farm	*farm;
+	int			line_nb;
+	int			error;
+	t_farm		*farm;
 
-	if (!(farm = ft_memalloc(sizeof(t_farm))) || read_input(farm) == ERROR)
+	line_nb = 1;
+	error = 0;
+	if (!(farm = ft_memalloc(sizeof(t_farm))) \
+		|| read_input(farm, line_nb, error, error) == ERROR)
 	//|| bfs(farm) == ERROR)
-		return(free_farm_error(farm));
+		return (free_farm_error(farm));
 	free_farm(farm);
 	return (FAILURE);
 }

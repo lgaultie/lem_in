@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/22 13:54:36 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/22 16:10:41 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ SRCS =	main.c			\
 		bfs.c           \
 		paths.c         \
 		free.c			\
-		free_error.c
+		free_error.c	\
+		parse_links.c	\
+		parse_rooms.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
