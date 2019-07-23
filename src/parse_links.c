@@ -6,16 +6,15 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:08:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 16:02:09 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 16:51:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
 /*
-** new_link: on créé un new link, farm->rooms->link = new si c'est le premier,
-** l'ajoute si c'est un suivant. Pas de prev a initialiser.
-** copie le nom du link.
+** new_link() creates a new link if this is the first, then add the others
+** to the list of links which each room has. Initializes link's name.
 */
 
 static int	new_link(t_rooms *room, char *name)
@@ -41,8 +40,7 @@ static int	new_link(t_rooms *room, char *name)
 }
 
 /*
-** add_link: on indique a qui est collé la salle (far->rooms).
-** probleme dans les cas où plusieurs liaisons, y'a des links qui se perdent
+** add_link() indicates to which room the actual one is linked to.
 */
 
 static int	add_link(t_farm *farm, char **tab)
@@ -84,18 +82,20 @@ int			check_valid_room_name(char **links, t_farm *farm)
 	tmp = farm->rooms;
 	while (tmp)
 	{
-		// printf("tmp->name = %s, links[0] = %s, links[1] == %s\n", tmp->links->name, links[0], links[1]);
 		if (ft_strcmp(tmp->name, links[0]) == 0)
 			success_1 = 1;
 		if (ft_strcmp(tmp->name, links[1]) == 0)
 			success_2 = 1;
 		tmp = tmp->next;
 	}
-	// printf("success1 = %d, success2 = %d\n", success_1, success_2);
 	if (success_1 == 0 || success_2 == 0)
 		return (ERROR);
 	return (SUCCESS);
 }
+
+/*
+** parse_links() calls different checks, and free.
+*/
 
 int			parse_links(t_farm *farm, char *line)
 {

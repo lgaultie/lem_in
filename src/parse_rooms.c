@@ -6,11 +6,15 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:08:49 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 16:02:08 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 16:48:23 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+
+/*
+** init_room() initializes rooms.
+*/
 
 static int	init_room(t_rooms *new, char **tab, int startend)
 {
@@ -28,10 +32,8 @@ static int	init_room(t_rooms *new, char **tab, int startend)
 }
 
 /*
-** add_room: si c'est premiere salle, relie cette new structure à celle
-** de la colonie: farm->rooms = new. Si c'est une seconde salle, l'ajoute à
-** la suite.
-** Initialise les salles.
+** add_room() If this is the first room, link the new structure to farm.
+** Then add others rooms to the following first room.
 */
 
 static int	add_room(t_farm *farm, char **tab, int startend)
@@ -59,7 +61,7 @@ static int	add_room(t_farm *farm, char **tab, int startend)
 }
 
 /*
-** check_tab_of_three: check if the tab for room is made of 3 parts, if it is
+** check_tab_of_three() check if the tab for room is made of 3 parts, if it is
 ** not, returns ERROR. Prevents wrong rooms such as: "start 1 2 3 4 5" or
 ** wrong links such as: "3-4 1".
 */
@@ -76,6 +78,11 @@ int			check_tab_of_three(char **rooms)
 	return (SUCCESS);
 }
 
+/*
+** check_if_name_taken() checks if the new room uses a name already given to
+** another room.
+*/
+
 int			check_if_name_taken(char **room, t_farm *farm)
 {
 	t_rooms		*tmp;
@@ -85,13 +92,16 @@ int			check_if_name_taken(char **room, t_farm *farm)
 	tmp = farm->rooms;
 	while (tmp)
 	{
-		// printf("tmp->name = %s, room[1] = %s\n", tmp->name, room[0]);
 		if (ft_strcmp(tmp->name, room[0]) == 0)
 			return (ERROR);
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
 }
+
+/*
+** parse_rooms() calls different checks, and free.
+*/
 
 int			parse_rooms(t_farm *farm, char *line, int start_end)
 {

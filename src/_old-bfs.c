@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs.c                                              :+:      :+:    :+:   */
+/*   _old-bfs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/21 11:12:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/05/21 11:12:41 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/07/23 17:42:57 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,11 @@ static int  queue(t_farm *farm, int room_id)
     t_queue *new;
 
     tmp = farm->queue;
-    if ((new = (t_queue*)malloc(sizeof(t_queue))) == NULL)
+    if (!(new = ft_memalloc(sizeof(t_queue))))
         return (ERROR);
-    ft_bzero(new, sizeof(t_queue));
-    if (tmp != NULL)
+    if (tmp)
     {
-        while (tmp->next != NULL)
+        while (tmp->next)
             tmp = tmp->next;
         tmp->next = new;
     }
@@ -55,7 +54,7 @@ static int  inversed_bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
         if (matrice[parent_room->room_id][i] == 1)
         {
             tmp_rooms = farm->rooms;
-            while (tmp_rooms != NULL)
+            while (tmp_rooms)
             {
                 if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 && tmp_rooms->start_end != 1)
                 {
@@ -80,42 +79,43 @@ static int  inversed_bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 
 static int  check_queue(t_farm *farm, int **matrice)
 {
-    t_queue *tmp_queue;
-    t_rooms *tmp_rooms;
+	t_queue *tmp_queue;
+	t_rooms *tmp_rooms;
 
-    tmp_queue = farm->queue;
-    while (tmp_queue != NULL)
-    {
-        tmp_rooms = farm->rooms;
-        while (tmp_rooms != NULL)
-        {
-            if (tmp_rooms->room_nb == tmp_queue->id)
-                if (inversed_bfs(farm, matrice, tmp_rooms) == ERROR)
-                    return (ERROR);
-            tmp_rooms = tmp_rooms->next;
-        }
-        tmp_queue = tmp_queue->next;
-    }
-    return (SUCCESS);
+	tmp_queue = farm->queue;
+	while (tmp_queue)
+	{
+		tmp_rooms = farm->rooms;
+		while (tmp_rooms)
+		{
+			if (tmp_rooms->room_nb == tmp_queue->id)
+				if (inversed_bfs(farm, matrice, tmp_rooms) == ERROR)
+					return (ERROR);
+			tmp_rooms = tmp_rooms->next;
+		}
+		tmp_queue = tmp_queue->next;
+	}
+	return (SUCCESS);
 }
 
 int         algo(t_farm *farm, int **matrice)
 {
-    t_rooms *tmp_rooms;
+	t_rooms *tmp_rooms;
 
-    tmp_rooms = farm->rooms;
-    while (tmp_rooms != NULL)
-    {
-        if (tmp_rooms->start_end == 1)
-        {
-            printf("queue room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
-            if (queue(farm, tmp_rooms->room_id) == ERROR || inversed_bfs(farm, matrice, tmp_rooms) == ERROR)
-                return (ERROR);
-            break ;
-        }
-        tmp_rooms = tmp_rooms->next;
-    }
-    if (check_queue(farm, matrice) == ERROR)
-        return (ERROR);
-    return (SUCCESS);
+	tmp_rooms = farm->rooms;
+	while (tmp_rooms)
+	{
+		if (tmp_rooms->start_end == 1)
+		{
+			printf("queue room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
+			if (queue(farm, tmp_rooms->room_id) == ERROR \
+			|| inversed_bfs(farm, matrice, tmp_rooms) == ERROR)
+				return (ERROR);
+			break ;
+		}
+		tmp_rooms = tmp_rooms->next;
+	}
+	if (check_queue(farm, matrice) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
 }

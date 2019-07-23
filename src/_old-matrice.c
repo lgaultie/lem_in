@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   matrice.c                                          :+:      :+:    :+:   */
+/*   _old-matrice.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 11:01:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/02 13:37:52 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/07/23 17:04:07 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,14 @@ int         **matrice_create(t_farm *farm)
     i = 0;
     j = 0;
 	total_rooms = farm->total_rooms;
-    matrice = (int**)malloc(sizeof(int*) * total_rooms);
+    matrice = ft_memalloc(sizeof(int*) * total_rooms);
     if (matrice == NULL)
         return (NULL);
     while (i < total_rooms)
     {
-        matrice[i] = (int*)malloc(sizeof(int) * total_rooms);
+        matrice[i] = ft_memalloc(sizeof(int) * total_rooms);
         if (matrice[i] == NULL)
             return (NULL);
-        ft_bzero(matrice[i], sizeof(int) * total_rooms);
         i++;
     }
     matrice_fill(farm, matrice);

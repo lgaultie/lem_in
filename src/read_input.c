@@ -6,18 +6,14 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 15:01:50 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 16:55:51 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
 /*
-** check_input: reparcours la liste pour verifier si il y a une
-** salle start et end.
-** (Peut etre le faire directement dans read_input pour optimiser --> evite
-** de parcourir la liste, à voir plus tard si on a besoin de gagner du temps
-** d'execution, et si ça nous fera vraiment gagner du temps ou pas)
+** check_start_end() review all rooms to check if there is a start and end.
 */
 
 static int	check_start_end(int error, t_farm *farm)
@@ -38,6 +34,10 @@ static int	check_start_end(int error, t_farm *farm)
 	return (error);
 }
 
+/*
+** is_line_start_end() tells which line is start (1), or end (2).
+*/
+
 int			is_line_start_end(int start_end, char *line)
 {
 	if (line && ft_strcmp(line, "##start") == 0)
@@ -46,6 +46,11 @@ int			is_line_start_end(int start_end, char *line)
 		start_end = 2;
 	return (start_end);
 }
+
+/*
+** check_empty_line_putstr() returns ERROR if there is an empty line.
+** then print the whole farm.
+*/
 
 int			check_empty_line_putstr(int error, char *line, int ret)
 {
@@ -63,14 +68,8 @@ void		free_when_needed(char *line)
 }
 
 /*
-** read_input: line_nb note les lignes par numéro (sauf les comments), pour
-** analyser dans le check_format (ex: premiere ligne = nb ant).
-** int error existe pour ne pas return directement en cas d'erreur: besoin
-** d'imprimer toute la colonie. Si error = 1 -->fin aquisition fourmiliere
-** mais traitement normal ensuite!
-** start_end -> start = 1, end = 2
-** attention dans le cas de ##start et ##end a la suite, start va etre
-** ignoré, il n'existera pas -->probleme pour l'algo
+** read_input() numbers every line (except comments). Calls differents checks,
+** read all input and writes it.
 */
 
 int			read_input(t_farm *farm, int line_nb, int error, int start_end)
@@ -101,18 +100,3 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 	error = check_start_end(error, farm);
 	return (error);
 }
-
-/* while (farm->rooms)
-{
-	printf("x_pos = %d, y_pos = %d, name = %s, id = %d, start-end = %d\n", farm->rooms->x_pos, farm->rooms->y_pos, farm->rooms->name, farm->rooms->room_id, farm->rooms->start_end);
-	if (farm->rooms->links)
-	{
-		while (farm->rooms->links)
-		{
-			printf("links-name = %s\n", farm->rooms->links->name);
-			farm->rooms->links = farm->rooms->links->next;
-		}
-	}
-	farm->rooms = farm->rooms->next;
-}
-*/

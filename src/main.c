@@ -6,14 +6,14 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 16:35:37 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 16:56:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
 /*
-** main: crée structure pour la colonie, lance le read, free structure.
+** main() creates farm structure, calls parser then algorithm, free farm.
 */
 
 int		main(void)
@@ -26,7 +26,6 @@ int		main(void)
 	error = 0;
 	if (!(farm = ft_memalloc(sizeof(t_farm))) \
 		|| read_input(farm, line_nb, error, error) == ERROR)
-	//|| bfs(farm) == ERROR)
 		return (free_farm_error(farm));
 	free_farm(farm);
 	return (FAILURE);
