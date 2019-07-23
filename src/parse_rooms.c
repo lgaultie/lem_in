@@ -13,7 +13,7 @@
 #include <lem_in.h>
 
 /*
-** init_room() initializes rooms.
+** init_room() initializes and fills a room.
 */
 
 static int	init_room(t_rooms *new, char **tab, int startend)
@@ -32,8 +32,8 @@ static int	init_room(t_rooms *new, char **tab, int startend)
 }
 
 /*
-** add_room() If this is the first room, link the new structure to farm.
-** Then add others rooms to the following first room.
+** add_room() creates a new room if this is the first of the list, calls
+** init_room() to fill it, and adds it to the list of rooms.
 */
 
 static int	add_room(t_farm *farm, char **tab, int startend)
@@ -61,9 +61,8 @@ static int	add_room(t_farm *farm, char **tab, int startend)
 }
 
 /*
-** check_tab_of_three() check if the tab for room is made of 3 parts, if it is
-** not, returns ERROR. Prevents wrong rooms such as: "start 1 2 3 4 5" or
-** wrong links such as: "3-4 1".
+** check_tab_of_three() checks if the tab for room is made of 3 parts, to
+** prevent wrong order in the map file. If not, it returns ERROR.
 */
 
 int			check_tab_of_three(char **rooms)
@@ -100,7 +99,8 @@ int			check_if_name_taken(char **room, t_farm *farm)
 }
 
 /*
-** parse_rooms() calls different checks, and free.
+** parse_rooms() calls different checking functions to check if the rooms are
+** valid.
 */
 
 int			parse_rooms(t_farm *farm, char *line, int start_end)

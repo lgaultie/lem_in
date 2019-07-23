@@ -13,8 +13,8 @@
 #include <lem_in.h>
 
 /*
-** new_link() creates a new link if this is the first, then add the others
-** to the list of links which each room has. Initializes link's name.
+** new_link() creates a new link if this is the first of the list, fills it,
+** and adds it to the list of links.
 */
 
 static int	new_link(t_rooms *room, char *name)
@@ -40,7 +40,8 @@ static int	new_link(t_rooms *room, char *name)
 }
 
 /*
-** add_link() indicates to which room the actual one is linked to.
+** add_link() checks the two rooms of a link, in two ways, and calls new_link()
+** to add them to their respective list of links.
 */
 
 static int	add_link(t_farm *farm, char **tab)
@@ -66,9 +67,8 @@ static int	add_link(t_farm *farm, char **tab)
 }
 
 /*
-** check_valid_room_name() checks if the link describes 2 known room.
-** success_1 to check the name of the first room described, success_2 for the
-** second room. Both have to be known.
+** check_valid_room_name() checks if the link describes two known rooms.
+** success_1 checks the name of the first room, success_2 the second.
 */
 
 int			check_valid_room_name(char **links, t_farm *farm)
@@ -94,7 +94,8 @@ int			check_valid_room_name(char **links, t_farm *farm)
 }
 
 /*
-** parse_links() calls different checks, and free.
+** parse_links() calls different checking functions to check if the links are
+** valid.
 */
 
 int			parse_links(t_farm *farm, char *line)

@@ -13,7 +13,7 @@
 #include <lem_in.h>
 
 /*
-** check_start_end() review all rooms to check if there is a start and end.
+** check_start_end() reviews all rooms to check if there is a start and an end.
 */
 
 static int	check_start_end(int error, t_farm *farm)
@@ -35,10 +35,10 @@ static int	check_start_end(int error, t_farm *farm)
 }
 
 /*
-** is_line_start_end() tells which line is start (1), or end (2).
+** is_start_end() tells which line is start (1), and end (2).
 */
 
-int			is_line_start_end(int start_end, char *line)
+int			is_start_end(int start_end, char *line)
 {
 	if (line && ft_strcmp(line, "##start") == 0)
 		start_end = 1;
@@ -48,18 +48,21 @@ int			is_line_start_end(int start_end, char *line)
 }
 
 /*
-** check_empty_line_putstr() returns ERROR if there is an empty line.
-** then print the whole farm.
+** check_line() prints the line, and checks if we have an empty line. If that
+** is the case, it returns ERROR.
 */
 
-int			check_empty_line_putstr(int error, char *line, int ret)
+int			check_line(char *line, int error)
 {
 	if (line && ft_strcmp(line, "") == 0)
 		error = -1;
-	if (ret > 0)
-		ft_putendl(line);
+	ft_putendl(line);
 	return (error);
 }
+
+/*
+** free_when_needed() frees line.
+*/
 
 void		free_when_needed(char *line)
 {
@@ -68,8 +71,8 @@ void		free_when_needed(char *line)
 }
 
 /*
-** read_input() numbers every line (except comments). Calls differents checks,
-** read all input and writes it.
+** read_input() reads every line of the map file, except comments, then calls
+** different checking functions to check if the map is valid.
 */
 
 int			read_input(t_farm *farm, int line_nb, int error, int start_end)
@@ -83,10 +86,9 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 	{
 		free_when_needed(line);
 		ret = get_next_line(0, &line);
-		error = check_empty_line_putstr(error, line, ret);
-		start_end = is_line_start_end(start_end, line);
-		if (ret != 0)
-			error = check_nb_ants(line_nb, farm, line, error);
+		error = check_line(line, error);
+		start_end = is_start_end(start_end, line);
+		error = check_nb_ants(line_nb, farm, line, error);
 		if (line && error == 0 && line_nb > 1 && line[0] != '#')
 		{
 			if (parse(farm, line, start_end) == ERROR)

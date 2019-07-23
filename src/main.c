@@ -13,7 +13,8 @@
 #include <lem_in.h>
 
 /*
-** main() creates farm structure, calls parser then algorithm, free farm.
+** main() creates farm structure, calls read_input() to read the map, then
+** frees it.
 */
 
 int		main(void)

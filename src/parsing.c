@@ -32,9 +32,9 @@ int			check_nb_ants(int line_nb, t_farm *farm, char *line, int error)
 }
 
 /*
-** parse() checks data and calls room and links parsing.
-** static int order: is at 2 when parsing rooms, is 3 when parsing links -->
-** checks the right order of description (rooms, then links between rooms).
+** parse() checks data for rooms and links, calls parse_rooms() and
+** parse_links(). Static int order equals 2 when parsing rooms, and 3 when
+** parsing links to prevent wrong order in the map file.
 */
 
 int			parse(t_farm *farm, char *line, int start_end)

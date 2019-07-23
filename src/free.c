@@ -13,6 +13,10 @@
 #include <lem_in.h>
 
 /*
+** free_paths() frees paths when they exist.
+*/
+
+/*
 static void    free_paths(t_farm *farm)
 {
     t_paths *tmp;
@@ -27,6 +31,10 @@ static void    free_paths(t_farm *farm)
         tmp = new;
     }
 }
+*/
+
+/*
+** free_queue() frees queue when it exists.
 */
 
 /*
@@ -46,7 +54,7 @@ static void    free_queue(t_farm *farm)
 */
 
 /*
-** free_links() free links when they exist.
+** free_links() frees links when they exist.
 */
 
 static void		free_links(t_links *links)
@@ -68,7 +76,7 @@ static void		free_links(t_links *links)
 }
 
 /*
-** free_rooms() free rooms when they exist.
+** free_rooms() frees rooms when they exist.
 */
 
 void			free_rooms(t_rooms *rooms)
@@ -85,6 +93,10 @@ void			free_rooms(t_rooms *rooms)
 		free(tmp);
 	}
 }
+
+/*
+** free_farm() frees farm.
+*/
 
 void			free_farm(t_farm *farm)
 {

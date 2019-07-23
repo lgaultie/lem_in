@@ -13,7 +13,7 @@
 #include <lem_in.h>
 
 /*
-** free_farm_error() when there is a parsing error with the input.
+** free_farm_error() frees farm and writes an error message.
 */
 
 int			free_farm_error(t_farm *farm)
@@ -24,8 +24,12 @@ int			free_farm_error(t_farm *farm)
 	return (ERROR);
 }
 
-int			free_tab_error(char **links)
+/*
+** free_tab_error() frees tab.
+*/
+
+int			free_tab_error(char **tab)
 {
-	ft_free_tab(links);
+	ft_free_tab(tab);
 	return (ERROR);
 }

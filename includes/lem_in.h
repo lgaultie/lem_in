@@ -69,12 +69,12 @@ typedef struct			s_farm
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
 int     check_nb_ants(int line_nb, t_farm *farm, char *line, int error);
 int		parse(t_farm *farm, char *line, int start_end);
-void	free_farm(t_farm *farm);
-void	free_rooms(t_rooms *rooms);
-int 	free_farm_error(t_farm *farm);
-int		free_tab_error(char **links);
 int		parse_rooms(t_farm *farm, char *line, int start_end);
 int		parse_links(t_farm *farm, char *line);
 int		bfs(t_farm *farm);
+void	free_farm(t_farm *farm);
+void	free_rooms(t_rooms *rooms);
+int 	free_farm_error(t_farm *farm);
+int		free_tab_error(char **tab);
 
 #endif
