@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/22 16:08:49 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 17:32:50 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 16:02:08 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,23 @@ int			check_tab_of_three(char **rooms)
 	return (SUCCESS);
 }
 
+int			check_if_name_taken(char **room, t_farm *farm)
+{
+	t_rooms		*tmp;
+
+	if (!(farm->rooms))
+		return (SUCCESS);
+	tmp = farm->rooms;
+	while (tmp)
+	{
+		// printf("tmp->name = %s, room[1] = %s\n", tmp->name, room[0]);
+		if (ft_strcmp(tmp->name, room[0]) == 0)
+			return (ERROR);
+		tmp = tmp->next;
+	}
+	return (SUCCESS);
+}
+
 int			parse_rooms(t_farm *farm, char *line, int start_end)
 {
 	char		**room;
@@ -83,7 +100,8 @@ int			parse_rooms(t_farm *farm, char *line, int start_end)
 	farm->total_rooms++;
 	if (!(room = ft_strsplit(line, ' ')))
 		return (ERROR);
-	if ((check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
+	if ((check_if_name_taken(room, farm) == ERROR) \
+	|| (check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
 	|| (add_room(farm, room, start_end) == ERROR))
 		return (free_tab_error(room));
 	ft_free_tab(room);
