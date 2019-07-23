@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:48:27 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 17:45:56 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 14:57:46 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,18 @@
 ** number of ants in the farm. If not, it returns ERROR.
 */
 
-int			check_nb_ants(int line_nb, t_farm *farm, char *line, int ret)
+int			check_nb_ants(int line_nb, t_farm *farm, char *line, int error)
 {
 	int i;
 
 	i = 0;
-	if (ret != 0 && line_nb == 1)
+	if (line_nb == 1 && line[0] != '#')
 	{
-		while (line[i])
-		{
-			if (!(ft_isdigit(line[i])))
-				return (ERROR);
-			i++;
-		}
 		farm->ants = ft_atoi(line);
 		if (farm->ants <= 0)
 			return (ERROR);
 	}
-	return (FAILURE);
+	return (error);
 }
 
 /*
@@ -45,7 +39,7 @@ int			check_nb_ants(int line_nb, t_farm *farm, char *line, int ret)
 
 int			parse(t_farm *farm, char *line, int start_end)
 {
-	static int	order;
+	static int	order = 1;
 
 	if (!(ft_strchr(line, ' ')) && !(ft_strchr(line, '-')))
 		return (ERROR);

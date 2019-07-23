@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/22 17:45:22 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/23 15:01:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ int			check_empty_line_putstr(int error, char *line, int ret)
 	return (error);
 }
 
+void		free_when_needed(char *line)
+{
+	if (line)
+		free(line);
+}
+
 /*
 ** read_input: line_nb note les lignes par numéro (sauf les comments), pour
 ** analyser dans le check_format (ex: premiere ligne = nb ant).
@@ -76,12 +82,12 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 	ret = 1;
 	while (ret != 0)
 	{
-		if (line)
-			free(line);
+		free_when_needed(line);
 		ret = get_next_line(0, &line);
 		error = check_empty_line_putstr(error, line, ret);
 		start_end = is_line_start_end(start_end, line);
-			error = check_nb_ants(line_nb, farm, line, ret);
+		if (ret != 0)
+			error = check_nb_ants(line_nb, farm, line, error);
 		if (line && error == 0 && line_nb > 1 && line[0] != '#')
 		{
 			if (parse(farm, line, start_end) == ERROR)
