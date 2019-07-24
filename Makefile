@@ -24,6 +24,7 @@ SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
 		bfs.c           \
+		path.c          \
 		free.c			\
 		free_error.c	\
 		parse_links.c	\
