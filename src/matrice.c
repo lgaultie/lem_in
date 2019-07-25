@@ -12,6 +12,11 @@
 
 #include <lem_in.h>
 
+/*
+** matrice_fill() fills the matrice with 1 when it detects a link between two
+** rooms.
+*/
+
 static int	matrice_fill(t_farm *farm, int **matrice)
 {
 	t_rooms	*room;
@@ -37,6 +42,12 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 	}
 	return (SUCCESS);
 }
+
+/*
+** matrice_create() creates an int** that references every links of the map.
+** Each rows and columns correspond to a room. We fill the matrice by calling
+** matrice_fill(). Then we call the algorithm.
+*/
 
 int			**matrice_create(t_farm *farm)
 {
@@ -75,29 +86,18 @@ int			**matrice_create(t_farm *farm)
 		k++;
 	}
 	// END TMP
-	if (init_paths(farm) == ERROR)
+	// Mettre ici la condition pour que le BFS tourne plusieurs fois
+	if (algo(farm, matrice) == ERROR)
 		return (NULL);
-	while (j < farm->ants)
-	{
-		if (algo(farm, matrice) == ERROR || fill_path(farm) == ERROR)
-			return (NULL);
-		reset_bfs(farm);
-		j++;
-	}
 	// TMP
-	t_paths *path = farm->paths;
-	int m = 0;
-	while (path != NULL)
+	printf("queue:\n");
+	t_queue	*tmp_queue = farm->queue;
+	while (tmp_queue)
 	{
-		printf("ant number %d - path: ", path->id_ant);
-		while (m < path->length)
-		{
-			printf("%d", path->path[m]);
-			m++;
-		}
-		printf("\n");
-		path = path->next;
+		printf("%d ", tmp_queue->id);
+		tmp_queue = tmp_queue->next;
 	}
+	printf("\n");
 	// END TMP
 	return (matrice);
 }
