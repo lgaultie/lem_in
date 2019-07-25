@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 16:55:51 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/25 12:21:20 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 /*
 ** check_start_end() reviews all rooms to check if there is a start and an end.
+** also checks if there is an ant number.
 */
 
 static int	check_start_end(int error, t_farm *farm)
@@ -29,7 +30,7 @@ static int	check_start_end(int error, t_farm *farm)
 			check_startend++;
 		tmp_rooms = tmp_rooms->next;
 	}
-	if (check_startend != 2)
+	if (check_startend != 2 || farm->ants <= 0)
 		error = -1;
 	return (error);
 }

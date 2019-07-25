@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   _old-reset_bfs.c                                   :+:      :+:    :+:   */
+/*   reset_bfs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/17 10:32:24 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/23 18:05:29 by lgaultie         ###   ########.fr       */
+/*   Created: 2019/07/24 10:14:40 by lgaultie          #+#    #+#             */
+/*   Updated: 2019/07/24 10:21:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
-int reset_bfs(t_farm *farm)
+int	reset_bfs(t_farm *farm)
 {
-	t_rooms *tmp_rooms;
+	t_rooms	*tmp_rooms;
 
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
