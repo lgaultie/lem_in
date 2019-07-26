@@ -26,7 +26,8 @@ int		main(void)
 	line_nb = 1;
 	error = 0;
 	if (!(farm = ft_memalloc(sizeof(t_farm))) \
-		|| read_input(farm, line_nb, error, error) == ERROR)
+		|| read_input(farm, line_nb, error, error) == ERROR \
+		|| matrice_create(farm) == NULL)
 		return (free_farm_error(farm));
 	free_farm(farm);
 	return (FAILURE);

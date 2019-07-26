@@ -23,12 +23,13 @@ LIB = $(LIBDIR)/libft.a
 SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
+		parse_rooms.c   \
+        parse_links.c	\
+		matrice.c       \
 		bfs.c           \
 		path.c          \
 		free.c			\
-		free_error.c	\
-		parse_links.c	\
-		parse_rooms.c
+		free_error.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
