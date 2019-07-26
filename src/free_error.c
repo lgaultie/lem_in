@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/19 12:15:48 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 16:58:34 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/26 12:13:41 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int			free_farm_error(t_farm *farm)
 {
 	free_rooms(farm->rooms);
-	free(farm);
+	ft_memdel((void**)&farm);
 	ft_putendl(ERROR_MSG);
 	return (ERROR);
 }

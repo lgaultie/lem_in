@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/25 14:17:33 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/26 12:17:09 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,6 @@ int			check_line(char *line, int error)
 }
 
 /*
-** free_when_needed() frees line.
-*/
-
-void		free_when_needed(char *line)
-{
-	if (line)
-		free(line);
-}
-
-/*
 ** read_input() reads every line of the map file, except comments, then calls
 ** different checking functions to check if the map is valid.
 */
@@ -89,7 +79,7 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 	ret = 1;
 	while (ret != 0)
 	{
-		free_when_needed(line);
+		ft_memdel((void*)&line);
 		ret = get_next_line(0, &line);
 		error = check_line(line, error);
 		start_end = is_start_end(start_end, line);

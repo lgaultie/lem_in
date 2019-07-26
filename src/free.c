@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 16:57:26 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/26 12:14:33 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ static void		free_links(t_links *links)
 	{
 		tmp = links;
 		links = links->next;
-		free(tmp->name);
-		free(tmp);
+		ft_memdel((void**)&tmp->name);
+		ft_memdel((void**)&tmp);
 	}
 	if (!(links->next))
 	{
-		free(links->name);
-		free(links);
+		ft_memdel((void**)&links->name);
+		ft_memdel((void**)&links);
 	}
 }
 
@@ -89,8 +89,8 @@ void			free_rooms(t_rooms *rooms)
 			free_links(rooms->links);
 		tmp = rooms;
 		rooms = rooms->next;
-		free(tmp->name);
-		free(tmp);
+		ft_memdel((void**)&tmp->name);
+		ft_memdel((void**)&tmp);
 	}
 }
 
@@ -103,5 +103,5 @@ void			free_farm(t_farm *farm)
 	free_rooms(farm->rooms);
 	//free_queue(farm);
 	//free_paths(farm);
-	free(farm);
+	ft_memdel((void**)&farm);
 }
