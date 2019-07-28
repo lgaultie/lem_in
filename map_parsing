@@ -1,0 +1,17 @@
+#comment
+#comment
+13
+ok 1 0
+##start
+no 5 0
+#comment
+##coco
+2 9 0
+3 13 0
+##end
+4 2 42
+3-4
+2-no
+2-3
+3-ok
+#comment

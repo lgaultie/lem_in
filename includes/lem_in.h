@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 14:53:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/28 10:59:47 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ void	free_farm(t_farm *farm);
 void	free_rooms(t_rooms *rooms);
 int 	free_farm_error(t_farm *farm);
 int		free_tab_error(char **tab);
+int		init_paths(t_farm *farm);
+int		fill_path(t_farm *farm);
 
 #endif

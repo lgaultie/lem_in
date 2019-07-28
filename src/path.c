@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/16 13:17:37 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/07/28 11:15:57 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,10 @@ static int	find_layer(t_farm *farm)
 	}
 	return (SUCCESS);
 }
+
+/*
+** layer = a quelle distance de start est la room
+*/
 
 int			fill_path(t_farm *farm)
 {

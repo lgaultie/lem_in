@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/24 10:21:41 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/28 11:13:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,28 @@ int			**matrice_create(t_farm *farm)
 	i = 0;
 	j = 0;
 	total_rooms = farm->total_rooms;
-	matrice = ft_memalloc(sizeof(int*) * total_rooms);
+	if (!(matrice = ft_memalloc(sizeof(int*) * total_rooms)))
+		return (NULL);
 	if (matrice == NULL)
 		return (NULL);
 	while (i < total_rooms)
 	{
-		matrice[i] = ft_memalloc(sizeof(int) * total_rooms);
+		if (!(matrice[i] = ft_memalloc(sizeof(int) * total_rooms)))
+			return (NULL);
 		if (matrice[i] == NULL)
 			return (NULL);
 		i++;
 	}
 	matrice_fill(farm, matrice);
 	// TMP
-	printf("matrice:\n");
+	t_rooms		*tmp;
+	tmp = farm->rooms;
+	while (tmp)
+	{
+		printf("%s | ", tmp->name);
+		tmp = tmp->next;
+	}
+	printf("\nmatrice:\n");
 	int k, l;
 	k = 0;
 	while (k < total_rooms)
@@ -99,5 +108,23 @@ int			**matrice_create(t_farm *farm)
 	}
 	printf("\n");
 	// END TMP
+	init_paths(farm);
+	fill_path(farm);
+	//TMP
+	t_paths		*tmp1;
+	tmp1 = farm->paths;
+	int x = 0;
+	while (tmp1)
+	{
+		printf("L%d - ", tmp1->id_ant);
+		while(x < tmp1->length)
+		{
+			printf("%d - ", tmp1->path[x]);
+			x++;
+		}
+		printf("\n");
+		tmp1 = tmp1->next;
+	}
+	//
 	return (matrice);
 }
