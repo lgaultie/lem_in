@@ -49,7 +49,6 @@ typedef struct			s_rooms
 	int					y_pos;
 	int					start_end;
 	int					visited;
-	int					reserved;
 	int					nb_links;
 	int					layer;
 	struct s_rooms		*prev;

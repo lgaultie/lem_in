@@ -64,7 +64,6 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
 					tmp_rooms->visited = 1;
-					// tmp_rooms->reserved = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 				}
 				tmp_rooms = tmp_rooms->next;
@@ -129,11 +128,11 @@ int		algo(t_farm *farm, int **matrice)
 	// END TMP
 	//si queue = 0: il n'y a pas de chemin, relancer le BFS en dé-rèservant les salles
 	//si queue = 0: il n'y a pas de chemin, relancer le BFS en dé-rèservant les salles
-	if (farm->queue->next == NULL && farm->queue->id == 0)
+	/*if (farm->queue->next == NULL && farm->queue->id == 0)
 	{
 		if (set_room_to_unvisited(farm) == ERROR)
 			return (ERROR);
 		algo(farm, matrice);
-	}
+	}*/
 	return (SUCCESS);
 }
