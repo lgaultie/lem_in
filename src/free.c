@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/26 12:14:33 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:06:51 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,20 @@ static void    free_paths(t_farm *farm)
 ** free_queue() frees queue when it exists.
 */
 
-/*
-static void    free_queue(t_farm *farm)
+void			free_queue(t_farm *farm)
 {
-    t_queue *tmp;
-    t_queue *new;
+	t_queue	*tmp;
+	t_queue	*new;
 
-    tmp = farm->queue;
-    while (tmp)
-    {
-        new = tmp->next;
-        ft_memdel((void**)&tmp);
-        tmp = new;
-    }
+	tmp = farm->queue;
+	while (tmp)
+	{
+		new = tmp->next;
+		ft_memdel((void**)&tmp);
+		tmp = new;
+	}
+	farm->queue = NULL;
 }
-*/
 
 /*
 ** free_links() frees links when they exist.
@@ -101,7 +100,7 @@ void			free_rooms(t_rooms *rooms)
 void			free_farm(t_farm *farm)
 {
 	free_rooms(farm->rooms);
-	//free_queue(farm);
+	free_queue(farm);
 	//free_paths(farm);
 	ft_memdel((void**)&farm);
 }

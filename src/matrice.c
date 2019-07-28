@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/28 11:13:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:40:44 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,19 @@ int			**matrice_create(t_farm *farm)
 	}
 	// END TMP
 	// Mettre ici la condition pour que le BFS tourne plusieurs fois
-	if (algo(farm, matrice) == ERROR)
-		return (NULL);
+	int		y = 1;
+	while (y < 4)
+	{
+		printf("\nlancement numéro %d de l'algo:\n", y);
+		if (algo(farm, matrice) == ERROR)
+			return (NULL);
+		//faut reset la queue ici
+		//faut reset la queue ici
+		free_queue(farm);
+		y++;
+	}
 	// TMP
-	printf("queue:\n");
+	printf("\nqueue:\n");
 	t_queue	*tmp_queue = farm->queue;
 	while (tmp_queue)
 	{
@@ -116,15 +125,15 @@ int			**matrice_create(t_farm *farm)
 	int x = 0;
 	while (tmp1)
 	{
-		printf("L%d - ", tmp1->id_ant);
+		printf("L%d: ", tmp1->id_ant);
 		while(x < tmp1->length)
 		{
-			printf("%d - ", tmp1->path[x]);
+			printf("%d  ", tmp1->path[x]);
 			x++;
 		}
 		printf("\n");
 		tmp1 = tmp1->next;
 	}
-	//
+	// END TMP
 	return (matrice);
 }

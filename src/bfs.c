@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/25 13:53:12 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/28 13:57:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
 					tmp_rooms->visited = 1;
-					//tmp_rooms->reserved = 1;
+					// tmp_rooms->reserved = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 				}
 				tmp_rooms = tmp_rooms->next;
@@ -117,5 +117,23 @@ int		algo(t_farm *farm, int **matrice)
 	}
 	if (check_queue(farm, matrice) == ERROR)
 		return (ERROR);
+	// TMP
+	printf("queue: ");
+	t_queue	*tmp_queue = farm->queue;
+	while (tmp_queue)
+	{
+		printf("%d ", tmp_queue->id);
+		tmp_queue = tmp_queue->next;
+	}
+	printf("\n");
+	// END TMP
+	//si queue = 0: il n'y a pas de chemin, relancer le BFS en dé-rèservant les salles
+	//si queue = 0: il n'y a pas de chemin, relancer le BFS en dé-rèservant les salles
+	if (farm->queue->next == NULL && farm->queue->id == 0)
+	{
+		if (set_room_to_unvisited(farm) == ERROR)
+			return (ERROR);
+		algo(farm, matrice);
+	}
 	return (SUCCESS);
 }

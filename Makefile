@@ -6,13 +6,13 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/22 17:07:09 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/28 13:23:28 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = lem_in
 CC = @clang
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 LIBDIR = libft
 OBJDIR = obj
 SRCDIR = src
@@ -24,12 +24,13 @@ SRCS =	main.c			\
 		read_input.c	\
 		parsing.c       \
 		parse_rooms.c   \
-        parse_links.c	\
+		parse_links.c	\
 		matrice.c       \
 		bfs.c           \
 		path.c          \
 		free.c			\
-		free_error.c
+		free_error.c	\
+		unvisit_rooms.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
