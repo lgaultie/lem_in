@@ -29,7 +29,6 @@ typedef struct			s_queue
 
 typedef struct			s_paths
 {
-	int					id_ant;
 	int					length;
 	int					*path;
 	struct s_paths		*next;

@@ -27,7 +27,7 @@ static int	new_link(t_rooms *room, char *name)
 		return (ERROR);
 	if (tmp)
 	{
-		while (tmp->next != NULL)
+		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
 	}

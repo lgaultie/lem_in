@@ -18,7 +18,7 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int room_id)
 	t_rooms		*tmp_rooms;
 
 	tmp_rooms = farm->rooms;
-	while (tmp_rooms != NULL)
+	while (tmp_rooms)
 	{
 		if (tmp_rooms->room_id == room_id)
 		{
@@ -38,7 +38,7 @@ static int	find_layer(t_farm *farm)
 	t_rooms	*tmp_rooms;
 
 	tmp_rooms = farm->rooms;
-	while (tmp_rooms != NULL)
+	while (tmp_rooms)
 	{
 		if (tmp_rooms->start_end == 2)
 			return (tmp_rooms->layer);
@@ -60,12 +60,11 @@ int			fill_path(t_farm *farm)
 	tmp_path = farm->paths;
 	tmp_rooms = farm->rooms;
 	layer = find_layer(farm);
-	printf("layer: %d\n", layer);
-	while (tmp_path->path != NULL)
+	while (tmp_path->path)
 		tmp_path = tmp_path->next;
 	tmp_path->length = layer + 1;
 	tmp_path->path = (int*)malloc(sizeof(int) * (layer + 1));
-	while (tmp_rooms != NULL)
+	while (tmp_rooms)
 	{
 		if (tmp_rooms->start_end == 2)
 			retrieve_path(farm, tmp_path, tmp_rooms->room_id);
@@ -78,25 +77,18 @@ int			init_paths(t_farm *farm)
 {
 	t_paths	*tmp;
 	t_paths	*new;
-	int		i;
 
-	i = 0;
-	while (i < farm->ants)
+	tmp = farm->paths;
+	if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
+		return (ERROR);
+	if (tmp)
 	{
-		tmp = farm->paths;
-		if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
-			return (ERROR);
-		if (tmp != NULL)
-		{
-			while (tmp->next != NULL)
-				tmp = tmp->next;
-			tmp->next = new;
-		}
-		else
-			farm->paths = new;
-		new->id_ant = i;
-		new->next = NULL;
-		i++;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
 	}
+	else
+		farm->paths = new;
+	new->next = NULL;
 	return (SUCCESS);
 }

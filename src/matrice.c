@@ -102,8 +102,8 @@ int			**matrice_create(t_farm *farm)
 		printf("\nlancement numéro %d de l'algo:\n", y);
 		if (algo(farm, matrice) == ERROR)
 			return (NULL);
-		//faut reset la queue ici
-		//faut reset la queue ici
+		init_paths(farm);
+		fill_path(farm);
 		free_queue(farm);
 		y++;
 	}
@@ -116,16 +116,11 @@ int			**matrice_create(t_farm *farm)
 		tmp_queue = tmp_queue->next;
 	}
 	printf("\n");
-	// END TMP
-	init_paths(farm);
-	fill_path(farm);
-	//TMP
 	t_paths		*tmp1;
 	tmp1 = farm->paths;
 	int x = 0;
 	while (tmp1)
 	{
-		printf("L%d: ", tmp1->id_ant);
 		while(x < tmp1->length)
 		{
 			printf("%d  ", tmp1->path[x]);
