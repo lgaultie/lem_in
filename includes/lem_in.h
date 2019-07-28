@@ -51,6 +51,7 @@ typedef struct			s_rooms
 	int					start_end;
 	int					visited;
 	int					reserved;
+	int					nb_links;
 	int					layer;
 	struct s_rooms		*prev;
 	struct s_rooms		*next;

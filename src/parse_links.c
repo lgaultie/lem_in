@@ -35,6 +35,7 @@ static int	new_link(t_rooms *room, char *name)
 		room->links = new;
 	if (!(new->name = ft_strdup(name)))
 		return (ERROR);
+	room->nb_links++;
 	new->next = NULL;
 	return (SUCCESS);
 }
