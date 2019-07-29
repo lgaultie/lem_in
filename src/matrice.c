@@ -99,35 +99,29 @@ int			**matrice_create(t_farm *farm)
 	int		y = 1;
 	while (y < 4)
 	{
-		printf("\nlancement numéro %d de l'algo:\n", y);
-		if (algo(farm, matrice) == ERROR)
+		printf("\nLancement numéro %d de l'algo:\n", y);
+		if (algo(farm, matrice) == ERROR || init_paths(farm) == ERROR \
+			|| fill_path(farm) == ERROR)
 			return (NULL);
-		init_paths(farm);
-		fill_path(farm);
 		free_queue(farm);
+		fill_reserved(farm);
 		y++;
 	}
 	// TMP
-	printf("\nqueue:\n");
-	t_queue	*tmp_queue = farm->queue;
-	while (tmp_queue)
-	{
-		printf("%d ", tmp_queue->id);
-		tmp_queue = tmp_queue->next;
-	}
+	t_paths		*tmp_path;
+	tmp_path = farm->paths;
 	printf("\n");
-	t_paths		*tmp1;
-	tmp1 = farm->paths;
-	int x = 0;
-	while (tmp1)
+	while (tmp_path)
 	{
-		while(x < tmp1->length)
+		printf("path: ");
+		int x = 0;
+		while(x < tmp_path->length)
 		{
-			printf("%d  ", tmp1->path[x]);
+			printf("%d ", tmp_path->path[x]);
 			x++;
 		}
 		printf("\n");
-		tmp1 = tmp1->next;
+		tmp_path = tmp_path->next;
 	}
 	// END TMP
 	return (matrice);

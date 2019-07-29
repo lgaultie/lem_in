@@ -27,6 +27,7 @@ SRCS =	main.c			\
 		parse_links.c	\
 		matrice.c       \
 		bfs.c           \
+		manage_rooms.c  \
 		path.c          \
 		free.c			\
 		free_error.c	\

@@ -12,15 +12,16 @@
 
 #include <lem_in.h>
 
-static int	retrieve_path(t_farm *farm, t_paths *path, int room_id)
+static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 {
 	static int	i = 0;
 	t_rooms		*tmp_rooms;
 
+	i = j;
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
-		if (tmp_rooms->room_id == room_id)
+		if (tmp_rooms->room_id == id)
 		{
 			path->path[i] = tmp_rooms->room_id;
 			i++;
@@ -29,7 +30,7 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int room_id)
 		tmp_rooms = tmp_rooms->next;
 	}
 	while (i < path->length)
-		retrieve_path(farm, path, tmp_rooms->parent->room_id);
+		retrieve_path(farm, path, tmp_rooms->parent->room_id, i);
 	return (SUCCESS);
 }
 
@@ -64,10 +65,12 @@ int			fill_path(t_farm *farm)
 		tmp_path = tmp_path->next;
 	tmp_path->length = layer + 1;
 	tmp_path->path = (int*)malloc(sizeof(int) * (layer + 1));
+	if (tmp_path->path == NULL)
+		return (ERROR);
 	while (tmp_rooms)
 	{
 		if (tmp_rooms->start_end == 2)
-			retrieve_path(farm, tmp_path, tmp_rooms->room_id);
+			retrieve_path(farm, tmp_path, tmp_rooms->room_id, 0);
 		tmp_rooms = tmp_rooms->next;
 	}
 	return (SUCCESS);

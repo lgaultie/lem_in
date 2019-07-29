@@ -49,6 +49,7 @@ typedef struct			s_rooms
 	int					y_pos;
 	int					start_end;
 	int					visited;
+	int					reserved;
 	int					nb_links;
 	int					layer;
 	struct s_rooms		*prev;
@@ -78,6 +79,7 @@ int 	free_farm_error(t_farm *farm);
 int		free_tab_error(char **tab);
 int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
+int		fill_reserved(t_farm *farm);
 void	free_queue(t_farm *farm);
 int		set_room_to_unvisited(t_farm *farm);
 
