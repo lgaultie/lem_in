@@ -12,9 +12,6 @@
 
 #include <lem_in.h>
 
-
-#include <lem_in.h>
-
 /*
 ** new_link() creates a new link if this is the first of the list, fills it,
 ** and adds it to the list of links.
