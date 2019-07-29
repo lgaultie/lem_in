@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/28 13:23:28 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/29 17:45:51 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,24 +14,29 @@ NAME = lem_in
 CC = @clang
 CFLAGS = -Wall -Werror -Wextra -g
 LIBDIR = libft
+LIB = $(LIBDIR)/libft.a
 OBJDIR = obj
 SRCDIR = src
 INC = ./includes/
+ALGO_DIR = algo
+PARS_DIR = parsing
+
+SRCS =	main.c							\
+		free.c							\
+		free_error.c					\
+		$(PARS_DIR)/read_input.c		\
+		$(PARS_DIR)/rooms.c				\
+		$(PARS_DIR)/parsing.c			\
+		$(PARS_DIR)/links.c				\
+		$(ALGO_DIR)/bfs.c				\
+		$(ALGO_DIR)/manage_rooms.c		\
+		$(ALGO_DIR)/matrice.c			\
+		$(ALGO_DIR)/path.c				\
+		$(ALGO_DIR)/unvisit_rooms.c		\
+		$(ALGO_DIR)/move_ants.c
+
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 #voir GNU 8.3 Functions for File Names
-LIB = $(LIBDIR)/libft.a
-SRCS =	main.c			\
-		read_input.c	\
-		parsing.c       \
-		parse_rooms.c   \
-		parse_links.c	\
-		matrice.c       \
-		bfs.c           \
-		manage_rooms.c  \
-		path.c          \
-		free.c			\
-		free_error.c	\
-		unvisit_rooms.c
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
@@ -43,17 +48,17 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@printf "$(_YELLOW)Compiling libft... $(_END)"
-	@cd $(LIBDIR) && make
+	@make -C $(LIBDIR)
 	@printf "$(_YELLOW)Compilation... $(_END)"
 	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -I$(INC) -o $(NAME)
 	@printf "$(_GREEN)lem_in done [✓]$(_END)\n"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c $(INC)/*.h
+$(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) $(CFLAGS) -c -I$(INC) $< -o $@
 
 $(OBJDIR) :
 	@printf "$(_YELLOW)Creating $(_PURPLE)Lem_in$(_YELLOW) obj folder $(_END)"
-	@mkdir $@
+	@mkdir $@ $@/$(ALGO_DIR) $@/$(PARS_DIR)
 	@printf "$(_CYAN)done$(_END)\n"
 
 $(OBJ) : | $(OBJDIR)

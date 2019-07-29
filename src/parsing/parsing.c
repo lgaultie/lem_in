@@ -5,31 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/07/17 18:48:27 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/23 16:55:55 by lgaultie         ###   ########.fr       */
+/*   Created: 2019/07/29 17:44:58 by lgaultie          #+#    #+#             */
+/*   Updated: 2019/07/29 17:45:24 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
-
-/*
-** check_ants() checks if the first line is a number. If it is, this is the
-** number of ants in the farm. If not, it returns ERROR.
-*/
-
-int			check_nb_ants(int line_nb, t_farm *farm, char *line, int error)
-{
-	int i;
-
-	i = 0;
-	if (line_nb == 1 && line[0] != '#')
-	{
-		farm->ants = ft_atoi(line);
-		if (farm->ants <= 0)
-			return (ERROR);
-	}
-	return (error);
-}
 
 /*
 ** parse() checks data for rooms and links, calls parse_rooms() and
