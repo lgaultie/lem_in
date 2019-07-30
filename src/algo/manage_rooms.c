@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/30 16:28:01 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:08:01 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,16 +121,79 @@ int		backtrack_paths(t_farm *farm)
 	return (SUCCESS);
 }
 
+// /*
+// ** delete_first_path() si un chemin a été trouvé en rendant disponible la salle
+// ** triple, alors il faut supprimer les chemins précédents qui l'utilisaient
+// */
+//
+// int		delete_first_path(t_farm *farm, int id_room)
+// {
+// 	t_paths		*tmp;
+// 	int			i;
+// 	t_paths		*tmp_free;
+//
+// 	i = 0;
+// 	tmp = farm->paths;
+// 	while (tmp)
+// 	{
+// 		while (i < tmp->length - 1)
+// 		{
+// 			printf("tmp->path[i] = %d\n", tmp->path[i]);
+// 			if (tmp->path[i] == id_room)
+// 			{
+// 				//nope faut free mais changer les pointeurs aussi, à voir plus tard
+// 				printf("rentré tmp->path[i] = %d\n", tmp->path[i]);
+// 				tmp_free = tmp;
+// 				tmp = tmp->next;
+// 				ft_memdel((void**)&tmp_free);
+// 				return (SUCCESS);
+// 			}
+// 			i++;
+// 		}
+// 		tmp = tmp->next;
+// 	}
+// 	return (SUCCESS);
+// }
+
 /*
-** delete_first_path() si un chemin a été trouvé en rendant disponible la salle
-** triple, alors il faut supprimer les chemins précédents qui l'utilisaient
+** rend de nouveau valide les salles de l'ancien paths, sauf la salle qui
+** correspond a id_rooms, qui est la salle qui a changé de path
 */
 
-int		delete_first_path(t_farm *farm, int id_room)
+int		put_rooms_to_unvisited(int *path, int length, t_farm *farm, int id_rooms)
+{
+	int		i;
+	t_rooms	*tmp;
+
+	i = 0;
+	tmp = farm->rooms;
+	while (i < length - 1 && tmp)
+	{
+		while (tmp->room_id != path[i])
+		{
+			tmp = tmp->next;
+		}
+		if (tmp->room_id == path[i] && tmp->room_id != id_rooms)
+		{
+			printf("tmp->room_id = %d\n", tmp->room_id);
+			tmp->visited = 0;
+			tmp->reserved = 0;
+			tmp = farm->rooms;
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+/*
+** delete first_path() recherche le chemin qui utilise la salle de nouveau
+** rendue libre, et rend libre tout le chemin
+*/
+
+int			delete_first_path(t_farm *farm, int id_rooms)
 {
 	t_paths		*tmp;
 	int			i;
-	t_paths		*tmp_free;
 
 	i = 0;
 	tmp = farm->paths;
@@ -138,15 +201,9 @@ int		delete_first_path(t_farm *farm, int id_room)
 	{
 		while (i < tmp->length - 1)
 		{
-			printf("tmp->path[i] = %d\n", tmp->path[i]);
-			if (tmp->path[i] == id_room)
+			if (tmp->path[i] == id_rooms)
 			{
-				//nope faut free mais changer les pointeurs aussi, à voir plus tard
-				printf("rentré tmp->path[i] = %d\n", tmp->path[i]);
-				tmp_free = tmp;
-				tmp = tmp->next;
-				ft_memdel((void**)&tmp_free);
-				return (SUCCESS);
+				put_rooms_to_unvisited(tmp->path, tmp->length, farm, id_rooms);
 			}
 			i++;
 		}

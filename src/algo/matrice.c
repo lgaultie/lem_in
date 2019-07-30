@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/30 16:30:14 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/30 17:02:03 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,16 @@ int			**matrice_create(t_farm *farm)
 		fill_reserved(farm);
 	}
 	if (inspect_paths(farm) == 1)
+	{
+		ft_putstr("\nGONNA DELETE PATHS\n");
 		delete_first_path(farm, id_room);
+	}
+	if (algo(farm, matrice) == ERROR || init_paths(farm) == ERROR \
+	|| fill_path(farm) == ERROR)
+		return (NULL);
+	free_queue(farm);
+	fill_reserved(farm);
+
 	//trouver la condition d'arret de l'algo pour pouvoir relancer autant de
 	// fois qu'il faut
 
@@ -160,6 +169,6 @@ int			**matrice_create(t_farm *farm)
 	}
 	// END TMP
 
-	
+
 	return (matrice);
 }
