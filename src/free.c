@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/28 13:06:51 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/30 15:37:57 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,23 +15,22 @@
 /*
 ** free_paths() frees paths when they exist.
 */
-
-/*
-static void    free_paths(t_farm *farm)
-{
-    t_paths *tmp;
-    t_paths *new;
-
-    tmp = farm->paths;
-    while (tmp)
-    {
-        new = tmp->next;
-        ft_memdel((void**)&tmp->path);
-        ft_memdel((void**)&tmp);
-        tmp = new;
-    }
-}
-*/
+// 
+//
+// static void		free_paths(t_farm *farm)
+// {
+// 	t_paths		*tmp;
+// 	t_paths		*new;
+//
+// 	tmp = farm->paths;
+// 	while (tmp)
+// 	{
+// 		new = tmp->next;
+// 		ft_memdel((void**)&tmp->path);
+// 		ft_memdel((void**)&tmp);
+// 		tmp = new;
+// 	}
+// }
 
 /*
 ** free_queue() frees queue when it exists.
