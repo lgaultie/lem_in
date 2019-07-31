@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/30 15:28:34 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 13:49:51 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,23 +59,26 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
-					printf("queue room: %s - id: %d - nb of links: %d - parent %d\n", tmp_rooms->name, tmp_rooms->room_id, tmp_rooms->nb_links, parent_room->room_id);
+					//printf("queue room: %s - id: %d - nb of links: %d - parent %d\n", tmp_rooms->name, tmp_rooms->room_id, tmp_rooms->nb_links, parent_room->room_id);
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
 					tmp_rooms->visited = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 					if (tmp_rooms->start_end == 2)
-						return (FAILURE);
+					{
+						//printf("\n\nid = %d\n", tmp_rooms->room_id);
+						return (SUCCESS);
+					}
 				}
 				tmp_rooms = tmp_rooms->next;
 			}
 		}
 		i++;
 	}
-	printf("unqueue room: %s - id: %d\n", parent_room->name, parent_room->room_id);
+	//printf("unqueue room: %s - id: %d\n", parent_room->name, parent_room->room_id);
 	unqueue(farm);
-	return (SUCCESS);
+	return (FAILURE);
 }
 
 static int	check_queue(t_farm *farm, int **matrice)
@@ -96,26 +99,27 @@ static int	check_queue(t_farm *farm, int **matrice)
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
-				else if (check_bfs == FAILURE)
+				else if (check_bfs == SUCCESS)
 					return (SUCCESS);
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
 		tmp_queue = tmp_queue->next;
 	}
-	return (SUCCESS);
+	return (FAILURE);
 }
 
 int		algo(t_farm *farm, int **matrice)
 {
 	t_rooms	*tmp_rooms;
+	int		ret;
 
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
 		if (tmp_rooms->start_end == 1)
 		{
-			printf("queue room: %s - id: %d - nb of links: %d\n", tmp_rooms->name, tmp_rooms->room_id, tmp_rooms->nb_links);
+			//printf("queue room: %s - id: %d - nb of links: %d\n", tmp_rooms->name, tmp_rooms->room_id, tmp_rooms->nb_links);
 			if (queue(farm, tmp_rooms->room_id) == ERROR \
 			|| bfs(farm, matrice, tmp_rooms) == ERROR)
 				return (ERROR);
@@ -123,15 +127,10 @@ int		algo(t_farm *farm, int **matrice)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	if (check_queue(farm, matrice) == ERROR)
+	ret = check_queue(farm, matrice);
+	if (ret == ERROR)
 		return (ERROR);
-	//si queue = 0: il n'y a pas de chemin, relancer le BFS en dé-rèservant les salles
-	//si queue = 0: il n'y a pas de chemin, relancer le BFS en dé-rèservant les salles
-	/*if (farm->queue->next == NULL && farm->queue->id == 0)
-	{
-		if (set_room_to_unvisited(farm) == ERROR)
-			return (ERROR);
-		algo(farm, matrice);
-	}*/
+	if (ret == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/29 17:45:51 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/07/31 11:23:28 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,8 @@ SRCS =	main.c							\
 		$(ALGO_DIR)/matrice.c			\
 		$(ALGO_DIR)/path.c				\
 		$(ALGO_DIR)/unvisit_rooms.c		\
-		$(ALGO_DIR)/move_ants.c
+		$(ALGO_DIR)/move_ants.c			\
+		$(ALGO_DIR)/choose_paths.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 #voir GNU 8.3 Functions for File Names

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/30 17:02:03 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 11:28:21 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,10 @@ int			**matrice_create(t_farm *farm)
 		k++;
 	}
 	// END TMP
-	// Mettre ici la condition pour que le BFS tourne plusieurs fois
-	int		y = 1;
-	while (y < 4)
-	{
-		printf("\nLancement numéro %d de l'algo:\n", y);
-		if (algo(farm, matrice) == ERROR || init_paths(farm) == ERROR \
-			|| fill_path(farm) == ERROR)
-			return (NULL);
-		free_queue(farm);
-		fill_reserved(farm);
-		y++;
-	}
+	if (choose_best_paths(farm, matrice) == ERROR)
+		return (NULL);
+
+
 	// TMP
 	t_paths		*tmp_path;
 	tmp_path = farm->paths;
@@ -124,51 +116,5 @@ int			**matrice_create(t_farm *farm)
 		tmp_path = tmp_path->next;
 	}
 	// END TMP
-
-	////mise en place du backtrack
-	int		id_room = 0;
-
-	if (inspect_paths(farm) == 1)
-	{
-		id_room = backtrack_paths(farm);
-		if (algo(farm, matrice) == ERROR || init_paths(farm) == ERROR \
-			|| fill_path(farm) == ERROR)
-			return (NULL);
-		free_queue(farm);
-		fill_reserved(farm);
-	}
-	if (inspect_paths(farm) == 1)
-	{
-		ft_putstr("\nGONNA DELETE PATHS\n");
-		delete_first_path(farm, id_room);
-	}
-	if (algo(farm, matrice) == ERROR || init_paths(farm) == ERROR \
-	|| fill_path(farm) == ERROR)
-		return (NULL);
-	free_queue(farm);
-	fill_reserved(farm);
-
-	//trouver la condition d'arret de l'algo pour pouvoir relancer autant de
-	// fois qu'il faut
-
-	// TMP
-	t_paths		*tmp_path1;
-	tmp_path1 = farm->paths;
-	printf("\n");
-	while (tmp_path1)
-	{
-		printf("path: ");
-		int g = 0;
-		while(g < tmp_path1->length)
-		{
-			printf("%d ", tmp_path1->path[g]);
-			g++;
-		}
-		printf("\n\n");
-		tmp_path1 = tmp_path1->next;
-	}
-	// END TMP
-
-
 	return (matrice);
 }

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/30 15:40:25 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 13:02:54 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct			s_paths
 {
 	int					length;
 	int					*path;
+	struct s_paths		*prev;
 	struct s_paths		*next;
 }						t_paths;
 
@@ -86,5 +87,6 @@ int		set_room_to_unvisited(t_farm *farm);
 int		inspect_paths(t_farm *farm);
 int		backtrack_paths(t_farm *farm);
 int		delete_first_path(t_farm *farm, int id_room);
+int		choose_best_paths(t_farm *farm, int **matrice);
 
 #endif

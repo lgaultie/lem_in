@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/28 11:15:57 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:06:44 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,13 @@ int			init_paths(t_farm *farm)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
+		new->prev = tmp;
 	}
 	else
+	{
 		farm->paths = new;
+		new->prev = NULL;
+	}
 	new->next = NULL;
 	return (SUCCESS);
 }
