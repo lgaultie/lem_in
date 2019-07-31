@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/31 15:00:26 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 16:03:30 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		choose_best_paths(t_farm *farm, int **matrice)
 		printf("ret algo = %d\n", ret_algo);
 		if (ret_algo == 0)
 		{
-			ft_putstr("LANCE BATRACK\n");
+			printf("LANCE BATRACK\n");
 			//clean les room visitées par le dernier bfs raté
 			unvisit_rooms(farm);
 			ret_backtrack = backtrack_paths(farm);
@@ -75,7 +75,7 @@ int		choose_best_paths(t_farm *farm, int **matrice)
 
 			if (ret_backtrack == ERROR)
 			{
-				ft_putstr("BATRACK OVER\n");
+				printf("BATRACK OVER\n");
 				//backtrack n'a aucune salle triple a rendre valide: chemins lineaires tous trouvés
 				return (SUCCESS);
 			}
