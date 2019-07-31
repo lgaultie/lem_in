@@ -6,11 +6,12 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/31 14:06:41 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:54:45 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+
 
 int	fill_reserved(t_farm *farm)
 {
@@ -133,7 +134,7 @@ int		put_rooms_to_unvisited(int *path, int length, t_farm *farm, int id_rooms)
 
 	i = 0;
 	tmp = farm->rooms;
-	while (i < length - 1 && tmp)
+	while (tmp && i < length - 1)
 	{
 		while (tmp->room_id != path[i])
 		{
@@ -161,7 +162,8 @@ void			delete_path(t_farm *farm, t_paths *path)
 		ft_memdel((void**)&path->path);
 		ft_memdel((void**)&path);
 		path = tmp;
-		path->prev = NULL;
+		if (path)
+			path->prev = NULL;
 		farm->paths = path;
 	}
 	else

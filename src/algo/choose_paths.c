@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/31 13:57:22 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 15:00:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@
 // 	i--;
 // 	return (i);
 // }
+
+void		unvisit_rooms(t_farm *farm)
+{
+	t_rooms	*tmp_rooms;
+
+	tmp_rooms = farm->rooms;
+	while (tmp_rooms)
+	{
+		tmp_rooms->visited = 0;
+		tmp_rooms = tmp_rooms->next;
+	}
+}
 
 int		choose_best_paths(t_farm *farm, int **matrice)
 {
@@ -46,9 +58,21 @@ int		choose_best_paths(t_farm *farm, int **matrice)
 		printf("ret algo = %d\n", ret_algo);
 		if (ret_algo == 0)
 		{
+			ft_putstr("LANCE BATRACK\n");
+			//clean les room visitées par le dernier bfs raté
+			unvisit_rooms(farm);
 			ret_backtrack = backtrack_paths(farm);
 			printf("ret_backtrack: %d\n", ret_backtrack);
-			ft_putstr("LANCE BATRACK\n");
+
+
+			// t_rooms *tmp = farm->rooms;
+			// while (tmp)
+			// {
+			// 	printf("room id: %d - visited: %d - reserved: %d\n", tmp->room_id, tmp->visited, tmp->reserved);
+			// 	tmp = tmp->next;
+			// }
+
+
 			if (ret_backtrack == ERROR)
 			{
 				ft_putstr("BATRACK OVER\n");

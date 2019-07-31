@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/31 13:49:51 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/07/31 14:46:29 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
+					printf("visit room id %d\n", tmp_rooms->room_id);
 					tmp_rooms->visited = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 					if (tmp_rooms->start_end == 2)
