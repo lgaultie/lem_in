@@ -178,8 +178,8 @@ int		put_rooms_to_unvisited(int *path, int length, t_farm *farm, int id_rooms)
 			printf("tmp->room_id = %d\n", tmp->room_id);
 			tmp->visited = 0;
 			tmp->reserved = 0;
-			tmp = farm->rooms;
 		}
+		tmp = farm->rooms;
 		i++;
 	}
 	return (SUCCESS);
