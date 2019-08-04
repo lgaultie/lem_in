@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/31 14:54:45 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/04 15:23:04 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	fill_reserved(t_farm *farm)
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
 			{
-				printf("reserve room %d\n", tmp_rooms->room_id);
+				printf("(filled reserved)reserve room %d\n", tmp_rooms->room_id);
 				tmp_rooms->reserved = 1;
 			}
 			i++;
@@ -142,7 +142,7 @@ int		put_rooms_to_unvisited(int *path, int length, t_farm *farm, int id_rooms)
 		}
 		if (tmp->room_id == path[i] && tmp->room_id != id_rooms)
 		{
-			printf("tmp->room_id = %d\n", tmp->room_id);
+			printf("unvisit: tmp->room_id = %d\n", tmp->room_id);
 			tmp->visited = 0;
 			tmp->reserved = 0;
 		}
