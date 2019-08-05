@@ -97,8 +97,6 @@ int			**matrice_create(t_farm *farm)
 	// END TMP
 	if (choose_best_paths(farm, matrice) == ERROR)
 		return (NULL);
-
-
 	// TMP
 	t_paths		*tmp_path;
 	tmp_path = farm->paths;

@@ -12,6 +12,10 @@
 
 #include <lem_in.h>
 
+/*
+** fill_reserved() put the rooms in the path to reserved = 1, except for the
+** start and end rooms, and to visited = 0.
+*/
 
 int	fill_reserved(t_farm *farm)
 {
@@ -19,6 +23,7 @@ int	fill_reserved(t_farm *farm)
 	t_rooms	*tmp_rooms;
 	int		i;
 
+	printf("fill reserved\n");
 	tmp_paths = farm->paths;
 	tmp_rooms = farm->rooms;
 	while (tmp_paths->next)
@@ -31,7 +36,7 @@ int	fill_reserved(t_farm *farm)
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
 			{
-				printf("(filled reserved)reserve room %d\n", tmp_rooms->room_id);
+				printf("reserve room %d\n", tmp_rooms->room_id);
 				tmp_rooms->reserved = 1;
 			}
 			i++;
@@ -41,7 +46,6 @@ int	fill_reserved(t_farm *farm)
 	}
 	return (SUCCESS);
 }
-
 
 /*
 ** regarde si on a trouvé deux fois le meme path: return (1) si il y a
@@ -57,6 +61,7 @@ int		inspect_paths(t_farm *farm)
 	int			i;
 	int			x;
 
+	printf("inspect paths\n");
 	last_length = 0;
 	tmp = farm->paths;
 	if (!(last = ft_memalloc(sizeof(int) * tmp->length)))
@@ -105,8 +110,8 @@ int		backtrack_paths(t_farm *farm)
 {
 	t_rooms		*tmp_rooms;
 
+	printf("backtrack paths\n");
 	tmp_rooms = farm->rooms;
-	// ft_putstr("on bactrack\n");
 	while (tmp_rooms)
 	{
 		// printf("room_id = %d, visited = %d, reserved = %d, nb_links = %d\n", tmp_rooms->room_id, tmp_rooms->visited, tmp_rooms->reserved, tmp_rooms->nb_links);
@@ -123,26 +128,25 @@ int		backtrack_paths(t_farm *farm)
 }
 
 /*
-** rend de nouveau valide les salles de l'ancien paths, sauf la salle qui
-** correspond a id_rooms, qui est la salle qui a changé de path
+** unvisit_rooms() put the rooms of the path to be deleted unvisited, except
+** the room corresponding to the id_room given in parameters.
 */
 
-int		put_rooms_to_unvisited(int *path, int length, t_farm *farm, int id_rooms)
+static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
 {
 	int		i;
 	t_rooms	*tmp;
 
+	printf("unvisit rooms\n");
 	i = 0;
 	tmp = farm->rooms;
-	while (tmp && i < length - 1)
+	while (tmp && (i < length))
 	{
 		while (tmp->room_id != path[i])
-		{
 			tmp = tmp->next;
-		}
-		if (tmp->room_id == path[i] && tmp->room_id != id_rooms)
+		if (tmp->room_id == path[i] && tmp->room_id != id_room)
 		{
-			printf("unvisit: tmp->room_id = %d\n", tmp->room_id);
+			printf("unvisit room_id %d\n", tmp->room_id);
 			tmp->visited = 0;
 			tmp->reserved = 0;
 		}
@@ -152,10 +156,15 @@ int		put_rooms_to_unvisited(int *path, int length, t_farm *farm, int id_rooms)
 	return (SUCCESS);
 }
 
-void			delete_path(t_farm *farm, t_paths *path)
+/*
+** delete_path() deletes the path from paths structure.
+*/
+
+static void	delete_path(t_farm *farm, t_paths *path)
 {
 	t_paths		*tmp;
 
+	printf("delete path\n");
 	if (path->prev == NULL)
 	{
 		tmp = path->next;
@@ -178,32 +187,30 @@ void			delete_path(t_farm *farm, t_paths *path)
 }
 
 /*
-** delete first_path() recherche le chemin qui utilise la salle de nouveau
-** rendue libre, et supprime le path
+** path_to_delete() finds the path(s) that use(s) the room given in parameter,
+** and calls unvisit_rooms() and delete_path().
 */
 
-int			delete_first_path(t_farm *farm, int id_rooms)
+int			path_to_delete(t_farm *farm, int id_room)
 {
 	t_paths		*tmp;
 	int			i;
 
+	printf("path to delete\n");
 	tmp = farm->paths;
 	while (tmp)
 	{
 		i = 0;
 		while (i < tmp->length)
 		{
-			if (tmp->path[i] == id_rooms)
+			if (tmp->path[i] == id_room)
 			{
-				put_rooms_to_unvisited(tmp->path, tmp->length, farm, id_rooms);
-				printf("Supprimer le chemin\n");
+				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
 				delete_path(farm, tmp);
 				return (SUCCESS);
 			}
-			printf("tmp->path[%d] = %d\n", i, tmp->path[i]);
 			i++;
 		}
-		printf("--------------\n");
 		tmp = tmp->next;
 	}
 	return (FAILURE);

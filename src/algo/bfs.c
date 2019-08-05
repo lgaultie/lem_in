@@ -16,10 +16,6 @@ static int	unqueue(t_farm *farm)
 {
 	t_queue	*tmp_queue;
 
-	// tmp_queue = farm->queue->next;
-	// ft_memdel((void**)&farm->queue);
-	// farm->queue = tmp_queue;
-	// return (SUCCESS);
 	tmp_queue = farm->queue;
 	farm->queue = farm->queue->next;
 	free(tmp_queue);
@@ -60,8 +56,8 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 			tmp_rooms = farm->rooms;
 			while (tmp_rooms)
 			{
-				if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1 && tmp_rooms->start_end != 1)
-					printf("room to queue: %d\n", tmp_rooms->room_id);
+				//if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1 && tmp_rooms->start_end != 1)
+					//printf("room to queue: %d\n", tmp_rooms->room_id);
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
@@ -69,22 +65,16 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
-					// printf("put room id %d to visited\n", tmp_rooms->room_id);
-
 					tmp_rooms->visited = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 					if (tmp_rooms->start_end == 2)
-					{
-						//printf("\n\nid = %d\n", tmp_rooms->room_id);
 						return (SUCCESS);
-					}
 				}
 				tmp_rooms = tmp_rooms->next;
 			}
 		}
 		i++;
 	}
-	//printf("unqueue room: %s - id: %d\n", parent_room->name, parent_room->room_id);
 	unqueue(farm);
 	return (FAILURE);
 }
@@ -127,7 +117,7 @@ int		algo(t_farm *farm, int **matrice)
 	{
 		if (tmp_rooms->start_end == 1)
 		{
-			//printf("queue room: %s - id: %d - nb of links: %d\n", tmp_rooms->name, tmp_rooms->room_id, tmp_rooms->nb_links);
+			printf("queue room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
 			if (queue(farm, tmp_rooms->room_id) == ERROR \
 			|| bfs(farm, matrice, tmp_rooms) == ERROR)
 				return (ERROR);

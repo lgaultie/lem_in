@@ -65,7 +65,7 @@ static int	add_room(t_farm *farm, char **tab, int startend)
 ** prevent wrong order in the map file. If not, it returns ERROR.
 */
 
-int			check_tab_of_three(char **rooms)
+static int	check_tab_of_three(char **rooms)
 {
 	int		i;
 
@@ -82,7 +82,7 @@ int			check_tab_of_three(char **rooms)
 ** another room.
 */
 
-int			check_if_name_taken(char **room, t_farm *farm)
+static int	check_if_name_taken(char **room, t_farm *farm)
 {
 	t_rooms		*tmp;
 

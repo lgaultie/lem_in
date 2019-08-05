@@ -12,7 +12,11 @@
 
 #include <lem_in.h>
 
-int		check_number_of_paths_found(t_farm *farm)
+/*
+** check_number_of_paths_found()
+*/
+
+static int	check_number_of_paths_found(t_farm *farm)
 {
 	t_paths	*tmp;
 	int		i;
@@ -29,17 +33,18 @@ int		check_number_of_paths_found(t_farm *farm)
 }
 
 /*
-** found_all_paths() : checks if we found the exact number of possible paths
+** found_max_paths() checks if we found the exact number of possible paths
 ** regarding start/end's links. Real number of possible paths may be less.
 */
 
-int		found_max_paths(t_farm *farm)
+static int	found_max_paths(t_farm *farm)
 {
 	int		max_paths;
 	int		links_of_start;
 	int		links_of_end;
 	t_rooms	*tmp_room;
 
+	printf("found max paths\n");
 	tmp_room = farm->rooms;
 	while (tmp_room)
 	{
@@ -59,7 +64,7 @@ int		found_max_paths(t_farm *farm)
 	return (FAILURE);
 }
 
-void		unvisit_rooms(t_farm *farm)
+static void	unvisit_rooms(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
 
@@ -71,7 +76,7 @@ void		unvisit_rooms(t_farm *farm)
 	}
 }
 
-int		*save_last_path_found(t_farm *farm)
+/*static int	*save_last_path_found(t_farm *farm)
 {
 	int		i;
 	t_paths	*tmp;
@@ -88,9 +93,9 @@ int		*save_last_path_found(t_farm *farm)
 		i++;
 	}
 	return (ret);
-}
+}*/
 
-int		check_new_and_last_path_found(int *last, t_farm *farm)
+/*static int	check_new_and_last_path_found(int *last, t_farm *farm)
 {
 	int		i;
 	t_paths	*tmp;
@@ -107,54 +112,47 @@ int		check_new_and_last_path_found(int *last, t_farm *farm)
 		i++;
 	}
 	return (SUCCESS);
-}
+}*/
 
-int		choose_best_paths(t_farm *farm, int **matrice)
+/*
+** choose_best_paths() calls algo() and checks what it returns.
+** If it returns 0, we are at the end or we are jammed. If we are jammed, we
+** call backtrack_paths() to unreserve a room. The next occurence of algo()
+** will call path_to_delete() to delete the path where the unreserved room was.
+** Else, we found a path, and call init_path(), fill_path() and fill_reserved()
+** to register it.
+*/
+
+int			choose_best_paths(t_farm *farm, int **matrice)
 {
 	int		ret_algo;
 	int		ret_backtrack;
-	// int		*last_path;
 
 	ret_backtrack = -1;
 	while (1)
-	// while (found_all_paths(farm) > 0)
 	{
 		while ((ret_algo = algo(farm, matrice)) == SUCCESS)
 		{
-			printf("in while\n");
+			printf("in while algo\n");
 			if (ret_backtrack != -1)
 			{
-				printf("before delete\n");
-				delete_first_path(farm, ret_backtrack);
+				path_to_delete(farm, ret_backtrack);
 				ret_backtrack = -1;
 			}
 			if (init_paths(farm) == ERROR || fill_path(farm) == ERROR)
 				return (ERROR);
 			free_queue(farm);
-			printf("FILLED RESERVED\n\n");
 			fill_reserved(farm);
 		}
-		// last_path = save_last_path_found(farm);
-		// if (check_new_and_last_path_found(last_path, farm) == 1)
-		// return (SUCCESS);
 		printf("ret algo = %d\n", ret_algo);
 		if (ret_algo == 0)
 		{
-			//clean les room visitées par le dernier bfs raté
 			unvisit_rooms(farm);
 			if (found_max_paths(farm) == SUCCESS)
 				return (SUCCESS);
-			printf("\nLANCE BATRACK\n");
 			ret_backtrack = backtrack_paths(farm);
 			printf("ret_backtrack: %d\n", ret_backtrack);
-
-
-			// t_rooms *tmp = farm->rooms;
-			// while (tmp)
-			// {
-			// 	printf("room id: %d - visited: %d - reserved: %d\n", tmp->room_id, tmp->visited, tmp->reserved);
-			// 	tmp = tmp->next;
-			// }
+			// TMP
 			t_paths *tmp = farm->paths;
 			printf("\nVOILA MES PATHS: \n");
 			{
@@ -171,14 +169,9 @@ int		choose_best_paths(t_farm *farm, int **matrice)
 				}
 			}
 			printf("\n");
-
-
+			// END TMP
 			if (ret_backtrack == ERROR)
-			{
-				printf("BATRACK OVER\n");
-				//backtrack n'a aucune salle triple a rendre valide: chemins lineaires tous trouvés
 				return (SUCCESS);
-			}
 		}
 	}
 	return (SUCCESS);

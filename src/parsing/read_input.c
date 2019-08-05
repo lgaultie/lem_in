@@ -17,7 +17,7 @@
 ** number of ants in the farm. If not, it returns ERROR.
 */
 
-int			check_nb_ants(int line_nb, t_farm *farm, char *line, int error)
+static int	check_nb_ants(int line_nb, t_farm *farm, char *line, int error)
 {
 	int i;
 
@@ -62,7 +62,7 @@ static int	check_start_end(int error, t_farm *farm)
 ** is_start_end() tells which line is start (1), and end (2).
 */
 
-int			is_start_end(int start_end, char *line)
+static int	is_start_end(int start_end, char *line)
 {
 	if (line && ft_strcmp(line, "##start") == 0)
 		start_end = 1;
@@ -76,7 +76,7 @@ int			is_start_end(int start_end, char *line)
 ** is the case, it returns ERROR.
 */
 
-int			check_line(char *line, int error)
+static int	check_line(char *line, int error)
 {
 	if (line && ft_strcmp(line, "") == 0)
 		error = -1;

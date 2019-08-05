@@ -58,6 +58,7 @@ int			fill_path(t_farm *farm)
 	t_rooms	*tmp_rooms;
 	int		layer;
 
+	printf("fill path\n");
 	tmp_path = farm->paths;
 	tmp_rooms = farm->rooms;
 	layer = find_layer(farm);
@@ -81,6 +82,7 @@ int			init_paths(t_farm *farm)
 	t_paths	*tmp;
 	t_paths	*new;
 
+	printf("init path\n");
 	tmp = farm->paths;
 	if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
 		return (ERROR);

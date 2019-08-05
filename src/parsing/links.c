@@ -72,7 +72,7 @@ static int	add_link(t_farm *farm, char **tab)
 ** success_1 checks the name of the first room, success_2 the second.
 */
 
-int			check_valid_room_name(char **links, t_farm *farm)
+static int	check_valid_room_name(char **links, t_farm *farm)
 {
 	t_rooms		*tmp;
 	int			success_1;

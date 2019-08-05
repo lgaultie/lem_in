@@ -69,7 +69,6 @@ typedef struct			s_farm
 }						t_farm;
 
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
-int     check_nb_ants(int line_nb, t_farm *farm, char *line, int error);
 int		parse(t_farm *farm, char *line, int start_end);
 int		parse_rooms(t_farm *farm, char *line, int start_end);
 int		parse_links(t_farm *farm, char *line);
@@ -77,16 +76,14 @@ int		**matrice_create(t_farm *farm);
 int		algo(t_farm *farm, int **matrice);
 void	free_farm(t_farm *farm);
 void	free_rooms(t_rooms *rooms);
+void	free_queue(t_farm *farm);
 int 	free_farm_error(t_farm *farm);
 int		free_tab_error(char **tab);
 int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
 int		fill_reserved(t_farm *farm);
-void	free_queue(t_farm *farm);
-int		set_room_to_unvisited(t_farm *farm);
-int		inspect_paths(t_farm *farm);
 int		backtrack_paths(t_farm *farm);
-int		delete_first_path(t_farm *farm, int id_room);
+int		path_to_delete(t_farm *farm, int id_room);
 int		choose_best_paths(t_farm *farm, int **matrice);
 
 #endif

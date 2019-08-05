@@ -25,16 +25,14 @@ SRCS =	main.c							\
 		free.c							\
 		free_error.c					\
 		$(PARS_DIR)/read_input.c		\
-		$(PARS_DIR)/rooms.c				\
 		$(PARS_DIR)/parsing.c			\
+		$(PARS_DIR)/rooms.c				\
 		$(PARS_DIR)/links.c				\
 		$(ALGO_DIR)/bfs.c				\
-		$(ALGO_DIR)/manage_rooms.c		\
 		$(ALGO_DIR)/matrice.c			\
-		$(ALGO_DIR)/path.c				\
-		$(ALGO_DIR)/unvisit_rooms.c		\
-		$(ALGO_DIR)/move_ants.c			\
-		$(ALGO_DIR)/choose_paths.c
+		$(ALGO_DIR)/choose_paths.c      \
+		$(ALGO_DIR)/path.c              \
+		$(ALGO_DIR)/manage_rooms.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 #voir GNU 8.3 Functions for File Names

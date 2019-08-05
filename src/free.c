@@ -41,6 +41,7 @@ void			free_queue(t_farm *farm)
 	t_queue	*tmp;
 	t_queue	*new;
 
+	printf("free queue\n");
 	tmp = farm->queue;
 	while (tmp)
 	{
