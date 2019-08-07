@@ -12,57 +12,6 @@
 
 #include <lem_in.h>
 
-/*
-** check_number_of_paths_found()
-*/
-
-static int	check_number_of_paths_found(t_farm *farm)
-{
-	t_paths	*tmp;
-	int		i;
-
-	tmp = farm->paths;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	printf("on en a trouvé: %d.\n", i);
-	return (i);
-}
-
-/*
-** found_max_paths() checks if we found the exact number of possible paths
-** regarding start/end's links. Real number of possible paths may be less.
-*/
-
-static int	found_max_paths(t_farm *farm)
-{
-	int		max_paths;
-	int		links_of_start;
-	int		links_of_end;
-	t_rooms	*tmp_room;
-
-	tmp_room = farm->rooms;
-	while (tmp_room)
-	{
-		if (tmp_room->start_end == 1)
-			links_of_start = tmp_room->nb_links;
-		if (tmp_room->start_end == 2)
-			links_of_end = tmp_room->nb_links;
-		tmp_room = tmp_room->next;
-	}
-	if (links_of_end < links_of_start)
-		max_paths = links_of_end;
-	else
-		max_paths = links_of_start;
-	printf("maximum possible de paths: %d et ", max_paths);
-	if (check_number_of_paths_found(farm) == max_paths)
-		return (SUCCESS);
-	return (FAILURE);
-}
-
 static void	unvisit_rooms(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;

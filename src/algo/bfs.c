@@ -12,7 +12,7 @@
 
 #include <lem_in.h>
 
-static int	unqueue(t_farm *farm) //originql
+static int	unqueue(t_farm *farm)
 {
 	t_queue	*tmp_queue;
 
