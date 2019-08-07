@@ -84,6 +84,7 @@ int		fill_path(t_farm *farm);
 int		fill_reserved(t_farm *farm);
 int		backtrack_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
+void	delete_path(t_farm *farm, t_paths *path);
 int		choose_best_paths(t_farm *farm, int **matrice);
 
 #endif

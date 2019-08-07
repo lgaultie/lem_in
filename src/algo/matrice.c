@@ -110,7 +110,7 @@ int			**matrice_create(t_farm *farm)
 			printf("%d ", tmp_path->path[x]);
 			x++;
 		}
-		printf("\n\n");
+		printf("\n");
 		tmp_path = tmp_path->next;
 	}
 	// END TMP

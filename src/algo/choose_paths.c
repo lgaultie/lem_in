@@ -75,43 +75,52 @@ static void	unvisit_rooms(t_farm *farm)
 	}
 }
 
-/*static int	*save_last_path_found(t_farm *farm)
+/*
+** check_last_path() adds the last path found in paths structure, and checks if
+** it is the same as the other paths. If true, we have found all the paths
+** possible, and we no longer need to call our algorithm. We delete the last
+** path found.
+*/
+
+static int	check_last_path(t_farm *farm)
 {
+	t_paths	*tmp_path;
+	t_paths	*tmp_path2;
+	t_paths	*last_path;
 	int		i;
-	t_paths	*tmp;
-	int		*ret;
 
-	i = 0;
-	tmp = farm->paths;
-	while (tmp->next)
-		tmp = tmp->next;
-	ret = ft_memalloc(sizeof(int) * tmp->length);
-	while (i < tmp->length)
+	printf("check last path\n");
+	if (init_paths(farm) == ERROR || fill_path(farm) == ERROR)
+		return (ERROR);
+	free_queue(farm);
+	fill_reserved(farm);
+	tmp_path = farm->paths;
+	tmp_path2 = farm->paths;
+	while (tmp_path->next)
+		tmp_path = tmp_path->next;
+	last_path = tmp_path;
+	while (tmp_path2)
 	{
-		ret[i] = tmp->path[i];
-		i++;
+		if (tmp_path2->length == last_path->length)
+		{
+			i = 0;
+			while (i < last_path->length)
+			{
+				if (tmp_path2->path[i] != last_path->path[i])
+					return (FAILURE);
+				if (i == (last_path->length - 1))
+				{
+					printf("There are 2 similar paths, delete the last one\n");
+					delete_path(farm, last_path);
+					return (SUCCESS);
+				}
+				i++;
+			}
+		}
+		tmp_path2 = tmp_path2->next;
 	}
-	return (ret);
-}*/
-
-/*static int	check_new_and_last_path_found(int *last, t_farm *farm)
-{
-	int		i;
-	t_paths	*tmp;
-
-	i = 0;
-	tmp = farm->paths;
-	while (tmp->next)
-		tmp = tmp->next;
-	while (i < tmp->length)
-	{
-		printf("last[%d] = %d && tmp->path[%d] = %d\n", i, last[i], i, tmp->path[i]);
-		if (last[i] != tmp->path[i])
-			return (FAILURE);
-		i++;
-	}
-	return (SUCCESS);
-}*/
+	return (FAILURE);
+}
 
 /*
 ** choose_best_paths() calls algo() and checks what it returns.
@@ -126,6 +135,7 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 {
 	int		ret_algo;
 	int		ret_backtrack;
+	int		ret_last_path;
 
 	ret_backtrack = -1;
 	while (1)
@@ -135,6 +145,11 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 			printf("in while algo\n");
 			if (ret_backtrack != -1)
 			{
+				ret_last_path = check_last_path(farm);
+				if (ret_last_path == SUCCESS)
+					return (SUCCESS);
+				if (ret_last_path == ERROR)
+					return (ERROR);
 				path_to_delete(farm, ret_backtrack);
 				ret_backtrack = -1;
 			}
@@ -147,8 +162,6 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 		if (ret_algo == 0)
 		{
 			unvisit_rooms(farm);
-			if (found_max_paths(farm) == SUCCESS)
-				return (SUCCESS);
 			ret_backtrack = backtrack_paths(farm);
 			printf("ret_backtrack: %d\n", ret_backtrack);
 			// TMP
