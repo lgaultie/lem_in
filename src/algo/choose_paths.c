@@ -12,58 +12,6 @@
 
 #include <lem_in.h>
 
-/*
-** check_number_of_paths_found()
-*/
-
-/*static int	check_number_of_paths_found(t_farm *farm)
-{
-	t_paths	*tmp;
-	int		i;
-
-	tmp = farm->paths;
-	i = 0;
-	while (tmp)
-	{
-		i++;
-		tmp = tmp->next;
-	}
-	printf("on en a trouvé: %d.\n", i);
-	return (i);
-}*/
-
-/*
-** found_max_paths() checks if we found the exact number of possible paths
-** regarding start/end's links. Real number of possible paths may be less.
-*/
-
-/*static int	found_max_paths(t_farm *farm)
-{
-	int		max_paths;
-	int		links_of_start;
-	int		links_of_end;
-	t_rooms	*tmp_room;
-
-	printf("found max paths\n");
-	tmp_room = farm->rooms;
-	while (tmp_room)
-	{
-		if (tmp_room->start_end == 1)
-			links_of_start = tmp_room->nb_links;
-		if (tmp_room->start_end == 2)
-			links_of_end = tmp_room->nb_links;
-		tmp_room = tmp_room->next;
-	}
-	if (links_of_end < links_of_start)
-		max_paths = links_of_end;
-	else
-		max_paths = links_of_start;
-	printf("maximum possible de paths: %d et ", max_paths);
-	if (check_number_of_paths_found(farm) == max_paths)
-		return (SUCCESS);
-	return (FAILURE);
-}*/
-
 static void	unvisit_rooms(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
@@ -75,44 +23,6 @@ static void	unvisit_rooms(t_farm *farm)
 		tmp_rooms = tmp_rooms->next;
 	}
 }
-
-/*static int	*save_last_path_found(t_farm *farm)
-{
-	int		i;
-	t_paths	*tmp;
-	int		*ret;
-
-	i = 0;
-	tmp = farm->paths;
-	while (tmp->next)
-		tmp = tmp->next;
-	ret = ft_memalloc(sizeof(int) * tmp->length);
-	while (i < tmp->length)
-	{
-		ret[i] = tmp->path[i];
-		i++;
-	}
-	return (ret);
-}*/
-
-/*static int	check_new_and_last_path_found(int *last, t_farm *farm)
-{
-	int		i;
-	t_paths	*tmp;
-
-	i = 0;
-	tmp = farm->paths;
-	while (tmp->next)
-		tmp = tmp->next;
-	while (i < tmp->length)
-	{
-		printf("last[%d] = %d && tmp->path[%d] = %d\n", i, last[i], i, tmp->path[i]);
-		if (last[i] != tmp->path[i])
-			return (FAILURE);
-		i++;
-	}
-	return (SUCCESS);
-}*/
 
 /*
 ** check_last_path() adds the last path found in paths structure, and checks if
