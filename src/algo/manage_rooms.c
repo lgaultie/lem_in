@@ -36,7 +36,7 @@ int	fill_reserved(t_farm *farm)
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
 			{
-				printf("reserve room %d\n", tmp_rooms->room_id);
+				printf("reserve room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
 				tmp_rooms->reserved = 1;
 			}
 			i++;
@@ -160,7 +160,7 @@ static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
 ** delete_path() deletes the path from paths structure.
 */
 
-static void	delete_path(t_farm *farm, t_paths *path)
+void		delete_path(t_farm *farm, t_paths *path)
 {
 	t_paths		*tmp;
 
