@@ -44,7 +44,6 @@ static int	found_max_paths(t_farm *farm)
 	int		links_of_end;
 	t_rooms	*tmp_room;
 
-	printf("found max paths\n");
 	tmp_room = farm->rooms;
 	while (tmp_room)
 	{

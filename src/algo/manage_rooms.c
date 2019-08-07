@@ -124,6 +124,7 @@ int		backtrack_paths(t_farm *farm)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
+	ft_putstr("pourquoi ya pas de salle triple??\n");
 	return (ERROR);
 }
 

@@ -12,13 +12,13 @@
 
 #include <lem_in.h>
 
-static int	unqueue(t_farm *farm)
+static int	unqueue(t_farm *farm) //originql
 {
 	t_queue	*tmp_queue;
 
 	tmp_queue = farm->queue;
 	farm->queue = farm->queue->next;
-	free(tmp_queue);
+	ft_memdel((void**)&tmp_queue);
 	return (SUCCESS);
 }
 
@@ -61,7 +61,6 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
-					printf("queue room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
@@ -85,24 +84,25 @@ static int	check_queue(t_farm *farm, int **matrice)
 	t_rooms	*tmp_rooms;
 	int check_bfs;
 
-	tmp_queue = farm->queue;
 	check_bfs = 0;
+	tmp_queue = farm->queue;
 	while (tmp_queue)
 	{
 		tmp_rooms = farm->rooms;
 		while (tmp_rooms)
 		{
-			if (tmp_rooms->room_id == tmp_queue->id) //READ 4
+			if (tmp_rooms->room_id == tmp_queue->id)
 			{
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
 				else if (check_bfs == SUCCESS)
 					return (SUCCESS);
+					tmp_queue = farm->queue;
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
-		tmp_queue = tmp_queue->next; //READ 8 --> free dans unqueue --> malloc dans queue
+		tmp_queue = tmp_queue->next;
 	}
 	return (FAILURE);
 }
@@ -117,7 +117,7 @@ int		algo(t_farm *farm, int **matrice)
 	{
 		if (tmp_rooms->start_end == 1)
 		{
-			printf("queue room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
+			printf("queue room algo: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
 			if (queue(farm, tmp_rooms->room_id) == ERROR \
 			|| bfs(farm, matrice, tmp_rooms) == ERROR)
 				return (ERROR);
