@@ -13,8 +13,8 @@
 #include <lem_in.h>
 
 /*
-** main() creates farm structure, calls read_input() to read the map, then
-** frees it.
+** main() creates farm structure, calls read_input() to read the map, creates
+** the matrice, then frees the farm.
 */
 
 int		main(void)

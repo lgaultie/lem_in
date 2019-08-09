@@ -12,6 +12,13 @@
 
 #include <lem_in.h>
 
+/*
+** For each room, beginning by the end room, retrieve_path() take the 'parent'
+** attribute and add it to the path. Then it calls the function again with the
+** room we just added. Until we reach the size of the path, that should
+** correspond with the start room.
+*/
+
 static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 {
 	static int	i = 0;
@@ -34,6 +41,11 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 	return (SUCCESS);
 }
 
+/*
+** find_layer() returns from witch distance the end room is from the start
+** room. This will help us know the size of the path.
+*/
+
 static int	find_layer(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
@@ -49,7 +61,8 @@ static int	find_layer(t_farm *farm)
 }
 
 /*
-** layer = a quelle distance de start est la room
+** fill_path() fills a link from the paths structure. It calls find_layer() and
+** retrieve_path() to help fill the link.
 */
 
 int			fill_path(t_farm *farm)
@@ -76,6 +89,10 @@ int			fill_path(t_farm *farm)
 	}
 	return (SUCCESS);
 }
+
+/*
+** init_paths() creates and initializes a link of the paths structure.
+*/
 
 int			init_paths(t_farm *farm)
 {

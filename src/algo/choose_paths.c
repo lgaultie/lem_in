@@ -12,6 +12,10 @@
 
 #include <lem_in.h>
 
+/*
+** unvisit_rooms() checks all the rooms and set their `visited` attribute to 0.
+*/
+
 static void	unvisit_rooms(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
@@ -73,7 +77,7 @@ static int	check_last_path(t_farm *farm)
 
 /*
 ** choose_best_paths() calls algo() and checks what it returns.
-** If it returns 0, we are at the end or we are jammed. If we are jammed, we
+** If it returns 0, we are at the end or we are jammed. If we are stucked, we
 ** call backtrack_paths() to unreserve a room. The next occurence of algo()
 ** will call path_to_delete() to delete the path where the unreserved room was.
 ** Else, we found a path, and call init_path(), fill_path() and fill_reserved()

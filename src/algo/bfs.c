@@ -12,6 +12,10 @@
 
 #include <lem_in.h>
 
+/*
+** unqueue() removes room id from the queue.
+*/
+
 static int	unqueue(t_farm *farm)
 {
 	t_queue	*tmp_queue;
@@ -21,6 +25,10 @@ static int	unqueue(t_farm *farm)
 	ft_memdel((void**)&tmp_queue);
 	return (SUCCESS);
 }
+
+/*
+** queue() adds room id to the queue.
+*/
 
 static int	queue(t_farm *farm, int room_id)
 {
@@ -43,6 +51,14 @@ static int	queue(t_farm *farm, int room_id)
 	return (SUCCESS);
 }
 
+/*
+** bfs() browses the matrice to see if the room id that we specified in the
+** parameters is linked to other rooms. If that is the case, and the room is
+** not visited nor reserved, we call queue() to add its id to the queue. When
+** we have found all the links, we call unqueue() to unqueue the room id
+** specified in the parameters. When we add the end room, we have finished.
+*/
+
 static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 {
 	int		i;
@@ -56,7 +72,6 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 			tmp_rooms = farm->rooms;
 			while (tmp_rooms)
 			{
-				//if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1 && tmp_rooms->start_end != 1)
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
@@ -67,7 +82,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 					tmp_rooms->visited = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 					if (tmp_rooms->start_end == 2)
-						return (-2);	// qu lieu de SUCCESS
+						return (-2); // au lieu de SUCCESS
 				}
 				tmp_rooms = tmp_rooms->next;
 			}
@@ -78,19 +93,21 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 	return (FAILURE);
 }
 
+/*
+** find_blocking_room()
+*/
+
 int		find_blocking_room(t_farm *farm, int **matrice)
 {
-	t_queue *tmp_q;
-	int id_last_valid_room;
+	t_queue	*tmp_q;
+	int		id_last_valid_room;
 	int		i;
 	t_rooms	*tmp_rooms;
 
 	i = 0;
 	tmp_q = farm->queue;
 	while (tmp_q->next)
-	{
 		tmp_q = tmp_q->next;
-	}
 	id_last_valid_room = tmp_q->id;
 	while (i < farm->total_rooms)
 	{
@@ -114,7 +131,8 @@ int		find_blocking_room(t_farm *farm, int **matrice)
 }
 
 /*
-** checkqueue doit renvoyer la salle qui bloque ou -1 si ca marche
+** check_queue() add children rooms tho the queue while there are rooms ids in
+** the queue, calling bfs(). If we are stucked, we call find_blocking_room().
 */
 
 static int	check_queue(t_farm *farm, int **matrice)
@@ -146,6 +164,11 @@ static int	check_queue(t_farm *farm, int **matrice)
 	return (find_blocking_room(farm, matrice));
 	// return (FAILURE);
 }
+
+/*
+** algo() fills the queue starting with start room and its children, calling
+** queue() and bfs(), then calls check_queue() to add rooms to the queue.
+*/
 
 int		algo(t_farm *farm, int **matrice)
 {
