@@ -53,7 +53,7 @@ int	fill_reserved(t_farm *farm)
 ** supprimer plus tard.
 */
 
-int		backtrack_paths(t_farm *farm)
+int		backtrack_paths(int room_to_deal, t_farm *farm)
 {
 	t_rooms		*tmp_rooms;
 
@@ -62,7 +62,7 @@ int		backtrack_paths(t_farm *farm)
 	while (tmp_rooms)
 	{
 		// printf("room_id = %d, visited = %d, reserved = %d, nb_links = %d\n", tmp_rooms->room_id, tmp_rooms->visited, tmp_rooms->reserved, tmp_rooms->nb_links);
-		if (tmp_rooms->reserved == 1 && tmp_rooms->nb_links > 2)
+		if (tmp_rooms->room_id == room_to_deal && tmp_rooms->start_end != 2)
 		{
 			// printf("je déreserve la premiere salle triple, ici %d\n", tmp_rooms->room_id);
 			tmp_rooms->visited = 0;
@@ -71,7 +71,7 @@ int		backtrack_paths(t_farm *farm)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	ft_putstr("pourquoi ya pas de salle triple??\n");
+	ft_putstr("y'a plus de salles a déreserver\n");
 	return (ERROR);
 }
 

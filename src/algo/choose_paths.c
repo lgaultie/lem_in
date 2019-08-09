@@ -89,7 +89,7 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 	ret_backtrack = -1;
 	while (1)
 	{
-		while ((ret_algo = algo(farm, matrice)) == SUCCESS)
+		while ((ret_algo = algo(farm, matrice)) == -2)
 		{
 			printf("in while algo\n");
 			if (ret_backtrack != -1)
@@ -108,10 +108,10 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 			fill_reserved(farm);
 		}
 		printf("ret algo = %d\n", ret_algo);
-		if (ret_algo == 0)
+		if (ret_algo != -2)
 		{
 			unvisit_rooms(farm);
-			ret_backtrack = backtrack_paths(farm);
+			ret_backtrack = backtrack_paths(ret_algo, farm);
 			printf("ret_backtrack: %d\n", ret_backtrack);
 			// TMP
 			t_paths *tmp = farm->paths;

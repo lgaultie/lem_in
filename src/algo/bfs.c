@@ -57,17 +57,17 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 			while (tmp_rooms)
 			{
 				//if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1 && tmp_rooms->start_end != 1)
-					//printf("room to queue: %d\n", tmp_rooms->room_id);
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
+					printf("room to queue: %d\n", tmp_rooms->room_id);
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
 					tmp_rooms->visited = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 					if (tmp_rooms->start_end == 2)
-						return (SUCCESS);
+						return (-2);	// qu lieu de SUCCESS
 				}
 				tmp_rooms = tmp_rooms->next;
 			}
@@ -77,6 +77,45 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 	unqueue(farm);
 	return (FAILURE);
 }
+
+int		find_blocking_room(t_farm *farm, int **matrice)
+{
+	t_queue *tmp_q;
+	int id_last_valid_room;
+	int		i;
+	t_rooms	*tmp_rooms;
+
+	i = 0;
+	tmp_q = farm->queue;
+	while (tmp_q->next)
+	{
+		tmp_q = tmp_q->next;
+	}
+	id_last_valid_room = tmp_q->id;
+	while (i < farm->total_rooms)
+	{
+		if (matrice[id_last_valid_room][i] == 1)
+		{
+			tmp_rooms = farm->rooms;
+			while (tmp_rooms)
+			{
+				// printf("on parcours dans find blocking room = %d\n", tmp_rooms->room_id);
+				if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1)
+				{
+					printf("room qui bloque = %d\n", tmp_rooms->room_id);
+					return (i);
+				}
+				tmp_rooms = tmp_rooms->next;
+			}
+		}
+		i++;
+	}
+	return (i);
+}
+
+/*
+** checkqueue doit renvoyer la salle qui bloque ou -1 si ca marche
+*/
 
 static int	check_queue(t_farm *farm, int **matrice)
 {
@@ -96,15 +135,16 @@ static int	check_queue(t_farm *farm, int **matrice)
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
-				else if (check_bfs == SUCCESS)
-					return (SUCCESS);
+				else if (check_bfs == -2)	//au lieu de success
+					return (-2);
 					tmp_queue = farm->queue;
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
 		tmp_queue = tmp_queue->next;
 	}
-	return (FAILURE);
+	return (find_blocking_room(farm, matrice));
+	// return (FAILURE);
 }
 
 int		algo(t_farm *farm, int **matrice)
@@ -126,9 +166,10 @@ int		algo(t_farm *farm, int **matrice)
 		tmp_rooms = tmp_rooms->next;
 	}
 	ret = check_queue(farm, matrice);
+	printf("algo renvoie %d\n", ret);
 	if (ret == ERROR)
 		return (ERROR);
-	if (ret == FAILURE)
-		return (FAILURE);
-	return (SUCCESS);
+	// if (ret == FAILURE)
+	// 	return (FAILURE);
+	return (ret);		//au lieu de SUCCESS
 }
