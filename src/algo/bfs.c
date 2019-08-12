@@ -75,7 +75,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
-					printf("room to queue: %d\n", tmp_rooms->room_id);
+					printf("room to queue: %s\n", tmp_rooms->name);
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
@@ -180,7 +180,7 @@ int		algo(t_farm *farm, int **matrice)
 	{
 		if (tmp_rooms->start_end == 1)
 		{
-			printf("queue room algo: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
+			printf("queue room algo: %s\n", tmp_rooms->name);
 			if (queue(farm, tmp_rooms->room_id) == ERROR \
 			|| bfs(farm, matrice, tmp_rooms) == ERROR)
 				return (ERROR);

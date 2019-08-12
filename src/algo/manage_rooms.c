@@ -36,7 +36,7 @@ int	fill_reserved(t_farm *farm)
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
 			{
-				printf("reserve room: %s - id: %d\n", tmp_rooms->name, tmp_rooms->room_id);
+				printf("reserve room: %s\n", tmp_rooms->name);
 				tmp_rooms->reserved = 1;
 			}
 			i++;
