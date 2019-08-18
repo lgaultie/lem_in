@@ -64,7 +64,6 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 	int		i;
 	t_rooms	*tmp_rooms;
 
-	printf("parent room: %s\n", parent_room->name);
 	i = 0;
 	while (i < farm->total_rooms)
 	{
@@ -83,7 +82,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 					tmp_rooms->visited = 1;
 					tmp_rooms->layer = parent_room->layer + 1;
 					if (tmp_rooms->start_end == 2)
-						return (-2); // au lieu de SUCCESS
+						return (-2);
 				}
 				tmp_rooms = tmp_rooms->next;
 			}
@@ -95,29 +94,26 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 }
 
 /*
-** find_blocking_room()
+** blocking_room() checks, with the room id we specified in the parameters
+** (that corresponds to the last link that was deleted from the queue), that
+** this room is linked to an other room. If it is, the linked room is the
+** blocking room.
 */
 
-int		find_blocking_room(t_farm *farm, int **matrice)
+static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 {
-	t_queue	*tmp_q;
-	int		id_last_valid_room;
 	int		i;
 	t_rooms	*tmp_rooms;
 
+	printf("find_blocking room\n");
 	i = 0;
-	tmp_q = farm->queue;
-	while (tmp_q->next)
-		tmp_q = tmp_q->next;
-	id_last_valid_room = tmp_q->id;
 	while (i < farm->total_rooms)
 	{
-		if (matrice[id_last_valid_room][i] == 1)
+		if (matrice[last_valid_room][i] == 1)
 		{
 			tmp_rooms = farm->rooms;
 			while (tmp_rooms)
 			{
-				// printf("on parcours dans find blocking room = %d\n", tmp_rooms->room_id);
 				if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1)
 				{
 					printf("room qui bloque = %d\n", tmp_rooms->room_id);
@@ -132,15 +128,17 @@ int		find_blocking_room(t_farm *farm, int **matrice)
 }
 
 /*
-** check_queue() add children rooms tho the queue while there are rooms ids in
-** the queue, calling bfs(). If we are stucked, we call find_blocking_room().
+** fill_queue() adds children rooms tho the queue while there are rooms ids in
+** the queue, calling bfs(). If we are stucked, we call blocking_room().
 */
 
-static int	check_queue(t_farm *farm, int **matrice)
+static int	fill_queue(t_farm *farm, int **matrice)
 {
 	t_rooms	*tmp_rooms;
-	int check_bfs;
+	int 	check_bfs;
+	int		first_of_queue;
 
+	printf("fill queue\n");
 	check_bfs = 0;
 	while (farm->queue)
 	{
@@ -149,47 +147,46 @@ static int	check_queue(t_farm *farm, int **matrice)
 		{
 			if (tmp_rooms->room_id == farm->queue->id)
 			{
+				first_of_queue = farm->queue->id;
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
-				else if (check_bfs == -2) // au lieu de SUCCESS
+				if (check_bfs == -2)
 					return (-2);
+				if (check_bfs == FAILURE && !farm->queue)
+					return (blocking_room(farm, matrice, first_of_queue));
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
 	}
-	return (find_blocking_room(farm, matrice));
-	// return (FAILURE);
+	return (blocking_room(farm, matrice, first_of_queue));
 }
 
 /*
 ** algo() fills the queue starting with start room and its children, calling
-** queue() and bfs(), then calls check_queue() to add rooms to the queue.
+** queue(), then calls check_queue() to add rooms to the queue.
 */
 
 int		algo(t_farm *farm, int **matrice)
 {
 	t_rooms	*tmp_rooms;
-	int		ret;
+	int		ret_fill_queue;
 
+	ret_fill_queue = 0;
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
 		if (tmp_rooms->start_end == 1)
 		{
-			printf("queue room algo: %s\n", tmp_rooms->name);
-			if (queue(farm, tmp_rooms->room_id) == ERROR \
-			|| bfs(farm, matrice, tmp_rooms) == ERROR)
+			printf("room to queue: %s\n", tmp_rooms->name);
+			if (queue(farm, tmp_rooms->room_id) == ERROR)
+				return (ERROR);
+			ret_fill_queue = fill_queue(farm, matrice);
+			if (ret_fill_queue == ERROR)
 				return (ERROR);
 			break ;
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	ret = check_queue(farm, matrice);
-	printf("algo renvoie %d\n", ret);
-	if (ret == ERROR)
-		return (ERROR);
-	// if (ret == FAILURE)
-	// 	return (FAILURE);
-	return (ret);		//au lieu de SUCCESS
+	return (ret_fill_queue);
 }

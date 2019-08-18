@@ -38,7 +38,6 @@ static void	unvisit_rooms(t_farm *farm)
 static int	check_last_path(t_farm *farm)
 {
 	t_paths	*tmp_path;
-	t_paths	*tmp_path2;
 	t_paths	*last_path;
 	int		i;
 
@@ -48,29 +47,28 @@ static int	check_last_path(t_farm *farm)
 	free_queue(farm);
 	fill_reserved(farm);
 	tmp_path = farm->paths;
-	tmp_path2 = farm->paths;
+	last_path = farm->paths;
+	while (last_path->next)
+		last_path = last_path->next;
 	while (tmp_path->next)
-		tmp_path = tmp_path->next;
-	last_path = tmp_path;
-	while (tmp_path2)
 	{
-		if (tmp_path2->length == last_path->length)
+		if (tmp_path->length == last_path->length)
 		{
 			i = 0;
 			while (i < last_path->length)
 			{
-				if (tmp_path2->path[i] != last_path->path[i])
+				if (tmp_path->path[i] != last_path->path[i])
 					return (FAILURE);
 				if (i == (last_path->length - 1))
 				{
-					printf("There are 2 similar paths, delete the last one\n");
+					printf("There is 2 similar paths, delete the last one\n");
 					delete_path(farm, last_path);
 					return (SUCCESS);
 				}
 				i++;
 			}
 		}
-		tmp_path2 = tmp_path2->next;
+		tmp_path = tmp_path->next;
 	}
 	return (FAILURE);
 }
@@ -117,27 +115,8 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 			unvisit_rooms(farm);
 			ret_backtrack = backtrack_paths(ret_algo, farm);
 			printf("ret_backtrack: %d\n", ret_backtrack);
-			// TMP
-			t_paths *tmp = farm->paths;
-			printf("\nVOILA MES PATHS: \n");
-			{
-				while (tmp)
-				{
-					int x = 0;
-					while(x < tmp->length)
-					{
-						printf("%d ", tmp->path[x]);
-						x++;
-					}
-					printf("\n");
-					tmp = tmp->next;
-				}
-			}
-			printf("\n");
-			// END TMP
 			if (ret_backtrack == ERROR)
 				return (SUCCESS);
 		}
 	}
-	return (SUCCESS);
 }
