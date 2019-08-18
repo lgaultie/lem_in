@@ -13,45 +13,6 @@
 #include <lem_in.h>
 
 /*
-** unqueue() removes room id from the queue.
-*/
-
-static int	unqueue(t_farm *farm)
-{
-	t_queue	*tmp_queue;
-
-	tmp_queue = farm->queue;
-	farm->queue = farm->queue->next;
-	ft_memdel((void**)&tmp_queue);
-	return (SUCCESS);
-}
-
-/*
-** queue() adds room id to the queue.
-*/
-
-static int	queue(t_farm *farm, int room_id)
-{
-	t_queue	*tmp;
-	t_queue	*new;
-
-	tmp = farm->queue;
-	if (!(new = ft_memalloc(sizeof(t_queue))))
-		return (ERROR);
-	if (tmp)
-	{
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-	else
-		farm->queue = new;
-	new->id = room_id;
-	new->next = NULL;
-	return (SUCCESS);
-}
-
-/*
 ** bfs() browses the matrice to see if the room id that we specified in the
 ** parameters is linked to other rooms. If that is the case, and the room is
 ** not visited nor reserved, we call queue() to add its id to the queue. When

@@ -29,6 +29,7 @@ SRCS =	main.c							\
 		$(PARS_DIR)/rooms.c				\
 		$(PARS_DIR)/links.c				\
 		$(ALGO_DIR)/bfs.c				\
+		$(ALGO_DIR)/queue.c				\
 		$(ALGO_DIR)/matrice.c			\
 		$(ALGO_DIR)/choose_paths.c      \
 		$(ALGO_DIR)/path.c              \

@@ -74,6 +74,8 @@ int		parse_rooms(t_farm *farm, char *line, int start_end);
 int		parse_links(t_farm *farm, char *line);
 int		**matrice_create(t_farm *farm);
 int		algo(t_farm *farm, int **matrice);
+int		queue(t_farm *farm, int room_id);
+int		unqueue(t_farm *farm);
 void	free_farm(t_farm *farm);
 void	free_rooms(t_rooms *rooms);
 void	free_queue(t_farm *farm);
