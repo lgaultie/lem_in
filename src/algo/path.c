@@ -24,12 +24,14 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 	static int	i = 0;
 	t_rooms		*tmp_rooms;
 
+	printf("retrieve path\n");
 	i = j;
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
 		if (tmp_rooms->room_id == id)
 		{
+			printf("add room %s in path\n", tmp_rooms->name);
 			path->path[i] = tmp_rooms->room_id;
 			i++;
 			break ;

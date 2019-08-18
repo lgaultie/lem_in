@@ -64,6 +64,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 	int		i;
 	t_rooms	*tmp_rooms;
 
+	printf("parent room: %s\n", parent_room->name);
 	i = 0;
 	while (i < farm->total_rooms)
 	{
@@ -137,29 +138,25 @@ int		find_blocking_room(t_farm *farm, int **matrice)
 
 static int	check_queue(t_farm *farm, int **matrice)
 {
-	t_queue	*tmp_queue;
 	t_rooms	*tmp_rooms;
 	int check_bfs;
 
 	check_bfs = 0;
-	tmp_queue = farm->queue;
-	while (tmp_queue)
+	while (farm->queue)
 	{
 		tmp_rooms = farm->rooms;
 		while (tmp_rooms)
 		{
-			if (tmp_rooms->room_id == tmp_queue->id)
+			if (tmp_rooms->room_id == farm->queue->id)
 			{
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
-				else if (check_bfs == -2)	//au lieu de success
+				else if (check_bfs == -2) // au lieu de SUCCESS
 					return (-2);
-					tmp_queue = farm->queue;
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
-		tmp_queue = tmp_queue->next;
 	}
 	return (find_blocking_room(farm, matrice));
 	// return (FAILURE);
