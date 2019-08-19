@@ -17,7 +17,7 @@
 */
 
 
-static void		free_paths(t_farm *farm)
+void			free_paths(t_farm *farm)
 {
 	t_paths		*tmp;
 	t_paths		*new;
@@ -92,6 +92,10 @@ void			free_rooms(t_rooms *rooms)
 	}
 }
 
+/*
+** free_matrice() frees the matrice.
+*/
+
 void 			free_matrice(t_farm *farm, int **matrice)
 {
 	int 	i;
@@ -105,17 +109,4 @@ void 			free_matrice(t_farm *farm, int **matrice)
 		i++;
 	}
 	ft_memdel((void**)&matrice);
-}
-
-/*
-** free_farm() frees farm.
-*/
-
-void			free_farm(t_farm *farm, int **matrice)
-{
-	free_matrice(farm, matrice);
-	free_rooms(farm->rooms);
-	free_queue(farm);
-	free_paths(farm);
-	ft_memdel((void**)&farm);
 }

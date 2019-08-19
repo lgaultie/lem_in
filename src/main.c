@@ -13,11 +13,24 @@
 #include <lem_in.h>
 
 /*
+** free_farm() frees farm.
+*/
+
+static void	free_farm(t_farm *farm, int **matrice)
+{
+	free_matrice(farm, matrice);
+	free_rooms(farm->rooms);
+	free_queue(farm);
+	free_paths(farm);
+	ft_memdel((void**)&farm);
+}
+
+/*
 ** main() creates farm structure, calls read_input() to read the map, creates
 ** the matrice, then frees the farm.
 */
 
-int		main(void)
+int			main(void)
 {
 	int			line_nb;
 	int			error;
