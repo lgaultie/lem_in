@@ -22,13 +22,14 @@ int		main(void)
 	int			line_nb;
 	int			error;
 	t_farm		*farm;
+	int 		**matrice;
 
 	line_nb = 1;
 	error = 0;
 	if (!(farm = ft_memalloc(sizeof(t_farm))) \
 		|| read_input(farm, line_nb, error, error) == ERROR \
-		|| matrice_create(farm) == NULL)
+		|| (matrice = matrice_create(farm)) == NULL)
 		return (free_farm_error(farm));
-	free_farm(farm);
+	free_farm(farm, matrice);
 	return (FAILURE);
 }

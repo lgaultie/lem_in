@@ -15,22 +15,22 @@
 /*
 ** free_paths() frees paths when they exist.
 */
-// 
-//
-// static void		free_paths(t_farm *farm)
-// {
-// 	t_paths		*tmp;
-// 	t_paths		*new;
-//
-// 	tmp = farm->paths;
-// 	while (tmp)
-// 	{
-// 		new = tmp->next;
-// 		ft_memdel((void**)&tmp->path);
-// 		ft_memdel((void**)&tmp);
-// 		tmp = new;
-// 	}
-// }
+
+
+static void		free_paths(t_farm *farm)
+{
+	t_paths		*tmp;
+	t_paths		*new;
+
+	tmp = farm->paths;
+	while (tmp)
+	{
+		new = tmp->next;
+		ft_memdel((void**)&tmp->path);
+		ft_memdel((void**)&tmp);
+		tmp = new;
+	}
+}
 
 /*
 ** free_queue() frees queue when it exists.
@@ -41,7 +41,6 @@ void			free_queue(t_farm *farm)
 	t_queue	*tmp;
 	t_queue	*new;
 
-	printf("free queue\n");
 	tmp = farm->queue;
 	while (tmp)
 	{
@@ -93,14 +92,30 @@ void			free_rooms(t_rooms *rooms)
 	}
 }
 
+void 			free_matrice(t_farm *farm, int **matrice)
+{
+	int 	i;
+
+	i = 0;
+	while (i < farm->total_rooms)
+	{
+		if (matrice[i] == NULL)
+			return ;
+		ft_memdel((void**)&matrice[i]);
+		i++;
+	}
+	ft_memdel((void**)&matrice);
+}
+
 /*
 ** free_farm() frees farm.
 */
 
-void			free_farm(t_farm *farm)
+void			free_farm(t_farm *farm, int **matrice)
 {
+	free_matrice(farm, matrice);
 	free_rooms(farm->rooms);
 	free_queue(farm);
-	//free_paths(farm);
+	free_paths(farm);
 	ft_memdel((void**)&farm);
 }
