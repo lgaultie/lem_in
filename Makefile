@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = lem_in
+NAME = lem-in
 CC = @clang
 CFLAGS = -Wall -Werror -Wextra -g
 LIBDIR = libft
