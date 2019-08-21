@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/04 16:13:52 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/21 16:15:36 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	check_last_path(t_farm *farm)
 	t_paths	*last_path;
 	int		i;
 
-	printf("check last path\n");
+	ft_putstr("check last path\n");
 	if (init_paths(farm) == ERROR || fill_path(farm) == ERROR)
 		return (ERROR);
 	free_queue(farm);
@@ -61,7 +61,7 @@ static int	check_last_path(t_farm *farm)
 					return (FAILURE);
 				if (i == (last_path->length - 1))
 				{
-					printf("There is 2 similar paths, delete the last one\n");
+					ft_putstr("There is 2 similar paths, delete the last one\n");
 					delete_path(farm, last_path);
 					return (SUCCESS);
 				}
@@ -93,7 +93,6 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 	{
 		while ((ret_algo = algo(farm, matrice)) == -2)
 		{
-			printf("in while algo\n");
 			if (ret_backtrack != -1)
 			{
 				ret_last_path = check_last_path(farm);
@@ -109,12 +108,35 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 			free_queue(farm);
 			fill_reserved(farm);
 		}
-		printf("ret algo = %d\n", ret_algo);
+		// TMP
+		t_paths		*tmp_path;
+		tmp_path = farm->paths;
+		printf("\n");
+		while (tmp_path)
+		{
+			ft_putstr("Paths en cours: ");
+			int x = 0;
+			while(x < tmp_path->length)
+			{
+				ft_putnbr(tmp_path->path[x]);
+				ft_putchar(' ');
+				// printf("%d ", tmp_path->path[x]);
+				x++;
+			}
+			ft_putstr("\n");
+			tmp_path = tmp_path->next;
+		}
+		ft_putstr("\n");
+		// END TMP
+		ft_putstr("ret_algo: ");
+		ft_putnbr(ret_algo);
+		ft_putchar('\n');
+		// printf("ret algo = %d\n", ret_algo);
 		if (ret_algo != -2)
 		{
 			unvisit_rooms(farm);
 			ret_backtrack = backtrack_paths(ret_algo, farm);
-			printf("ret_backtrack: %d\n", ret_backtrack);
+			// printf("ret_backtrack: %d\n", ret_backtrack);
 			if (ret_backtrack == ERROR)
 				return (SUCCESS);
 		}

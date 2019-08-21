@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/31 17:15:25 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/21 15:12:12 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
-					printf("room to queue: %s\n", tmp_rooms->name);
+					// printf("room to queue: %s\n", tmp_rooms->name);
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
@@ -66,7 +66,6 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 	int		i;
 	t_rooms	*tmp_rooms;
 
-	printf("find_blocking room\n");
 	i = 0;
 	while (i < farm->total_rooms)
 	{
@@ -77,7 +76,10 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 			{
 				if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1)
 				{
-					printf("room qui bloque = %d\n", tmp_rooms->room_id);
+					ft_putstr("blocking room: ");
+					ft_putnbr(tmp_rooms->room_id);
+					ft_putchar('\n');
+					// printf("room qui bloque = %d\n", tmp_rooms->room_id);
 					return (i);
 				}
 				tmp_rooms = tmp_rooms->next;
@@ -99,7 +101,6 @@ static int	fill_queue(t_farm *farm, int **matrice)
 	int 	check_bfs;
 	int		first_of_queue;
 
-	printf("fill queue\n");
 	check_bfs = 0;
 	while (farm->queue)
 	{
@@ -139,7 +140,7 @@ int		algo(t_farm *farm, int **matrice)
 	{
 		if (tmp_rooms->start_end == 1)
 		{
-			printf("room to queue: %s\n", tmp_rooms->name);
+			// printf("room to queue: %s\n", tmp_rooms->name);
 			if (queue(farm, tmp_rooms->room_id) == ERROR)
 				return (ERROR);
 			ret_fill_queue = fill_queue(farm, matrice);

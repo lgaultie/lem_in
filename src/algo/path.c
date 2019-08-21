@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/31 14:06:44 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/21 15:17:17 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,16 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 	static int	i = 0;
 	t_rooms		*tmp_rooms;
 
-	printf("retrieve path\n");
 	i = j;
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
 		if (tmp_rooms->room_id == id)
 		{
-			printf("add room %s in path\n", tmp_rooms->name);
+			ft_putstr("add room to path: ");
+			ft_putnbr(tmp_rooms->room_id);
+			ft_putchar('\n');
+			// printf("add room %s in path\n", tmp_rooms->name);
 			path->path[i] = tmp_rooms->room_id;
 			i++;
 			break ;
@@ -73,7 +75,6 @@ int			fill_path(t_farm *farm)
 	t_rooms	*tmp_rooms;
 	int		layer;
 
-	printf("fill path\n");
 	tmp_path = farm->paths;
 	tmp_rooms = farm->rooms;
 	layer = find_layer(farm);
@@ -101,7 +102,6 @@ int			init_paths(t_farm *farm)
 	t_paths	*tmp;
 	t_paths	*new;
 
-	printf("init path\n");
 	tmp = farm->paths;
 	if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
 		return (ERROR);

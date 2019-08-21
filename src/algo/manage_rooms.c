@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/04 15:23:04 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/21 16:07:02 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	fill_reserved(t_farm *farm)
 	t_rooms	*tmp_rooms;
 	int		i;
 
-	printf("fill reserved\n");
 	tmp_paths = farm->paths;
 	tmp_rooms = farm->rooms;
 	while (tmp_paths->next)
@@ -36,7 +35,7 @@ int	fill_reserved(t_farm *farm)
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
 			{
-				printf("reserve room: %s\n", tmp_rooms->name);
+				// printf("reserve room: %s\n", tmp_rooms->name);
 				tmp_rooms->reserved = 1;
 			}
 			i++;
@@ -56,7 +55,6 @@ int			backtrack_paths(int room_to_deal, t_farm *farm)
 {
 	t_rooms		*tmp_rooms;
 
-	printf("backtrack paths\n");
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
@@ -81,7 +79,6 @@ static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
 	int		i;
 	t_rooms	*tmp;
 
-	printf("unvisit rooms\n");
 	i = 0;
 	tmp = farm->rooms;
 	while (tmp && (i < length))
@@ -90,7 +87,7 @@ static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
 			tmp = tmp->next;
 		if (tmp->room_id == path[i] && tmp->room_id != id_room)
 		{
-			printf("unvisit room_id %d\n", tmp->room_id);
+			// printf("unvisit room_id %d\n", tmp->room_id);
 			tmp->visited = 0;
 			tmp->reserved = 0;
 		}
@@ -108,7 +105,21 @@ void		delete_path(t_farm *farm, t_paths *path)
 {
 	t_paths		*tmp;
 
-	printf("delete path\n");
+	//
+	int		i;
+
+	i = 0;
+	//parcourir le int *tab de paths pour voir lequel on delete
+	ft_putstr("On delete le path: ");
+	while (i < path->length)
+	{
+		ft_putnbr(path->path[i]);
+		ft_putchar(' ');
+		i++;
+	}
+	ft_putchar('\n');
+	//
+
 	if (path->prev == NULL)
 	{
 		tmp = path->next;
@@ -128,6 +139,25 @@ void		delete_path(t_farm *farm, t_paths *path)
 		ft_memdel((void**)&path->path);
 		ft_memdel((void**)&path);
 	}
+	// TMP
+	t_paths		*tmp_path;
+	tmp_path = farm->paths;
+	ft_putchar('\n');
+	while (tmp_path)
+	{
+		ft_putstr("PATHS EN COURS APRES DELETE : ");
+		int x = 0;
+		while(x < tmp_path->length)
+		{
+			ft_putnbr(tmp_path->path[x]);
+			ft_putchar(' ');
+			x++;
+		}
+		ft_putchar('\n');
+		tmp_path = tmp_path->next;
+	}
+	ft_putchar('\n');
+	// END TMP
 }
 
 /*
@@ -140,7 +170,9 @@ int			path_to_delete(t_farm *farm, int id_room)
 	t_paths		*tmp;
 	int			i;
 
-	printf("path to delete: %d\n", id_room);
+	ft_putstr("path to delete, the one with room: ");
+	ft_putnbr(id_room);
+	ft_putchar('\n');
 	tmp = farm->paths;
 	while (tmp)
 	{
