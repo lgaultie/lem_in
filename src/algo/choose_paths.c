@@ -103,10 +103,13 @@ int			choose_best_paths(t_farm *farm, int **matrice)
 				path_to_delete(farm, ret_backtrack);
 				ret_backtrack = -1;
 			}
-			if (init_paths(farm) == ERROR || fill_path(farm) == ERROR)
-				return (ERROR);
-			free_queue(farm);
-			fill_reserved(farm);
+			else
+			{
+				if (init_paths(farm) == ERROR || fill_path(farm) == ERROR)
+					return (ERROR);
+				free_queue(farm);
+				fill_reserved(farm);
+			}
 		}
 		// TMP
 		t_paths		*tmp_path;
