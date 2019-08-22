@@ -17,7 +17,7 @@
 ** start and end rooms, and to visited = 0.
 */
 
-int	fill_reserved(t_farm *farm)
+int		fill_reserved(t_farm *farm)
 {
 	t_paths	*tmp_paths;
 	t_rooms	*tmp_rooms;
@@ -34,10 +34,7 @@ int	fill_reserved(t_farm *farm)
 		{
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
-			{
-				// printf("reserve room: %s\n", tmp_rooms->name);
 				tmp_rooms->reserved = 1;
-			}
 			i++;
 		}
 		tmp_rooms->visited = 0;
@@ -51,7 +48,7 @@ int	fill_reserved(t_farm *farm)
 ** visited and reserved to 0 before returning the room id.
 */
 
-int			backtrack_paths(int room_to_deal, t_farm *farm)
+int		backtrack_paths(int room_to_deal, t_farm *farm)
 {
 	t_rooms		*tmp_rooms;
 
@@ -70,46 +67,16 @@ int			backtrack_paths(int room_to_deal, t_farm *farm)
 }
 
 /*
-** unvisit_rooms() put the rooms of the path to be deleted unvisited, except
-** the room corresponding to the id_room given in parameters.
-*/
-
-static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
-{
-	int		i;
-	t_rooms	*tmp;
-
-	i = 0;
-	tmp = farm->rooms;
-	while (tmp && (i < length))
-	{
-		while (tmp->room_id != path[i])
-			tmp = tmp->next;
-		if (tmp->room_id == path[i] && tmp->room_id != id_room)
-		{
-			// printf("unvisit room_id %d\n", tmp->room_id);
-			tmp->visited = 0;
-			tmp->reserved = 0;
-		}
-		tmp = farm->rooms;
-		i++;
-	}
-	return (SUCCESS);
-}
-
-/*
 ** delete_path() deletes the path from paths structure.
 */
 
-void		delete_path(t_farm *farm, t_paths *path)
+void	delete_path(t_farm *farm, t_paths *path)
 {
-	t_paths		*tmp;
-
-	//
+	t_paths	*tmp;
 	int		i;
 
 	i = 0;
-	//parcourir le int *tab de paths pour voir lequel on delete
+	// TMP
 	ft_putstr("On delete le path: ");
 	while (i < path->length)
 	{
@@ -118,8 +85,7 @@ void		delete_path(t_farm *farm, t_paths *path)
 		i++;
 	}
 	ft_putchar('\n');
-	//
-
+	// END TMP
 	if (path->prev == NULL)
 	{
 		tmp = path->next;
@@ -158,36 +124,4 @@ void		delete_path(t_farm *farm, t_paths *path)
 	}
 	ft_putchar('\n');
 	// END TMP
-}
-
-/*
-** path_to_delete() finds the path(s) that use(s) the room given in parameter,
-** and calls unvisit_rooms() and delete_path().
-*/
-
-int			path_to_delete(t_farm *farm, int id_room)
-{
-	t_paths		*tmp;
-	int			i;
-
-	ft_putstr("path to delete, the one with room: ");
-	ft_putnbr(id_room);
-	ft_putchar('\n');
-	tmp = farm->paths;
-	while (tmp)
-	{
-		i = 0;
-		while (i < tmp->length)
-		{
-			if (tmp->path[i] == id_room)
-			{
-				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
-				delete_path(farm, tmp);
-				tmp = farm->paths;
-			}
-			i++;
-		}
-		tmp = tmp->next;
-	}
-	return (SUCCESS);
 }

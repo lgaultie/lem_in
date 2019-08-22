@@ -46,7 +46,8 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 /*
 ** matrice_create() creates an int** that references every links of the map.
 ** Each rows and columns correspond to a room. We fill the matrice by calling
-** matrice_fill(). Then we call the algorithm.
+** matrice_fill(). Then we call our algorithm, the function that does a BFS
+** until we found two similar paths.
 */
 
 int			**matrice_create(t_farm *farm)
@@ -69,15 +70,6 @@ int			**matrice_create(t_farm *farm)
 	}
 	matrice_fill(farm, matrice);
 	// TMP
-	t_rooms		*tmp;
-	tmp = farm->rooms;
-	while (tmp)
-	{
-		ft_putstr(tmp->name);
-		ft_putstr(" | ");
-		// printf("%s | ", tmp->name);
-		tmp = tmp->next;
-	}
 	ft_putstr("\nmatrice:\n");
 	int k, l;
 	k = 0;
@@ -94,8 +86,11 @@ int			**matrice_create(t_farm *farm)
 		k++;
 	}
 	// END TMP
-	if (choose_best_paths(farm, matrice) == ERROR)
-		return (NULL);
+	while (farm->paths == NULL || check_paths(farm) == FAILURE)
+	{
+		if (find_paths(farm, matrice) == ERROR)
+			return (NULL);
+	}
 	// TMP
 	t_paths		*tmp_path;
 	tmp_path = farm->paths;
