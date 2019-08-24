@@ -60,7 +60,6 @@ typedef struct			s_rooms
 
 typedef struct			s_farm
 {
-	int					arrived;
 	int					ants;
 	int					total_rooms;
 	t_queue				*queue;

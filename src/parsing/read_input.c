@@ -114,5 +114,15 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 		line_nb++;
 	}
 	error = check_start_end(error, farm);
+	// TMP
+	t_rooms *tmp = farm->rooms;
+	printf("ants: %d\n", farm->ants);
+	printf("number of rooms: %d\n", farm->total_rooms);
+	while (tmp)
+	{
+		printf("room: %s, id: %d, pos_x: %d, pos_y: %d, start_end: %d, visited: %d, reserved: %d, nb_links: %d, layer: %d\n", tmp->name, tmp->room_id, tmp->x_pos, tmp->y_pos, tmp->start_end, tmp->visited, tmp->reserved, tmp->nb_links, tmp->layer);
+		tmp = tmp->next;
+	}
+	// END TMP
 	return (error);
 }
