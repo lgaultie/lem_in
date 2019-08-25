@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/24 14:47:18 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 11:15:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,23 @@ void		print_free_rooms(t_farm *farm)
 
 int			find_paths(t_farm *farm, int **matrice)
 {
-	int		ret_algo;
-	int		ret_backtrack;
+	int				ret_algo;
+	int				ret_fill_path;
+	static int		ret_backtrack = -1;
 
-	ret_backtrack = -1;
 	while ((ret_algo = algo(farm, matrice)) == -2)
 	{
-		if (init_paths(farm) == ERROR || fill_path(farm) == ERROR)
+		if (init_paths(farm) == ERROR || ((ret_fill_path = fill_path(farm)) == ERROR))
 			return (ERROR);
+		if (ret_fill_path == FAILURE)
+			return (FAILURE);
 		free_queue(farm);
 		fill_reserved(farm);
+		if (ret_backtrack != -1)
+		{
+			path_to_delete(farm, ret_backtrack);
+			ret_backtrack = -1;
+		}
 	}
 	ft_putstr("ret_algo: ");
 	ft_putnbr(ret_algo);
@@ -129,7 +136,6 @@ int			find_paths(t_farm *farm, int **matrice)
 		ft_putchar('\n');
 		if (ret_backtrack == ERROR)
 			return (ERROR);
-
 	}
 	print_free_rooms(farm);
 	return (SUCCESS);

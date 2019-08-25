@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/21 15:49:05 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 11:13:15 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,14 @@ int			**matrice_create(t_farm *farm)
 		k++;
 	}
 	// END TMP
+	int		ret_find_path;
+
 	while (farm->paths == NULL || check_paths(farm) == FAILURE)
 	{
-		if (find_paths(farm, matrice) == ERROR)
+		if ((ret_find_path = find_paths(farm, matrice)) == ERROR)
 			return (NULL);
+		if (ret_find_path == FAILURE)
+			return (matrice);
 	}
 	// TMP
 	t_paths		*tmp_path;

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/24 17:30:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 11:16:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,9 @@ static int	fill_queue(t_farm *farm, int **matrice)
 			if (tmp_rooms->room_id == farm->queue->id)
 			{
 				first_of_queue = farm->queue->id;
+				ft_putstr("farm->queue id =  ");
+				ft_putnbr(first_of_queue);
+				ft_putchar('\n');
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
@@ -153,8 +156,5 @@ int		algo(t_farm *farm, int **matrice)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	ft_putstr("ret_fill_queue: ");
-	ft_putnbr(ret_fill_queue);
-	ft_putchar('\n');
 	return (ret_fill_queue);
 }

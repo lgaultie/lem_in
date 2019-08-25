@@ -6,11 +6,34 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/21 15:17:17 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 11:10:08 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+
+void	print_all_paths(t_farm *farm)
+{
+	// TMP
+	t_paths		*tmp_path;
+	tmp_path = farm->paths;
+	ft_putchar('\n');
+	while (tmp_path)
+	{
+		ft_putstr("PATHS actuels : ");
+		int x = 0;
+		while(x < tmp_path->length)
+		{
+			ft_putnbr(tmp_path->path[x]);
+			ft_putchar(' ');
+			x++;
+		}
+		ft_putchar('\n');
+		tmp_path = tmp_path->next;
+	}
+	ft_putchar('\n');
+	// END TMP
+}
 
 /*
 ** For each room, beginning by the end room, retrieve_path() take the 'parent'
@@ -40,6 +63,7 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
+	print_all_paths(farm);
 	while (i < path->length)
 		retrieve_path(farm, path, tmp_rooms->parent->room_id, i);
 	return (SUCCESS);
@@ -87,7 +111,11 @@ int			fill_path(t_farm *farm)
 	while (tmp_rooms)
 	{
 		if (tmp_rooms->start_end == 2)
+		{
 			retrieve_path(farm, tmp_path, tmp_rooms->room_id, 0);
+			if (check_paths(farm) == SUCCESS)	///
+				return (FAILURE);	///
+		}
 		tmp_rooms = tmp_rooms->next;
 	}
 	return (SUCCESS);

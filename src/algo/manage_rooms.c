@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/24 17:02:26 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 10:27:30 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,4 +124,65 @@ void	delete_path(t_farm *farm, t_paths *path)
 	}
 	ft_putchar('\n');
 	// END TMP
+}
+
+/*
+** unvisit_rooms() put the rooms of the path to be deleted unvisited, except
+** the room corresponding to the id_room given in parameters.
+*/
+
+static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
+{
+	int		i;
+	t_rooms	*tmp;
+
+	i = 0;
+	tmp = farm->rooms;
+	while (tmp && (i < length))
+	{
+		while (tmp->room_id != path[i])
+			tmp = tmp->next;
+		if (tmp->room_id == path[i] && tmp->room_id != id_room)
+		{
+			// printf("unvisit room_id %d\n", tmp->room_id);
+			tmp->visited = 0;
+			tmp->reserved = 0;
+		}
+		tmp = farm->rooms;
+		i++;
+	}
+	return (SUCCESS);
+}
+
+/*
+** path_to_delete() finds the path(s) that use(s) the room given in parameter,
+** and calls unvisit_rooms() and delete_path().
+*/
+
+int			path_to_delete(t_farm *farm, int id_room)
+{
+	t_paths		*tmp;
+	int			i;
+
+	ft_putstr("path to delete, the one with room: ");
+	ft_putnbr(id_room);
+	ft_putchar('\n');
+	tmp = farm->paths;
+	while (tmp)
+	{
+		i = 0;
+		while (i < tmp->length)
+		{
+			if (tmp->path[i] == id_room)
+			{
+				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
+				delete_path(farm, tmp);
+				tmp = farm->paths;
+				return (SUCCESS);
+			}
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	return (SUCCESS);
 }
