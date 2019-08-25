@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/25 11:10:08 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 15:39:07 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,21 @@ static int	find_layer(t_farm *farm)
 }
 
 /*
+** save_path() saves in an array of paths the path before deleting it
+*/
+void-	save_path(t_farm *farm, t_paths *paths)
+{
+	// dupliquer t_paths *paths
+	if (farm->all_paths[farm->nb_paths] == NULL)
+		farm->all_paths[farm->nb_paths] = paths;
+	else
+		// comparer les 2 sets de paths
+		// garder les chemins les - longs
+		// si on garde les anciens chenins, on ne change rien
+		// sinon, on free les anciens chemins, on duplique les nouveaux pour les mettre a la place des anciens
+}
+
+/*
 ** fill_path() fills a link from the paths structure. It calls find_layer() and
 ** retrieve_path() to help fill the link.
 */
@@ -113,8 +128,10 @@ int			fill_path(t_farm *farm)
 		if (tmp_rooms->start_end == 2)
 		{
 			retrieve_path(farm, tmp_path, tmp_rooms->room_id, 0);
-			if (check_paths(farm) == SUCCESS)	///
-				return (FAILURE);	///
+			if (check_paths(farm) == SUCCESS)
+				return (FAILURE);
+			farm->nb_paths++;
+			save_path(farm, tmp_path);
 		}
 		tmp_rooms = tmp_rooms->next;
 	}

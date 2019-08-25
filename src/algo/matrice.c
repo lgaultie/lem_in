@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 11:13:15 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 13:59:24 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 	}
 	return (SUCCESS);
 }
+
+//all_paths[1]->next->path
+//all_paths[3]->lenght
 
 /*
 ** matrice_create() creates an int** that references every links of the map.

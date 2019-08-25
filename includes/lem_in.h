@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 10:07:25 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 15:16:19 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ typedef struct			s_rooms
 
 typedef struct			s_farm
 {
+	int					nb_paths;
 	int					ants;
 	int					total_rooms;
 	t_queue				*queue;
 	t_rooms				*rooms;
 	t_paths				*paths;
+	t_paths				**all_paths;
 }						t_farm;
 
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
