@@ -176,7 +176,6 @@ int			path_to_delete(t_farm *farm, int id_room)
 			if (tmp->path[i] == id_room)
 			{
 				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
-				// save_path(farm, tmp);
 				delete_path(farm, tmp);
 				tmp = farm->paths;
 				return (SUCCESS);

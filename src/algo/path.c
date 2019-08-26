@@ -89,18 +89,42 @@ static int	find_layer(t_farm *farm)
 }
 
 /*
-** save_path() saves in an array of paths the path before deleting it
+** save_path() saves in an array of paths the paths combinations, in an
+** incremental order. If we have 2 sets that have the same number of paths, we
+** compare them and keep the set that has the lower number of rooms.
 */
-void-	save_path(t_farm *farm, t_paths *paths)
+
+void	save_path(t_farm *farm, t_paths *paths)
 {
 	// dupliquer t_paths *paths
+	t_paths	*paths_on_set;
+	int i;
+
+	ft_putstr("save path\n");
+	paths_on_set = farm->all_paths[farm->nb_paths];
+	i = 0;
 	if (farm->all_paths[farm->nb_paths] == NULL)
 		farm->all_paths[farm->nb_paths] = paths;
 	else
-		// comparer les 2 sets de paths
-		// garder les chemins les - longs
-		// si on garde les anciens chenins, on ne change rien
+	{
+		/*
+		// on compte le nombre total de salles dans le set déjà enregistré
+		while (paths_on_set)
+		{
+			i += paths_on_set->length;
+			paths_on_set = paths_on_set->next;
+		}
+		ft_putstr("number of total rooms in set ");
+		ft_putnbr(farm->nb_paths);
+		ft_putstr(" : ");
+		ft_putnbr(i);
+		ft_putchar('\n');
+		// on compte le nombre total de salles dans le set que l'on vient de trouver
+		// on garde le set qui a le nombre le plus petit
+		// si on garde les anciens chemins, on ne change rien
 		// sinon, on free les anciens chemins, on duplique les nouveaux pour les mettre a la place des anciens
+		 */
+	}
 }
 
 /*

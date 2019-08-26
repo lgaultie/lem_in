@@ -27,8 +27,9 @@ static void	free_farm(t_farm *farm, int **matrice)
 
 
 /*
-** found_all_paths() : checks if we found the exact number of possible paths
-** regarding start/end's links. Real number of possible paths may be less.
+** found_all_paths() calculates the maximum number of paths we can find. It's
+** the maximum number between the number of links to the start room, or the end
+** room. The real number may be less.
 */
 
 int		max_paths(t_farm *farm)
@@ -56,6 +57,10 @@ int		max_paths(t_farm *farm)
 	ft_putchar('\n');
 	return (max_paths);
 }
+
+/*
+** init_all_paths() initializes the array of paths structures.
+*/
 
 int		init_all_paths(t_farm *farm)
 {
