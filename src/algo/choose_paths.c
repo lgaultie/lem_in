@@ -68,34 +68,6 @@ int			check_paths(t_farm *farm)
 	return (FAILURE);
 }
 
-void		print_free_rooms(t_farm *farm)
-{
-	t_rooms *tmp;
-
-	tmp = farm->rooms;
-	ft_putstr("--------------\n");
-	while (tmp)
-	{
-		if (tmp->reserved == 1)
-		{
-			ft_putstr("salle ");
-			ft_putnbr(tmp->room_id);
-			ft_putstr(" reserved");
-			ft_putchar(' ');
-		}
-		if (tmp->reserved == 0)
-		{
-			ft_putstr("salle ");
-			ft_putnbr(tmp->room_id);
-			ft_putstr(" libre");
-			ft_putchar(' ');
-		}
-		ft_putchar('\n');
-		tmp = tmp->next;
-	}
-	ft_putstr("--------------\n");
-}
-
 /*
 ** find_paths() calls algo() and checks what it returns.
 ** If it returns -2, we found the end room, so our BFS is complete. We save the

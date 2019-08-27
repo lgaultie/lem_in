@@ -97,39 +97,68 @@ static int	find_layer(t_farm *farm)
 void	save_path(t_farm *farm, t_paths *paths)
 {
 	// dupliquer t_paths *paths
+	t_paths	*actual_paths;
 	t_paths	*paths_on_set;
 	int i;
+	int	j;
 
-	ft_putstr("save path\n");
+	/// TMP
+	ft_putstr("je suis dans save path et nb_paths = ");
+	ft_putnbr(farm->nb_paths);
+	ft_putchar('\n');
+	///
+	actual_paths = farm->paths;
 	paths_on_set = farm->all_paths[farm->nb_paths];
 	i = 0;
+	j = 0;
 	if (farm->all_paths[farm->nb_paths] == NULL)
+	{
+		ft_putstr("je remplis le tableau\n");
 		farm->all_paths[farm->nb_paths] = paths;
+		print_tab_paths(farm);	//imprime le tableau
+	}
 	else
 	{
-		/*
 		// on compte le nombre total de salles dans le set déjà enregistré
 		while (paths_on_set)
 		{
 			i += paths_on_set->length;
 			paths_on_set = paths_on_set->next;
 		}
-		ft_putstr("number of total rooms in set ");
-		ft_putnbr(farm->nb_paths);
-		ft_putstr(" : ");
-		ft_putnbr(i);
-		ft_putchar('\n');
+		while (actual_paths)
+		{
+			j += actual_paths->length;
+			actual_paths = actual_paths->next;
+		}
+		if (i <= j)
+		{
+			ft_putstr("i & j =  ");
+			ft_putnbr(i);
+			ft_putchar(' ');
+			ft_putnbr(j);
+			ft_putchar('\n');
+			return ;
+		}
+		else
+		{
+			ft_putstr("i & j =  ");
+			ft_putnbr(i);
+			ft_putchar(' ');
+			ft_putnbr(j);
+			ft_putchar('\n');
+			//remplacer les paths
+		}
 		// on compte le nombre total de salles dans le set que l'on vient de trouver
 		// on garde le set qui a le nombre le plus petit
 		// si on garde les anciens chemins, on ne change rien
 		// sinon, on free les anciens chemins, on duplique les nouveaux pour les mettre a la place des anciens
-		 */
 	}
 }
 
 /*
 ** fill_path() fills a link from the paths structure. It calls find_layer() and
-** retrieve_path() to help fill the link.
+** retrieve_path() to help fill the link. Call save_path to save all paths and
+** find the most optimized set of paths in the end.
 */
 
 int			fill_path(t_farm *farm)

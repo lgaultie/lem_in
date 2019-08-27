@@ -91,5 +91,8 @@ void	delete_path(t_farm *farm, t_paths *path);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
+//print functions
+void	print_tab_paths(t_farm *farm);
+void	print_free_rooms(t_farm *farm);
 
 #endif
