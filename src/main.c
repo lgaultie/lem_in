@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 15:02:33 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 10:47:10 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ static void	free_farm(t_farm *farm, int **matrice)
 	free_paths(farm);
 	ft_memdel((void**)&farm);
 }
-
 
 /*
 ** found_all_paths() calculates the maximum number of paths we can find. It's

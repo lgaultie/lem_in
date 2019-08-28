@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 14:58:57 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 10:51:58 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ int			path_to_delete(t_farm *farm, int id_room)
 			{
 				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
 				delete_path(farm, tmp);
+				farm->nb_paths--;
 				tmp = farm->paths;
 				return (SUCCESS);
 			}

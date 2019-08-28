@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 15:17:15 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 11:32:10 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int			find_paths(t_farm *farm, int **matrice)
 	int				ret_algo;
 	int				ret_fill_path;
 	static int		ret_backtrack = -1;
+	static int		just_deleted = -1;
 
 	while ((ret_algo = algo(farm, matrice)) == -2)
 	{
@@ -94,7 +95,14 @@ int			find_paths(t_farm *farm, int **matrice)
 		{
 			path_to_delete(farm, ret_backtrack);
 			ret_backtrack = -1;
+			just_deleted = 1;
 		}
+		if (just_deleted != 1)
+		{
+			if (save_path(farm, farm->paths) == ERROR)
+				return (ERROR);
+		}
+		just_deleted = -1;
 	}
 	ft_putstr("ret_algo: ");
 	ft_putnbr(ret_algo);

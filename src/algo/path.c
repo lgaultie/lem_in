@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/25 15:39:07 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 11:29:42 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ int			fill_path(t_farm *farm)
 			if (check_paths(farm) == SUCCESS)
 				return (FAILURE);
 			farm->nb_paths++;
-			if (save_path(farm, farm->paths) == ERROR)
-				return (ERROR);
+			// if (save_path(farm, farm->paths) == ERROR)
+			// 	return (ERROR);
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
