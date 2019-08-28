@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/28 11:32:10 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:34:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,6 @@ int			find_paths(t_farm *farm, int **matrice)
 		if (ret_backtrack == ERROR)
 			return (ERROR);
 	}
-	print_free_rooms(farm); // TMP
+	// print_free_rooms(farm); // TMP
 	return (SUCCESS);
 }

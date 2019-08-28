@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 10:18:36 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/28 14:21:49 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:40:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void		print_tab_paths(t_farm *farm)
 	t_paths	*tmp_tab;
 
 	i = 0;
+	ft_putstr("-----------tableau de save_paths-------------\n");
 	while (i <= farm->nb_paths - 1)
 	{
 		tmp_tab = farm->all_paths[i];

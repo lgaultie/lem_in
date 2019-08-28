@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/28 14:24:39 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 15:59:13 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,34 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 	return (SUCCESS);
 }
 
+void	delete_paths_on_set(t_farm *farm)
+{
+	t_paths	*tmp;
+	int		i;
+
+	i = 0;
+	while (paths_on_set)
+	{
+		tmp = paths_on_set->next;
+		if (paths_on_set->length > 0)
+		{
+			while (i < paths_on_set->length)
+			{
+				ft_memdel((void**)&paths_on_set);
+				i++;
+			}
+		}
+		ft_memdel((void**)&paths_on_set);
+		paths_on_set = tmp;
+	}
+	(void)farm;
+	farm->all_paths[farm->nb_paths - 1] = NULL;
+}
+
+// void	cpy_new_set(t_farm *farm, t_paths *paths_cpy)
+// {
+//
+// }
 
 /*
 ** save_path() saves in an array of paths the paths combinations, in an
@@ -102,26 +130,18 @@ int			save_path(t_farm *farm, t_paths *paths)
 		farm->all_paths[farm->nb_paths - 1] = paths_cpy;
 		print_tab_paths(farm); // TMP
 	}
-	else
+	// else
+	if (farm->nb_paths == 3)
 	{
-		ft_putstr("oh y'a deja des paths dans le tableau !\n");
-		print_tab_paths(farm); // TMP
-	}
-	/*else
-	{
+		paths_on_set = farm->all_paths[farm->nb_paths - 1];
+		ft_putstr("OHH YA DEJA DES PATHS DANS LE TABBB\n");
 		while (paths_on_set)
 		{
-			ft_putstr("length of path on set: ");
-			ft_putnbr(paths_on_set->length);
-			ft_putchar('\n');
 			i += paths_on_set->length;
 			paths_on_set = paths_on_set->next;
 		}
 		while (paths_cpy)
 		{
-			ft_putstr("length of path on set cpy: ");
-			ft_putnbr(paths_cpy->length);
-			ft_putchar('\n');
 			j += paths_cpy->length;
 			paths_cpy = paths_cpy->next;
 		}
@@ -134,26 +154,22 @@ int			save_path(t_farm *farm, t_paths *paths)
 		ft_putstr("number of total rooms in new set : ");
 		ft_putnbr(j);
 		ft_putchar('\n');
+		ft_putstr("length of path_on_set et paths_cpy -->  ");
+		ft_putnbr(i);
+		ft_putstr(" et ");
+		ft_putnbr(j);
+		ft_putchar('\n');
 		// END TMP
-		// on garde le set qui a le nombre le plus petit
-		// si on garde les anciens chemins, on ne change rien
 		// sinon, on free les anciens chemins, on duplique les nouveaux pour les mettre a la place des anciens
-		if (i <= j)
-		{
-			ft_putstr("i & j =  ");
-			ft_putnbr(i);
-			ft_putchar(' ');
-			ft_putnbr(j);
-			ft_putchar('\n');
-		}
+		if (i < j)
+			return (SUCCESS);
 		else
 		{
-			ft_putstr("i & j =  ");
-			ft_putnbr(i);
-			ft_putchar(' ');
-			ft_putnbr(j);
-			ft_putchar('\n');
+			ft_putstr("je remplace les chemins\n");
+			delete_paths_on_set(farm);
+			// cpy_new_set(farm, paths_cpy);
+			print_tab_paths(farm); // TMP
 		}
-	}*/
+	}
 	return (SUCCESS);
 }
