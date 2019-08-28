@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/28 11:29:42 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:05:06 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int			fill_path(t_farm *farm)
 	while (tmp_path->path)
 		tmp_path = tmp_path->next;
 	tmp_path->length = layer + 1;
-	tmp_path->path = (int*)malloc(sizeof(int) * (layer + 1));
-	if (tmp_path->path == NULL)
+	if (!(tmp_path->path = ft_memalloc(sizeof(int) * (layer + 1))))
 		return (ERROR);
 	while (tmp_rooms)
 	{

@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/28 11:15:36 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:24:39 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int			save_path(t_farm *farm, t_paths *paths)
 	int		i;
 	int		j;
 
+	if (farm->nb_paths <= 0)
+		return (SUCCESS);
 	ft_putstr("in save_path() avec farm->nb_paths = ");
 	ft_putnbr(farm->nb_paths);
 	ft_putchar('\n');
@@ -74,7 +76,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 	if (init_paths_cpy(paths, &paths_cpy) == ERROR)
 		return (ERROR);
 	//on prend le pointeur des paths actuels dans le tableau
-	paths_on_set = farm->all_paths[farm->nb_paths];
+	paths_on_set = farm->all_paths[farm->nb_paths - 1];
 	// TMP
 	t_paths	*tmp_path = paths_cpy;
 	ft_putchar('\n');
@@ -97,7 +99,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 	j = 0;
 	if (paths_on_set == NULL)
 	{
-		farm->all_paths[farm->nb_paths] = paths_cpy;
+		farm->all_paths[farm->nb_paths - 1] = paths_cpy;
 		print_tab_paths(farm); // TMP
 	}
 	else

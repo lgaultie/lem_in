@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/28 10:47:10 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 14:21:23 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		init_all_paths(t_farm *farm)
 	int		max_path;
 
 	max_path = max_paths(farm);
-	if (!(farm->all_paths = ft_memalloc(sizeof(t_paths*) * max_path + 1)))
+	if (!(farm->all_paths = ft_memalloc(sizeof(t_paths*) * max_path)))
 		return (ERROR);
 	return (SUCCESS);
 }
