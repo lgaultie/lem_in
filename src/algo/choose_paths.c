@@ -109,6 +109,6 @@ int			find_paths(t_farm *farm, int **matrice)
 		if (ret_backtrack == ERROR)
 			return (ERROR);
 	}
-	print_free_rooms(farm);
+	print_free_rooms(farm); // TMP
 	return (SUCCESS);
 }

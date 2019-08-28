@@ -14,7 +14,7 @@
 # define LEM_IN_H
 
 # include "../libft/libft.h"
-#include <stdio.h>
+#include <stdio.h> // TMP
 
 # define SUCCESS 1
 # define FAILURE 0
@@ -85,6 +85,7 @@ int 	free_farm_error(t_farm *farm);
 int		free_tab_error(char **tab);
 int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
+int		save_path(t_farm *farm, t_paths *paths);
 int		fill_reserved(t_farm *farm);
 int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_farm *farm, t_paths *path);
@@ -94,5 +95,6 @@ int		path_to_delete(t_farm *farm, int id_room);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
+void	print_all_paths(t_farm *farm);
 
 #endif

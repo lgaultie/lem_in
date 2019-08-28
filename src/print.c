@@ -1,4 +1,5 @@
-//faire header 42
+// header 42
+
 #include <lem_in.h>
 
 void		print_tab_paths(t_farm *farm)
@@ -57,4 +58,25 @@ void		print_free_rooms(t_farm *farm)
 		tmp = tmp->next;
 	}
 	ft_putstr("--------------\n");
+}
+
+void		print_all_paths(t_farm *farm)
+{
+	t_paths		*tmp_path;
+	tmp_path = farm->paths;
+	ft_putchar('\n');
+	while (tmp_path)
+	{
+		ft_putstr("PATHS actuels : ");
+		int x = 0;
+		while(x < tmp_path->length)
+		{
+			ft_putnbr(tmp_path->path[x]);
+			ft_putchar(' ');
+			x++;
+		}
+		ft_putchar('\n');
+		tmp_path = tmp_path->next;
+	}
+	ft_putchar('\n');
 }
