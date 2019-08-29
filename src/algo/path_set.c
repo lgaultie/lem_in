@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/29 17:04:11 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/29 18:25:32 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,48 +83,6 @@ void	delete_set(t_farm *farm, t_paths *paths_on_set)
 }
 
 /*
-** cpy_set() copy in the array the new optimized set.
-*/
-
-t_paths	*cpy_set(t_paths *paths_to_cpy)
-{
-	t_paths	*dest;
-	t_paths	*prev_path;
-	int		i;
-
-	ft_putstr("in cpy_set()\n");
-	dest = NULL;
-	while (paths_to_cpy)
-	{
-		prev_path = dest;
-		if ((dest = ft_memalloc(sizeof(t_paths))) == NULL)
-		return (NULL);
-		if (prev_path)
-			prev_path->next = dest;
-		else
-			dest = paths_to_cpy;
-		dest->length = paths_to_cpy->length;
-		if (dest->length > 0)
-		{
-			if ((dest->path = ft_memalloc(sizeof(int) * dest->length)) == NULL)
-				return (NULL);
-			i = 0;
-			while (i < dest->length)
-			{
-				dest->path[i] = paths_to_cpy->path[i];
-				ft_putstr("dest->path[i] = ");
-				ft_putnbr(dest->path[i]);
-				ft_putchar('\n');
-				i++;
-			}
-		}
-		dest->prev = prev_path;
-		dest->next = NULL;
-		paths_to_cpy = paths_to_cpy->next;
-	}
-	return (dest);
-}
-/*
 ** save_path() saves in an array of paths the paths combinations, in an
 ** incremental order. If we have 2 sets that have the same number of paths, we
 ** compare them and keep the set that has the lower number of rooms.
@@ -140,33 +98,10 @@ int			save_path(t_farm *farm, t_paths *paths)
 
 	if (farm->nb_paths <= 0)
 		return (SUCCESS);
-	ft_putstr("in save_path() avec farm->nb_paths = ");
-	ft_putnbr(farm->nb_paths);
-	ft_putchar('\n');
 	paths_cpy = NULL;
-	//copie les paths actuels dans path_cpy
 	if (init_paths_cpy(paths, &paths_cpy) == ERROR)
 		return (ERROR);
-	//on prend le pointeur des paths actuels dans le tableau
 	paths_on_set = farm->all_paths[farm->nb_paths - 1];
-	// TMP
-	t_paths	*tmp_path = paths_cpy;
-	ft_putchar('\n');
-	while (tmp_path)
-	{
-		ft_putstr("PATHS cpy : ");
-		int x = 0;
-		while(x < tmp_path->length)
-		{
-			ft_putnbr(tmp_path->path[x]);
-			ft_putchar(' ');
-			x++;
-		}
-		ft_putchar('\n');
-		tmp_path = tmp_path->next;
-	}
-	ft_putchar('\n');
-	// END TMP
 	i = 0;
 	j = 0;
 	if (paths_on_set == NULL)
@@ -174,11 +109,9 @@ int			save_path(t_farm *farm, t_paths *paths)
 		farm->all_paths[farm->nb_paths - 1] = paths_cpy;
 		print_tab_paths(farm); // TMP
 	}
-	// else
-	if (farm->nb_paths == 3)
+	else
 	{
 		paths_on_set = farm->all_paths[farm->nb_paths - 1];
-		ft_putstr("OHH YA DEJA DES PATHS DANS LE TABBB\n");
 		while (paths_on_set)
 		{
 			i += paths_on_set->length;
@@ -190,31 +123,17 @@ int			save_path(t_farm *farm, t_paths *paths)
 			j += tmp_paths_cpy->length;
 			tmp_paths_cpy = tmp_paths_cpy->next;
 		}
-		// TMP
-		ft_putstr("number of total rooms in registered set ");
-		ft_putnbr(farm->nb_paths);
-		ft_putstr(" : ");
-		ft_putnbr(i);
-		ft_putchar('\n');
-		ft_putstr("number of total rooms in new set : ");
-		ft_putnbr(j);
-		ft_putchar('\n');
-		ft_putstr("length of path_on_set et paths_cpy -->  ");
-		ft_putnbr(i);
-		ft_putstr(" et ");
-		ft_putnbr(j);
-		ft_putchar('\n');
-		// END TMP
-		// sinon, on free les anciens chemins, on duplique les nouveaux pour les mettre a la place des anciens
-		if (i < j)
+		if (i <= j)
 			return (SUCCESS);
 		else
 		{
-			ft_putstr("je remplace les chemins\n");
 			delete_set(farm, farm->all_paths[farm->nb_paths - 1]);
-			print_tab_paths(farm); // TMP
-			ft_putstr("Juste apres delete.\n");
-			farm->all_paths[farm->nb_paths - 1] = cpy_set(paths_cpy);
+			//delete_set free farm->all_paths[farm->nb_paths - 1] et par la
+			//meme occasion paths_cpy, parceque les deux pointeurs pointaient
+			// au meme endroit, je dois donc reinitialiser path_cpy
+			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
+				return (ERROR);
+			farm->all_paths[farm->nb_paths - 1] = paths_cpy;
 			print_tab_paths(farm); // TMP
 		}
 	}

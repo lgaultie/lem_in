@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/28 14:21:23 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/29 18:35:13 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void	free_farm(t_farm *farm, int **matrice)
 	free_rooms(farm->rooms);
 	free_queue(farm);
 	free_paths(farm);
+	free_all_paths(farm);
 	ft_memdel((void**)&farm);
 }
 
