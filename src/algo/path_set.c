@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/28 15:59:13 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/29 17:04:11 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,35 +52,78 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 	return (SUCCESS);
 }
 
-void	delete_paths_on_set(t_farm *farm)
+/*
+** delete_set() free and supress old set.
+*/
+
+void	delete_set(t_farm *farm, t_paths *paths_on_set)
 {
 	t_paths	*tmp;
+	t_paths	*new;
 	int		i;
 
 	i = 0;
-	while (paths_on_set)
+	tmp = paths_on_set;
+	while (tmp)
 	{
-		tmp = paths_on_set->next;
-		if (paths_on_set->length > 0)
+		new = tmp->next;
+		if (tmp->length > 0)
 		{
-			while (i < paths_on_set->length)
+			while (i < tmp->length)
 			{
-				ft_memdel((void**)&paths_on_set);
+				ft_memdel((void**)&tmp->path);
 				i++;
 			}
+			i = 0;
 		}
-		ft_memdel((void**)&paths_on_set);
-		paths_on_set = tmp;
+		ft_memdel((void**)&tmp);
+		tmp = new;
 	}
-	(void)farm;
 	farm->all_paths[farm->nb_paths - 1] = NULL;
 }
 
-// void	cpy_new_set(t_farm *farm, t_paths *paths_cpy)
-// {
-//
-// }
+/*
+** cpy_set() copy in the array the new optimized set.
+*/
 
+t_paths	*cpy_set(t_paths *paths_to_cpy)
+{
+	t_paths	*dest;
+	t_paths	*prev_path;
+	int		i;
+
+	ft_putstr("in cpy_set()\n");
+	dest = NULL;
+	while (paths_to_cpy)
+	{
+		prev_path = dest;
+		if ((dest = ft_memalloc(sizeof(t_paths))) == NULL)
+		return (NULL);
+		if (prev_path)
+			prev_path->next = dest;
+		else
+			dest = paths_to_cpy;
+		dest->length = paths_to_cpy->length;
+		if (dest->length > 0)
+		{
+			if ((dest->path = ft_memalloc(sizeof(int) * dest->length)) == NULL)
+				return (NULL);
+			i = 0;
+			while (i < dest->length)
+			{
+				dest->path[i] = paths_to_cpy->path[i];
+				ft_putstr("dest->path[i] = ");
+				ft_putnbr(dest->path[i]);
+				ft_putchar('\n');
+				i++;
+			}
+		}
+		dest->prev = prev_path;
+		dest->next = NULL;
+		paths_to_cpy = paths_to_cpy->next;
+	}
+	return (dest);
+}
 /*
 ** save_path() saves in an array of paths the paths combinations, in an
 ** incremental order. If we have 2 sets that have the same number of paths, we
@@ -91,6 +134,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 {
 	t_paths	*paths_on_set;
 	t_paths	*paths_cpy;
+	t_paths	*tmp_paths_cpy;
 	int		i;
 	int		j;
 
@@ -140,10 +184,11 @@ int			save_path(t_farm *farm, t_paths *paths)
 			i += paths_on_set->length;
 			paths_on_set = paths_on_set->next;
 		}
-		while (paths_cpy)
+		tmp_paths_cpy = paths_cpy;
+		while (tmp_paths_cpy)
 		{
-			j += paths_cpy->length;
-			paths_cpy = paths_cpy->next;
+			j += tmp_paths_cpy->length;
+			tmp_paths_cpy = tmp_paths_cpy->next;
 		}
 		// TMP
 		ft_putstr("number of total rooms in registered set ");
@@ -166,8 +211,10 @@ int			save_path(t_farm *farm, t_paths *paths)
 		else
 		{
 			ft_putstr("je remplace les chemins\n");
-			delete_paths_on_set(farm);
-			// cpy_new_set(farm, paths_cpy);
+			delete_set(farm, farm->all_paths[farm->nb_paths - 1]);
+			print_tab_paths(farm); // TMP
+			ft_putstr("Juste apres delete.\n");
+			farm->all_paths[farm->nb_paths - 1] = cpy_set(paths_cpy);
 			print_tab_paths(farm); // TMP
 		}
 	}
