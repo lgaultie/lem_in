@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 15:55:54 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 16:30:38 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		fill_reserved(t_farm *farm)
 	t_rooms	*tmp_rooms;
 	int		i;
 
+	ft_putstr("fill reserved\n");
 	tmp_paths = farm->paths;
 	tmp_rooms = farm->rooms;
 	while (tmp_paths->next)

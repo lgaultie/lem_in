@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 15:47:29 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 16:37:45 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int room_id);
 void	free_all_paths(t_farm *farm);
 void	free_blocking_room(t_farm *farm);
+int		check_starters(t_farm *farm, int **matrice);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);

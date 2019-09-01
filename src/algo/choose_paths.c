@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 15:55:46 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 16:39:30 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ int			find_paths(t_farm *farm, int **matrice)
 	ft_putchar('\n');
 	if (ret_algo != -2)
 	{
+		//c'est ici quon devrait mettre check_starters...
 		unvisit_rooms(farm);
 		ret_backtrack = backtrack_paths(ret_algo, farm);
 		ft_putstr("ret_backtrack: ");
