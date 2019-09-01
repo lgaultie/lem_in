@@ -125,12 +125,8 @@ int			save_path(t_farm *farm, t_paths *paths)
 		}
 		if (i > j)
 		{
+			ft_putstr("on supprime le set\n");
 			delete_set(farm, farm->all_paths[farm->nb_paths - 1]);
-			//delete_set free farm->all_paths[farm->nb_paths - 1] et par la
-			//meme occasion paths_cpy, parceque les deux pointeurs pointaient
-			// au meme endroit, je dois donc reinitialiser path_cpy
-			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
-				return (ERROR);
 			farm->all_paths[farm->nb_paths - 1] = paths_cpy;
 			print_tab_paths(farm); // TMP
 		}

@@ -55,6 +55,36 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 }
 
 /*
+** save_blocking_room()
+*/
+
+static void	save_blocking_room(t_farm *farm, int i)
+{
+	t_rooms_id	*tmp_blocking;
+
+	tmp_blocking = farm->blocking_rooms;
+	if (farm->blocking_rooms == NULL)
+		farm->blocking_rooms->room_id = i;
+	else
+	{
+		while (tmp_blocking->next)
+			tmp_blocking = tmp_blocking->next;
+		tmp_blocking->room_id = i;
+	}
+	tmp_blocking->next = NULL;
+	// TMP
+	t_rooms_id	*tmp = farm->blocking_rooms;
+	while (tmp)
+	{
+		ft_putstr("blocking room : ");
+		ft_putnbr(tmp->room_id);
+		ft_putchar('\n');
+		tmp = tmp->next;
+	}
+	// END TMP
+}
+
+/*
 ** blocking_room() checks, with the room id we specified in the parameters
 ** (that corresponds to the last link that was deleted from the queue), that
 ** this room is linked to an other room. If it is, the linked room is the
@@ -63,8 +93,8 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 
 static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 {
-	int		i;
-	t_rooms	*tmp_rooms;
+	int			i;
+	t_rooms		*tmp_rooms;
 
 	i = 0;
 	while (i < farm->total_rooms)
@@ -79,7 +109,7 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 					ft_putstr("blocking room: ");
 					ft_putnbr(tmp_rooms->room_id);
 					ft_putchar('\n');
-					// printf("room qui bloque = %d\n", tmp_rooms->room_id);
+					save_blocking_room(farm, i);
 					return (i);
 				}
 				tmp_rooms = tmp_rooms->next;

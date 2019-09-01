@@ -29,7 +29,55 @@ static void	unvisit_rooms(t_farm *farm)
 }
 
 /*
-** check_paths() checks if we have two similar paths in our paths strusture.
+** check_all_paths()
+*/
+
+int			check_all_paths(t_farm *farm)
+{
+	int		i;
+	int		j;
+	t_paths	*tmp_path;
+	t_paths	*tmp_all_paths;
+
+	i = 0;
+	tmp_path = farm->paths;
+	while (tmp_path->next)
+		tmp_path = tmp_path->next;
+	while (i < farm->nb_paths - 1)
+	{
+		ft_putstr("ici\n");
+		tmp_all_paths = farm->all_paths[i];
+		while (tmp_all_paths)
+		{
+			ft_putstr("la\n");
+			j = 0;
+			print_tab_paths(farm);
+			if (tmp_path->length == tmp_all_paths->length)
+			{
+				while (j < tmp_path->length &&
+					   tmp_path->path[j] == tmp_all_paths->path[j])
+				{
+					printf("tmp_path[j]: %d\n", tmp_path->path[j]);
+					printf("tmp_all_paths->path[j]: %d\n",
+						   tmp_all_paths->path[j]);
+					j++;
+				}
+				printf("i: %d   j: %d\n", i, j);
+				if (j == tmp_path->length)
+				{
+					delete_path(farm, tmp_path);
+					return (SUCCESS);
+				}
+			}
+			tmp_all_paths = tmp_all_paths->next;
+		}
+		i++;
+	}
+	return (FAILURE);
+}
+
+/*
+** check_paths() checks if we have two similar paths in our paths structure.
 ** If this is the case, we have found all the paths possible, and we no longer
 ** need to call our algorithm. We delete the first similar path.
 */
@@ -41,6 +89,8 @@ int			check_paths(t_farm *farm)
 	int		i;
 
 	ft_putstr("check paths\n");
+	if (check_all_paths(farm) == SUCCESS)
+		return (SUCCESS);
 	current_path = farm->paths;
 	while (current_path)
 	{

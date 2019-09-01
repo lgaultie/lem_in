@@ -58,6 +58,12 @@ typedef struct			s_rooms
 	struct s_rooms		*parent;
 }						t_rooms;
 
+typedef struct			s_rooms_id
+{
+	int					room_id;
+	struct s_rooms_id	*next;
+}						t_rooms_id;
+
 typedef struct			s_farm
 {
 	int					nb_paths;
@@ -65,6 +71,7 @@ typedef struct			s_farm
 	int					total_rooms;
 	t_queue				*queue;
 	t_rooms				*rooms;
+	t_rooms_id			*blocking_rooms;
 	t_paths				*paths;
 	t_paths				**all_paths;
 }						t_farm;
