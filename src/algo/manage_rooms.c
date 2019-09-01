@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 15:47:19 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 15:55:54 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,48 +154,6 @@ static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
 	return (SUCCESS);
 }
 
-// void 	path_cpy(t_paths *new, t_paths *path)
-// {
-// 	int		i;
-//
-// 	i = 0;
-// 	if (!(new->path = ft_memalloc(sizeof(int) * path->length)))
-// 		return ;
-// 	while (i < path->length)
-// 	{
-// 		new->path[i] = path->path[i];
-// 		i++;
-// 	}
-// }
-//
-// /*
-// ** save_deleted_path()
-// */
-//
-// void save_deleted_path(t_farm *farm, t_paths *path)
-// {
-// 	t_paths	*tmp;
-// 	t_paths	*new;
-//
-// 	tmp = farm->deleted_paths;
-// 	if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
-// 		return ;
-// 	if (tmp)
-// 	{
-// 		while (tmp->next)
-// 			tmp = tmp->next;
-// 		tmp->next = new;
-// 		new->prev = tmp;
-// 	}
-// 	else
-// 	{
-// 		farm->deleted_paths = new;
-// 		new->prev = NULL;
-// 	}
-// 	new->next = NULL;
-// 	new->length = path->length;
-// 	path_cpy(new, path);
-// }
 
 /*
 ** path_to_delete() finds the path(s) that use(s) the room given in parameter,
@@ -216,7 +174,6 @@ int			path_to_delete(t_farm *farm, int room_id)
 			if (tmp->path[i] == room_id)
 			{
 				unvisit_rooms(tmp->path, tmp->length, farm, room_id);
-				// save_deleted_path(farm, tmp);
 				delete_path(farm, tmp);
 				farm->nb_paths--;
 				tmp = farm->paths;

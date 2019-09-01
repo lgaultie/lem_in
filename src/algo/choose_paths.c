@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 15:47:08 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 15:55:46 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,56 +75,6 @@ int			check_all_paths(t_farm *farm)
 	}
 	return (FAILURE);
 }
-
-/*
-** check_deleted_paths()
-*/
-
-/*int			check_deleted_paths(t_farm *farm)
-{
-	int		i;
-	int		j;
-	t_paths	*tmp_path;
-	t_paths	*tmp_delete;
-
-	i = 0;
-	tmp_path = farm->paths;
-	while (tmp_path->next)
-		tmp_path = tmp_path->next;
-	tmp_delete = farm->deleted_paths;
-	// TMP
-	t_paths *tmp = farm->deleted_paths;
-	int k = 0;
-	while (tmp)
-	{
-		ft_putstr("deleted path: ");
-		while (k < tmp->length)
-		{
-			ft_putnbr(tmp->path[k]);
-			ft_putchar(' ');
-			k++;
-		}
-		ft_putchar('\n');
-		tmp = tmp->next;
-	}
-	// END TMP
-	while (tmp_delete)
-	{
-		if (tmp_path->length == tmp_delete->length)
-		{
-			j = 0;
-			while (j < tmp_path->length && tmp_path->path[j] == tmp_delete->path[j])
-				j++;
-			if (j == tmp_path->length)
-			{
-				delete_path(farm, tmp_path);
-				return (SUCCESS);
-			}
-		}
-		tmp_delete = tmp_delete->next;
-	}
-	return (FAILURE);
-}*/
 
 /*
 ** check_paths() checks if we have two similar paths in our paths structure.
