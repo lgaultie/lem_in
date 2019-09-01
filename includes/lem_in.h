@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/29 18:30:29 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 15:47:29 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ typedef struct			s_farm
 	t_rooms				*rooms;
 	t_rooms_id			*blocking_rooms;
 	t_paths				*paths;
+	// t_paths				*deleted_paths;
 	t_paths				**all_paths;
 }						t_farm;
 
@@ -98,8 +99,9 @@ int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_farm *farm, t_paths *path);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);
-int		path_to_delete(t_farm *farm, int id_room);
+int		path_to_delete(t_farm *farm, int room_id);
 void	free_all_paths(t_farm *farm);
+void	free_blocking_room(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);

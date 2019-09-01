@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/28 14:34:49 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 15:47:08 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	unvisit_rooms(t_farm *farm)
 		tmp_rooms = tmp_rooms->next;
 	}
 }
+
 
 /*
 ** check_all_paths()
@@ -55,11 +56,10 @@ int			check_all_paths(t_farm *farm)
 			if (tmp_path->length == tmp_all_paths->length)
 			{
 				while (j < tmp_path->length &&
-					   tmp_path->path[j] == tmp_all_paths->path[j])
+					tmp_path->path[j] == tmp_all_paths->path[j])
 				{
 					printf("tmp_path[j]: %d\n", tmp_path->path[j]);
-					printf("tmp_all_paths->path[j]: %d\n",
-						   tmp_all_paths->path[j]);
+					printf("tmp_all_paths->path[j]: %d\n", tmp_all_paths->path[j]);
 					j++;
 				}
 				printf("i: %d   j: %d\n", i, j);
@@ -75,6 +75,56 @@ int			check_all_paths(t_farm *farm)
 	}
 	return (FAILURE);
 }
+
+/*
+** check_deleted_paths()
+*/
+
+/*int			check_deleted_paths(t_farm *farm)
+{
+	int		i;
+	int		j;
+	t_paths	*tmp_path;
+	t_paths	*tmp_delete;
+
+	i = 0;
+	tmp_path = farm->paths;
+	while (tmp_path->next)
+		tmp_path = tmp_path->next;
+	tmp_delete = farm->deleted_paths;
+	// TMP
+	t_paths *tmp = farm->deleted_paths;
+	int k = 0;
+	while (tmp)
+	{
+		ft_putstr("deleted path: ");
+		while (k < tmp->length)
+		{
+			ft_putnbr(tmp->path[k]);
+			ft_putchar(' ');
+			k++;
+		}
+		ft_putchar('\n');
+		tmp = tmp->next;
+	}
+	// END TMP
+	while (tmp_delete)
+	{
+		if (tmp_path->length == tmp_delete->length)
+		{
+			j = 0;
+			while (j < tmp_path->length && tmp_path->path[j] == tmp_delete->path[j])
+				j++;
+			if (j == tmp_path->length)
+			{
+				delete_path(farm, tmp_path);
+				return (SUCCESS);
+			}
+		}
+		tmp_delete = tmp_delete->next;
+	}
+	return (FAILURE);
+}*/
 
 /*
 ** check_paths() checks if we have two similar paths in our paths structure.
@@ -132,7 +182,9 @@ int			find_paths(t_farm *farm, int **matrice)
 	int				ret_fill_path;
 	static int		ret_backtrack = -1;
 	static int		just_deleted = -1;
+	t_rooms_id		*tmp_block;
 
+	tmp_block = farm->blocking_rooms;
 	while ((ret_algo = algo(farm, matrice)) == -2)
 	{
 		if (init_paths(farm) == ERROR || ((ret_fill_path = fill_path(farm)) == ERROR))
@@ -143,7 +195,12 @@ int			find_paths(t_farm *farm, int **matrice)
 		fill_reserved(farm);
 		if (ret_backtrack != -1)
 		{
-			path_to_delete(farm, ret_backtrack);
+			while (tmp_block)
+			{
+				path_to_delete(farm, tmp_block->room_id);
+				tmp_block = tmp_block->next;
+			}
+			free_blocking_room(farm);
 			ret_backtrack = -1;
 			just_deleted = 1;
 		}

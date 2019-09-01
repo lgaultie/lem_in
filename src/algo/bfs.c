@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 11:16:49 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/01 14:08:14 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,28 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 static void	save_blocking_room(t_farm *farm, int i)
 {
 	t_rooms_id	*tmp_blocking;
+	t_rooms_id	*new;
 
 	tmp_blocking = farm->blocking_rooms;
+	if (!(new = ft_memalloc(sizeof(t_rooms_id))))
+		return ;
 	if (farm->blocking_rooms == NULL)
-		farm->blocking_rooms->room_id = i;
+		farm->blocking_rooms = new;
 	else
 	{
 		while (tmp_blocking->next)
 			tmp_blocking = tmp_blocking->next;
-		tmp_blocking->room_id = i;
+		tmp_blocking->next = new;
 	}
-	tmp_blocking->next = NULL;
+	new->room_id = i;
+	new->next = NULL;
 	// TMP
 	t_rooms_id	*tmp = farm->blocking_rooms;
+
+	ft_putstr("jarrive dans la fonction\n");
 	while (tmp)
 	{
-		ft_putstr("blocking room : ");
+		ft_putstr("saved blocking room : ");
 		ft_putnbr(tmp->room_id);
 		ft_putchar('\n');
 		tmp = tmp->next;
