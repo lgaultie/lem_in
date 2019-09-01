@@ -93,8 +93,6 @@ int			fill_path(t_farm *farm)
 			if (check_paths(farm) == SUCCESS)
 				return (FAILURE);
 			farm->nb_paths++;
-			// if (save_path(farm, farm->paths) == ERROR)
-			// 	return (ERROR);
 		}
 		tmp_rooms = tmp_rooms->next;
 	}

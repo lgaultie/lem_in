@@ -53,7 +53,7 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 }
 
 /*
-** delete_set() free and supress old set.
+** delete_set() frees and deletes the set of path we want to replace.
 */
 
 void	delete_set(t_farm *farm, t_paths *paths_on_set)
@@ -123,9 +123,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 			j += tmp_paths_cpy->length;
 			tmp_paths_cpy = tmp_paths_cpy->next;
 		}
-		if (i <= j)
-			return (SUCCESS);
-		else
+		if (i > j)
 		{
 			delete_set(farm, farm->all_paths[farm->nb_paths - 1]);
 			//delete_set free farm->all_paths[farm->nb_paths - 1] et par la
