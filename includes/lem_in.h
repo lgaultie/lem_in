@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 16:37:45 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 15:18:20 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # define SUCCESS 1
 # define FAILURE 0
+# define END -2
 # define ERROR -1
 # define ERROR_MSG "ERROR"
 
@@ -73,7 +74,7 @@ typedef struct			s_farm
 	t_rooms				*rooms;
 	t_rooms_id			*blocking_rooms;
 	t_paths				*paths;
-	// t_paths				*deleted_paths;
+	t_paths				*all_found_paths;
 	t_paths				**all_paths;
 }						t_farm;
 

@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/28 14:05:06 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 15:42:42 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	print_all_paths(farm); // TMP
+	// print_all_paths(farm); // TMP
 	while (i < path->length)
 		retrieve_path(farm, path, tmp_rooms->parent->room_id, i);
 	return (SUCCESS);
@@ -64,6 +64,54 @@ static int	find_layer(t_farm *farm)
 	}
 	return (SUCCESS);
 }
+
+/*
+** save_found_path()
+*/
+
+void 	path_cpy(t_paths *new, t_paths *path)
+{
+	int		i;
+
+	i = 0;
+	if (!(new->path = ft_memalloc(sizeof(int) * path->length)))
+		return ;
+	while (i < path->length)
+	{
+		new->path[i] = path->path[i];
+		i++;
+	}
+}
+
+/*
+** save_found_path() initializes the list of all found paths.
+*/
+
+void	save_found_path(t_farm *farm, t_paths *path)
+{
+	t_paths	*tmp;
+	t_paths	*new;
+
+	tmp = farm->all_found_paths;
+	if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
+		return ;
+	if (tmp)
+	{
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+		new->prev = tmp;
+	}
+	else
+	{
+		farm->all_found_paths = new;
+		new->prev = NULL;
+	}
+	new->next = NULL;
+	new->length = path->length;
+	path_cpy(new, path);
+}
+
 
 /*
 ** fill_path() fills a link from the paths structure. It calls find_layer() and
@@ -90,6 +138,7 @@ int			fill_path(t_farm *farm)
 		if (tmp_rooms->start_end == 2)
 		{
 			retrieve_path(farm, tmp_path, tmp_rooms->room_id, 0);
+			save_found_path(farm, tmp_path);
 			if (check_paths(farm) == SUCCESS)
 				return (FAILURE);
 			farm->nb_paths++;

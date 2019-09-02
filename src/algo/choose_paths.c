@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 16:39:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:15:31 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,48 +30,42 @@ static void	unvisit_rooms(t_farm *farm)
 
 
 /*
-** check_all_paths()
+** check_all_paths() checks if we have two similar paths in our paths structure.
+** If this is the case, we have found all the paths possible, and we no longer
+** need to call our algorithm. We delete the first similar path.
 */
 
-int			check_all_paths(t_farm *farm)
+int			check_paths(t_farm *farm)
 {
-	int		i;
 	int		j;
 	t_paths	*tmp_path;
 	t_paths	*tmp_all_paths;
 
-	i = 0;
+	ft_putstr("check all paths\n");
 	tmp_path = farm->paths;
 	while (tmp_path->next)
 		tmp_path = tmp_path->next;
-	while (i < farm->nb_paths - 1)
+	tmp_all_paths = farm->all_found_paths;
+	while (tmp_all_paths->next)
 	{
-		ft_putstr("ici\n");
-		tmp_all_paths = farm->all_paths[i];
-		while (tmp_all_paths)
+		j = 0;
+		print_tab_paths(farm);
+		if (tmp_path->length == tmp_all_paths->length)
 		{
-			ft_putstr("la\n");
-			j = 0;
-			print_tab_paths(farm);
-			if (tmp_path->length == tmp_all_paths->length)
+			while (j < tmp_path->length &&
+				tmp_path->path[j] == tmp_all_paths->path[j])
+				j++;
+			if (j == tmp_path->length)
 			{
-				while (j < tmp_path->length &&
-					tmp_path->path[j] == tmp_all_paths->path[j])
-				{
-					printf("tmp_path[j]: %d\n", tmp_path->path[j]);
-					printf("tmp_all_paths->path[j]: %d\n", tmp_all_paths->path[j]);
-					j++;
-				}
-				printf("i: %d   j: %d\n", i, j);
-				if (j == tmp_path->length)
-				{
-					delete_path(farm, tmp_path);
-					return (SUCCESS);
-				}
+				ft_putstr("There is 2 similar paths in all_paths, we delete the first similar path.\n");
+				delete_path(farm, tmp_path);
+				print_tab_paths(farm);
+				print_all_paths(farm);
+				// save_path(farm, farm->paths);
+				return (SUCCESS);
 			}
-			tmp_all_paths = tmp_all_paths->next;
 		}
-		i++;
+		tmp_all_paths = tmp_all_paths->next;
 	}
 	return (FAILURE);
 }
@@ -82,41 +76,41 @@ int			check_all_paths(t_farm *farm)
 ** need to call our algorithm. We delete the first similar path.
 */
 
-int			check_paths(t_farm *farm)
-{
-	t_paths	*current_path;
-	t_paths	*compared_path;
-	int		i;
+// int			check_paths(t_farm *farm)
+// {
+	// t_paths	*current_path;
+	// t_paths	*compared_path;
+	// int		i;
 
-	ft_putstr("check paths\n");
-	if (check_all_paths(farm) == SUCCESS)
-		return (SUCCESS);
-	current_path = farm->paths;
-	while (current_path)
-	{
-		compared_path = farm->paths;
-		while (compared_path)
-		{
-			if (current_path != compared_path \
-				&& current_path->length == compared_path->length)
-			{
-				i = 0;
-				while (i < compared_path->length \
-					&& current_path->path[i] == compared_path->path[i])
-					i++;
-				if (i == compared_path->length)
-				{
-					ft_putstr("There is 2 similar paths, we delete the first similar path.\n");
-					delete_path(farm, current_path);
-					return (SUCCESS);
-				}
-			}
-			compared_path = compared_path->next;
-		}
-		current_path = current_path->next;
-	}
-	return (FAILURE);
-}
+	// ft_putstr("check paths\n");
+	// if (check_all_paths(farm) == SUCCESS)
+	// 	return (SUCCESS);
+	// current_path = farm->paths;
+	// while (current_path)
+	// {
+	// 	compared_path = farm->paths;
+	// 	while (compared_path)
+	// 	{
+	// 		if (current_path != compared_path \
+	// 			&& current_path->length == compared_path->length)
+	// 		{
+	// 			i = 0;
+	// 			while (i < compared_path->length \
+	// 				&& current_path->path[i] == compared_path->path[i])
+	// 				i++;
+	// 			if (i == compared_path->length)
+	// 			{
+	// 				ft_putstr("There is 2 similar paths found in all_found_paths, we delete the first similar path.\n");
+	// 				delete_path(farm, current_path);
+	// 				return (SUCCESS);
+	// 			}
+	// 		}
+	// 		compared_path = compared_path->next;
+	// 	}
+	// 	current_path = current_path->next;
+	// }
+// 	return (FAILURE);
+// }
 
 /*
 ** find_paths() calls algo() and checks what it returns.
@@ -145,12 +139,13 @@ int			find_paths(t_farm *farm, int **matrice)
 		fill_reserved(farm);
 		if (ret_backtrack != -1)
 		{
-			while (tmp_block)
-			{
-				path_to_delete(farm, tmp_block->room_id);
-				tmp_block = tmp_block->next;
-			}
-			free_blocking_room(farm);
+			//beug: arrete trop tot backtrack1
+			// while (tmp_block)
+			// {
+			// 	path_to_delete(farm, tmp_block->room_id);
+			// 	tmp_block = tmp_block->next;
+			// }
+			// free_blocking_room(farm);
 			ret_backtrack = -1;
 			just_deleted = 1;
 		}
@@ -166,14 +161,15 @@ int			find_paths(t_farm *farm, int **matrice)
 	ft_putchar('\n');
 	if (ret_algo != -2)
 	{
-		//c'est ici quon devrait mettre check_starters...
+		// if (check_starters(farm, matrice) == SUCCESS)
+		// 	return (END);
 		unvisit_rooms(farm);
 		ret_backtrack = backtrack_paths(ret_algo, farm);
 		ft_putstr("ret_backtrack: ");
 		ft_putnbr(ret_backtrack);
 		ft_putchar('\n');
 		if (ret_backtrack == ERROR)
-			return (ERROR);
+			return (END);
 	}
 	// print_free_rooms(farm); // TMP
 	return (SUCCESS);

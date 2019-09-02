@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/08/29 18:25:32 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:07:24 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 	t_paths	*prev_path;
 	int		i;
 
-	ft_putstr("in init_save_path()\n");
+	ft_putstr("in init_paths_cpy()\n");
 	new_path = NULL;
 	while (paths)
 	{
