@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/02 15:18:20 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:34:54 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 
 # define SUCCESS 1
 # define FAILURE 0
-# define END -2
 # define ERROR -1
 # define ERROR_MSG "ERROR"
 
@@ -59,12 +58,6 @@ typedef struct			s_rooms
 	struct s_rooms		*parent;
 }						t_rooms;
 
-typedef struct			s_rooms_id
-{
-	int					room_id;
-	struct s_rooms_id	*next;
-}						t_rooms_id;
-
 typedef struct			s_farm
 {
 	int					nb_paths;
@@ -72,9 +65,8 @@ typedef struct			s_farm
 	int					total_rooms;
 	t_queue				*queue;
 	t_rooms				*rooms;
-	t_rooms_id			*blocking_rooms;
 	t_paths				*paths;
-	t_paths				*all_found_paths;
+	t_paths				*found_paths;
 	t_paths				**all_paths;
 }						t_farm;
 
@@ -100,10 +92,9 @@ int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_farm *farm, t_paths *path);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);
-int		path_to_delete(t_farm *farm, int room_id);
+int		path_to_delete(t_farm *farm, int id_room);
 void	free_all_paths(t_farm *farm);
-void	free_blocking_room(t_farm *farm);
-int		check_starters(t_farm *farm, int **matrice);
+void	free_found_paths(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);

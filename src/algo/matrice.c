@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/02 16:15:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/25 13:59:24 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,59 +43,8 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 	return (SUCCESS);
 }
 
-// /*
-// ** check_starters()
-// */
-//
-// int			check_starters(t_farm *farm, int **matrice)
-// {
-// 	t_rooms	*tmp;
-// 	t_rooms	*tmp_reserved;
-// 	int 	i;
-// 	int		nb_links;
-// 	int		nb_reserved;
-//
-// 	ft_putstr("in check_starters()\n");
-// 	tmp = farm->rooms;
-// 	i = 0;
-// 	nb_links = 0;
-// 	nb_reserved = 0;
-// 	while (tmp->start_end != 1)
-// 		tmp = tmp->next;
-// 	while (i < farm->total_rooms)
-// 	{
-// 		if (matrice[tmp->room_id][i] == 1)
-// 		{
-// 			nb_links++;
-// 			tmp_reserved = farm->rooms;
-// 			print_free_rooms(farm);
-// 			while (tmp_reserved)
-// 			{
-// 				if (tmp_reserved->room_id == i)
-// 				{
-// 					if (tmp_reserved->reserved == 1)
-// 						nb_reserved++;
-// 				}
-// 				tmp_reserved = tmp_reserved->next;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	ft_putstr("nb_links : ");
-// 	ft_putnbr(nb_links);
-// 	ft_putchar('\n');
-// 	ft_putstr("nb_reserved : ");
-// 	ft_putnbr(nb_reserved);
-// 	ft_putchar('\n');
-// 	if (nb_links == nb_reserved)
-// 	{
-// 		// save_path(farm, farm->paths);
-// 		print_tab_paths(farm);
-// 		print_all_paths(farm);
-// 		return (SUCCESS);
-// 	}
-// 	return (FAILURE);
-// }
+//all_paths[1]->next->path
+//all_paths[3]->lenght
 
 /*
 ** matrice_create() creates an int** that references every links of the map.
@@ -146,7 +95,7 @@ int			**matrice_create(t_farm *farm)
 	{
 		if ((ret_find_path = find_paths(farm, matrice)) == ERROR)
 			return (NULL);
-		if (ret_find_path == FAILURE || ret_find_path == END)
+		if (ret_find_path == FAILURE)
 			return (matrice);
 	}
 	// TMP

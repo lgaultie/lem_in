@@ -6,38 +6,16 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 14:56:45 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:55:15 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
 /*
-** free_blocking_room()
-*/
-
-void			free_blocking_room(t_farm *farm)
-{
-	t_rooms_id	*tmp;
-	t_rooms_id	*new;
-
-	tmp = farm->blocking_rooms;
-	while (tmp)
-	{
-		ft_putstr("je free tmp ");
-		ft_putnbr(tmp->room_id);
-		ft_putchar('\n');
-		new = tmp->next;
-		ft_memdel((void**)&tmp);
-		tmp = new;
-	}
-	farm->blocking_rooms = NULL;
-	// ft_memdel((void**)&farm->blocking_rooms);
-}
-
-/*
 ** free_paths() frees paths when they exist.
 */
+
 
 void			free_paths(t_farm *farm)
 {
@@ -45,6 +23,26 @@ void			free_paths(t_farm *farm)
 	t_paths		*new;
 
 	tmp = farm->paths;
+	while (tmp)
+	{
+		new = tmp->next;
+		ft_memdel((void**)&tmp->path);
+		ft_memdel((void**)&tmp);
+		tmp = new;
+	}
+}
+
+/*
+** free_paths() frees paths when they exist.
+*/
+
+
+void			free_found_paths(t_farm *farm)
+{
+	t_paths		*tmp;
+	t_paths		*new;
+
+	tmp = farm->found_paths;
 	while (tmp)
 	{
 		new = tmp->next;

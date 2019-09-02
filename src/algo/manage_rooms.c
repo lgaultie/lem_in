@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/01 16:30:38 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/08/28 10:51:58 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int		fill_reserved(t_farm *farm)
 	t_rooms	*tmp_rooms;
 	int		i;
 
-	ft_putstr("fill reserved\n");
 	tmp_paths = farm->paths;
 	tmp_rooms = farm->rooms;
 	while (tmp_paths->next)
@@ -155,26 +154,28 @@ static int	unvisit_rooms(int *path, int length, t_farm *farm, int id_room)
 	return (SUCCESS);
 }
 
-
 /*
 ** path_to_delete() finds the path(s) that use(s) the room given in parameter,
 ** and calls unvisit_rooms() and delete_path().
 */
 
-int			path_to_delete(t_farm *farm, int room_id)
+int			path_to_delete(t_farm *farm, int id_room)
 {
 	t_paths		*tmp;
 	int			i;
 
+	ft_putstr("path to delete, the one with room: ");
+	ft_putnbr(id_room);
+	ft_putchar('\n');
 	tmp = farm->paths;
 	while (tmp)
 	{
 		i = 0;
 		while (i < tmp->length)
 		{
-			if (tmp->path[i] == room_id)
+			if (tmp->path[i] == id_room)
 			{
-				unvisit_rooms(tmp->path, tmp->length, farm, room_id);
+				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
 				delete_path(farm, tmp);
 				farm->nb_paths--;
 				tmp = farm->paths;

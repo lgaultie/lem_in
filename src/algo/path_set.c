@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/02 16:07:24 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 17:35:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 	t_paths	*prev_path;
 	int		i;
 
-	ft_putstr("in init_paths_cpy()\n");
+	ft_putstr("in init_path_cpy()\n");
 	new_path = NULL;
 	while (paths)
 	{
 		prev_path = new_path;
-		if ((new_path = ft_memalloc(sizeof(t_paths))) == NULL)
+		if (!(new_path = ft_memalloc(sizeof(t_paths))))
 			return (ERROR);
 		if (prev_path)
 			prev_path->next = new_path;
@@ -36,7 +36,7 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 		new_path->length = paths->length;
 		if (new_path->length > 0)
 		{
-			if ((new_path->path = ft_memalloc(sizeof(int) * new_path->length)) == NULL)
+			if (!(new_path->path = ft_memalloc(sizeof(int) * new_path->length)))
 				return (ERROR);
 			i = 0;
 			while (i < new_path->length)
@@ -125,8 +125,9 @@ int			save_path(t_farm *farm, t_paths *paths)
 		}
 		if (i > j)
 		{
-			ft_putstr("on supprime le set\n");
 			delete_set(farm, farm->all_paths[farm->nb_paths - 1]);
+			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
+				return (ERROR);
 			farm->all_paths[farm->nb_paths - 1] = paths_cpy;
 			print_tab_paths(farm); // TMP
 		}

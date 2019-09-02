@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/02 15:42:42 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 16:28:13 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	// print_all_paths(farm); // TMP
+	print_all_paths(farm); // TMP
 	while (i < path->length)
 		retrieve_path(farm, path, tmp_rooms->parent->room_id, i);
 	return (SUCCESS);
@@ -92,7 +92,7 @@ void	save_found_path(t_farm *farm, t_paths *path)
 	t_paths	*tmp;
 	t_paths	*new;
 
-	tmp = farm->all_found_paths;
+	tmp = farm->found_paths;
 	if ((new = ft_memalloc(sizeof(t_paths))) == NULL)
 		return ;
 	if (tmp)
@@ -104,14 +104,13 @@ void	save_found_path(t_farm *farm, t_paths *path)
 	}
 	else
 	{
-		farm->all_found_paths = new;
+		farm->found_paths = new;
 		new->prev = NULL;
 	}
 	new->next = NULL;
 	new->length = path->length;
 	path_cpy(new, path);
 }
-
 
 /*
 ** fill_path() fills a link from the paths structure. It calls find_layer() and
