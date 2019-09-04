@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/04 18:51:49 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 19:23:42 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int			path_to_delete(t_farm *farm, int id_room)
 }
 
 /*
-** bug here
+**
 */
 
 void	release_rooms_on_same_path(t_farm *farm, int id)
@@ -174,27 +174,27 @@ void	release_rooms_on_same_path(t_farm *farm, int id)
 	t_paths		*tmp;
 	int			i;
 
-	i = 0;
+	print_all_paths(farm);
 	tmp = farm->paths;
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->path[i] != id)
+		while (i < tmp->length)
 		{
-			i++;
-		}
-		if (tmp->path[i] == id)
-		{
-			// i++;
-			while (i < tmp->length)
+			if (tmp->path[i] == id)
 			{
-				ft_putstr("rend en non visité les salles: ");
-				ft_putnbr(farm->all_rooms[i].room_id);
-				ft_putchar('\n');
-				farm->all_rooms[i].visited = 0;
-				farm->all_rooms[i].reserved = 0;
-				i++;
+				while (i < tmp->length)
+				{
+					ft_putstr("rend en non visité les salles: ");
+					ft_putnbr(farm->all_rooms[i]->room_id);
+					ft_putchar('\n');
+					farm->all_rooms[i]->visited = 0;
+					farm->all_rooms[i]->reserved = 0;
+					i++;
+				}
+				break ;
 			}
+			i++;
 		}
 		tmp = tmp->next;
 	}

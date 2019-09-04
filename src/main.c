@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/04 18:04:01 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 19:01:06 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ int		init_all_rooms(t_farm *farm)
 
 	tmp = farm->rooms;
 	i = 0;
-	if (!(farm->all_rooms = ft_memalloc(sizeof(t_rooms) * farm->total_rooms)))
+	if (!(farm->all_rooms = ft_memalloc(sizeof(t_rooms *) * farm->total_rooms)))
 		return (ERROR);
 	while (tmp)
 	{
-		farm->all_rooms[i] = *tmp;
+		farm->all_rooms[i] = tmp;
 		tmp = tmp->next;
 		i++;
 	}

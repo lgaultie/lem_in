@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/02 16:34:54 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 19:13:10 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct			s_farm
 	int					nb_paths;
 	int					ants;
 	int					total_rooms;
-	t_rooms				*all_rooms;
+	t_rooms				**all_rooms;
 	t_queue				*queue;
 	t_rooms				*rooms;
 	t_rooms				*start;
