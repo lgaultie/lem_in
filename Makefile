@@ -24,7 +24,7 @@ PARS_DIR = parsing
 SRCS =	main.c							\
 		free.c							\
 		free_error.c					\
-		print.c								\
+		print.c							\
 		$(PARS_DIR)/read_input.c		\
 		$(PARS_DIR)/parsing.c			\
 		$(PARS_DIR)/rooms.c				\

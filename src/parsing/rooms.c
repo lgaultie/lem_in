@@ -58,6 +58,10 @@ static int	add_room(t_farm *farm, char **tab, int startend)
 		farm->rooms = new;
 	}
 	init_room(new, tab, startend);
+	if (startend == 1)
+		farm->start = new;
+	if (startend == 2)
+		farm->end = new;
 	return (SUCCESS);
 }
 

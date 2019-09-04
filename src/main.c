@@ -60,6 +60,28 @@ int		max_paths(t_farm *farm)
 }
 
 /*
+** init_all_rooms()
+*/
+
+int		init_all_rooms(t_farm *farm)
+{
+	t_rooms	*tmp;
+	int		i;
+
+	tmp = farm->rooms;
+	i = 0;
+	if (!(farm->all_rooms = ft_memalloc(sizeof(t_rooms) * farm->total_rooms)))
+		return (ERROR);
+	while (tmp)
+	{
+		farm->all_rooms[i] = *tmp;
+		tmp = tmp->next;
+		i++;
+	}
+	return (SUCCESS);
+}
+
+/*
 ** init_all_paths() initializes the array of paths structures.
 */
 
@@ -89,6 +111,7 @@ int			main(void)
 	error = 0;
 	if (!(farm = ft_memalloc(sizeof(t_farm))) \
 		|| read_input(farm, line_nb, error, error) == ERROR \
+		|| init_all_rooms(farm) == ERROR \
 		|| init_all_paths(farm) == ERROR \
 		|| (matrice = matrice_create(farm)) == NULL)
 		return (free_farm_error(farm));

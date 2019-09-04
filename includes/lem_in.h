@@ -56,6 +56,7 @@ typedef struct			s_rooms
 	struct s_rooms		*prev;
 	struct s_rooms		*next;
 	struct s_rooms		*parent;
+	t_paths				*path;
 }						t_rooms;
 
 typedef struct			s_farm
@@ -63,8 +64,11 @@ typedef struct			s_farm
 	int					nb_paths;
 	int					ants;
 	int					total_rooms;
+	t_rooms				*all_rooms;
 	t_queue				*queue;
 	t_rooms				*rooms;
+	t_rooms				*start;
+	t_rooms				*end;
 	t_paths				*paths;
 	t_paths				*found_paths;
 	t_paths				**all_paths;
