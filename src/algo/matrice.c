@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 13:59:24 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 18:19:47 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 	t_links	*links;
 
 	room = farm->rooms;
-	while (room != NULL)
+	while (room)
 	{
 		links = room->links;
-		while (links != NULL)
+		while (links)
 		{
 			room_bis = farm->rooms;
-			while (room_bis != NULL)
+			while (room_bis)
 			{
 				if (ft_strcmp(room_bis->name, links->name) == 0)
 					matrice[room->room_id][room_bis->room_id] = 1;
@@ -55,10 +55,11 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 
 int			**matrice_create(t_farm *farm)
 {
-	int	i;
-	int	j;
-	int	total_rooms;
-	int	**matrice;
+	int		i;
+	int		j;
+	int		total_rooms;
+	int		**matrice;
+	int		ret_find_path;
 
 	i = 0;
 	j = 0;
@@ -72,25 +73,6 @@ int			**matrice_create(t_farm *farm)
 		i++;
 	}
 	matrice_fill(farm, matrice);
-	// TMP
-	ft_putstr("\nmatrice:\n");
-	int k, l;
-	k = 0;
-	while (k < total_rooms)
-	{
-		l = 0;
-		while (l < total_rooms)
-		{
-			ft_putnbr(matrice[k][l]);
-			ft_putchar(' ');
-			l++;
-		}
-		ft_putchar('\n');
-		k++;
-	}
-	// END TMP
-	int		ret_find_path;
-
 	while (farm->paths == NULL || check_paths(farm) == FAILURE)
 	{
 		if ((ret_find_path = find_paths(farm, matrice)) == ERROR)
@@ -98,23 +80,5 @@ int			**matrice_create(t_farm *farm)
 		if (ret_find_path == FAILURE)
 			return (matrice);
 	}
-	// TMP
-	t_paths		*tmp_path;
-	tmp_path = farm->paths;
-	ft_putchar('\n');
-	while (tmp_path)
-	{
-		ft_putstr("path: ");
-		int x = 0;
-		while(x < tmp_path->length)
-		{
-			ft_putnbr(tmp_path->path[x]);
-			ft_putchar(' ');
-			x++;
-		}
-		ft_putchar('\n');
-		tmp_path = tmp_path->next;
-	}
-	// END TMP
 	return (matrice);
 }

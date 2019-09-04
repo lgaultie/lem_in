@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:05 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/29 17:47:05 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:42:16 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,10 @@ int			parse_links(t_farm *farm, char *line)
 			return (ERROR);
 		if (check_valid_room_name(link, farm) == ERROR \
 		|| add_link(farm, link) == ERROR)
+		{
+			ft_putstr("nameee\n");
 			return (free_tab_error(link));
+		}
 		ft_free_tab(link);
 	}
 	return (SUCCESS);

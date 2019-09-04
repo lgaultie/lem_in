@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:44:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/29 17:45:24 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:33:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ int			parse(t_farm *farm, char *line, int start_end)
 			return (ERROR);
 		order = 3;
 		if (parse_links(farm, line) == ERROR)
+		{
+			ft_putstr("parse link error\n");
 			return (ERROR);
+		}
 	}
 	return (SUCCESS);
 }

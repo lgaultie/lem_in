@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:13 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/21 15:44:34 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:29:52 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int	init_room(t_rooms *new, char **tab, int startend)
 
 	if (!(new->name = ft_strdup(tab[0])))
 		return (ERROR);
-	// printf("\n\nname = %s\n\n", new->name);
 	new->room_id = room_id;
 	new->x_pos = ft_atoi(tab[1]);
 	new->y_pos = ft_atoi(tab[2]);
@@ -103,34 +102,6 @@ static int	check_if_name_taken(char **room, t_farm *farm)
 	return (SUCCESS);
 }
 
-// void	ft_display_array(char **tab)
-// {
-// 	int		i;
-// 	int		j;
-// 	int		size;
-//
-// 	i = 0;
-// 	j = 0;
-// 	size = 0;
-// 	while (tab[i] != NULL)
-// 	{
-// 		size++;
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (i < size)
-// 	{
-// 		while (tab[i][j] != '\0')
-// 		{
-// 			ft_putchar(tab[i][j]);
-// 			j++;
-// 		}
-// 		ft_putchar(' ');
-// 		j = 0;
-// 		i++;
-// 	}
-// }
-
 /*
 ** parse_rooms() calls different checking functions to check if the rooms are
 ** valid.
@@ -143,9 +114,6 @@ int			parse_rooms(t_farm *farm, char *line, int start_end)
 	farm->total_rooms++;
 	if (!(room = ft_strsplit(line, ' ')))
 		return (ERROR);
-		// ft_putstr("\n\ndisplaaay arrayy\n");
-		// ft_display_array(room);
-		// ft_putstr("\n\n");
 	if ((check_if_name_taken(room, farm) == ERROR) \
 	|| (check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
 	|| (add_room(farm, room, start_end) == ERROR))

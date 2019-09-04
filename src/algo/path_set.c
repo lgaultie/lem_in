@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/02 17:35:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/02 19:20:09 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,6 @@ int			save_path(t_farm *farm, t_paths *paths)
 	if (paths_on_set == NULL)
 	{
 		farm->all_paths[farm->nb_paths - 1] = paths_cpy;
-		print_tab_paths(farm); // TMP
 	}
 	else
 	{
@@ -129,7 +128,6 @@ int			save_path(t_farm *farm, t_paths *paths)
 			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
 				return (ERROR);
 			farm->all_paths[farm->nb_paths - 1] = paths_cpy;
-			print_tab_paths(farm); // TMP
 		}
 	}
 	return (SUCCESS);

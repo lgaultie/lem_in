@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/25 11:16:49 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 18:33:21 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 				if (tmp_rooms->room_id == i && tmp_rooms->visited == 0 \
 					&& tmp_rooms->reserved == 0 && tmp_rooms->start_end != 1)
 				{
-					// printf("room to queue: %s\n", tmp_rooms->name);
 					if (queue(farm, i) == ERROR)
 						return (ERROR);
 					tmp_rooms->parent = parent_room;
@@ -60,6 +59,27 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 ** this room is linked to an other room. If it is, the linked room is the
 ** blocking room.
 */
+
+// version avec direct les pointeurs mais bug...
+// static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
+// {
+// 	int		i;
+//
+// 	i = 0;
+// 	while (i < farm->total_rooms)
+// 	{
+// 		if (matrice[last_valid_room][i] == 1 && farm->all_rooms[i].reserved == 1)
+// 		{
+// 			ft_putstr("blocking room: ");
+// 			ft_putnbr(farm->all_rooms[i].room_id);
+// 			ft_putchar('\n');
+// 			// printf("room qui bloque = %d\n", tmp_rooms->room_id);
+// 			return (i);
+// 		}
+// 		i++;
+// 	}
+// 	return (i);
+// }
 
 static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 {
@@ -141,20 +161,11 @@ int		algo(t_farm *farm, int **matrice)
 	int		ret_fill_queue;
 
 	ret_fill_queue = 0;
-	tmp_rooms = farm->rooms;
-	while (tmp_rooms)
-	{
-		if (tmp_rooms->start_end == 1)
-		{
-			// printf("room to queue: %s\n", tmp_rooms->name);
-			if (queue(farm, tmp_rooms->room_id) == ERROR)
-				return (ERROR);
-			ret_fill_queue = fill_queue(farm, matrice);
-			if (ret_fill_queue == ERROR)
-				return (ERROR);
-			break ;
-		}
-		tmp_rooms = tmp_rooms->next;
-	}
+	tmp_rooms = farm->start;
+	if (queue(farm, tmp_rooms->room_id) == ERROR)
+		return (ERROR);
+	ret_fill_queue = fill_queue(farm, matrice);
+	if (ret_fill_queue == ERROR)
+		return (ERROR);
 	return (ret_fill_queue);
 }

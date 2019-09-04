@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/08/28 10:51:58 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 18:51:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,6 @@ int		fill_reserved(t_farm *farm)
 }
 
 /*
-** backtrack_paths() goes too the room id given in parameters, and set its
-** visited and reserved to 0 before returning the room id.
-*/
-
-int		backtrack_paths(int room_to_deal, t_farm *farm)
-{
-	t_rooms		*tmp_rooms;
-
-	tmp_rooms = farm->rooms;
-	while (tmp_rooms)
-	{
-		if (tmp_rooms->room_id == room_to_deal && tmp_rooms->start_end != 2)
-		{
-			tmp_rooms->visited = 0;
-			tmp_rooms->reserved = 0;
-			return (tmp_rooms->room_id);
-		}
-		tmp_rooms = tmp_rooms->next;
-	}
-	return (ERROR);
-}
-
-/*
 ** delete_path() deletes the path from paths structure.
 */
 
@@ -76,16 +53,16 @@ void	delete_path(t_farm *farm, t_paths *path)
 	int		i;
 
 	i = 0;
-	// TMP
-	ft_putstr("On delete le path: ");
-	while (i < path->length)
-	{
-		ft_putnbr(path->path[i]);
-		ft_putchar(' ');
-		i++;
-	}
-	ft_putchar('\n');
-	// END TMP
+	// // TMP
+	// ft_putstr("On delete le path: ");
+	// while (i < path->length)
+	// {
+	// 	ft_putnbr(path->path[i]);
+	// 	ft_putchar(' ');
+	// 	i++;
+	// }
+	// ft_putchar('\n');
+	// // END TMP
 	if (path->prev == NULL)
 	{
 		tmp = path->next;
@@ -105,25 +82,25 @@ void	delete_path(t_farm *farm, t_paths *path)
 		ft_memdel((void**)&path->path);
 		ft_memdel((void**)&path);
 	}
-	// TMP
-	t_paths		*tmp_path;
-	tmp_path = farm->paths;
-	ft_putchar('\n');
-	while (tmp_path)
-	{
-		ft_putstr("PATHS EN COURS APRES DELETE : ");
-		int x = 0;
-		while(x < tmp_path->length)
-		{
-			ft_putnbr(tmp_path->path[x]);
-			ft_putchar(' ');
-			x++;
-		}
-		ft_putchar('\n');
-		tmp_path = tmp_path->next;
-	}
-	ft_putchar('\n');
-	// END TMP
+	// // TMP
+	// t_paths		*tmp_path;
+	// tmp_path = farm->paths;
+	// ft_putchar('\n');
+	// while (tmp_path)
+	// {
+	// 	ft_putstr("PATHS EN COURS APRES DELETE : ");
+	// 	int x = 0;
+	// 	while(x < tmp_path->length)
+	// 	{
+	// 		ft_putnbr(tmp_path->path[x]);
+	// 		ft_putchar(' ');
+	// 		x++;
+	// 	}
+	// 	ft_putchar('\n');
+	// 	tmp_path = tmp_path->next;
+	// }
+	// ft_putchar('\n');
+	// // END TMP
 }
 
 /*
@@ -186,4 +163,63 @@ int			path_to_delete(t_farm *farm, int id_room)
 		tmp = tmp->next;
 	}
 	return (SUCCESS);
+}
+
+/*
+** bug here
+*/
+
+void	release_rooms_on_same_path(t_farm *farm, int id)
+{
+	t_paths		*tmp;
+	int			i;
+
+	i = 0;
+	tmp = farm->paths;
+	while (tmp)
+	{
+		i = 0;
+		while (tmp->path[i] != id)
+		{
+			i++;
+		}
+		if (tmp->path[i] == id)
+		{
+			// i++;
+			while (i < tmp->length)
+			{
+				ft_putstr("rend en non visité les salles: ");
+				ft_putnbr(farm->all_rooms[i].room_id);
+				ft_putchar('\n');
+				farm->all_rooms[i].visited = 0;
+				farm->all_rooms[i].reserved = 0;
+				i++;
+			}
+		}
+		tmp = tmp->next;
+	}
+}
+
+/*
+** backtrack_paths() goes too the room id given in parameters, and set its
+** visited and reserved to 0 before returning the room id.
+*/
+
+int		backtrack_paths(int room_to_deal, t_farm *farm)
+{
+	t_rooms		*tmp_rooms;
+
+	tmp_rooms = farm->rooms;
+	while (tmp_rooms)
+	{
+		if (tmp_rooms->room_id == room_to_deal && tmp_rooms->start_end != 2)
+		{
+			tmp_rooms->visited = 0;
+			tmp_rooms->reserved = 0;
+			release_rooms_on_same_path(farm, room_to_deal);
+			return (tmp_rooms->room_id);
+		}
+		tmp_rooms = tmp_rooms->next;
+	}
+	return (ERROR);
 }

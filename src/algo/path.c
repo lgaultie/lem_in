@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/12 14:15:36 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/02 16:28:13 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 18:18:28 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,35 +33,14 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 			ft_putstr("add room to path: ");
 			ft_putnbr(tmp_rooms->room_id);
 			ft_putchar('\n');
-			// printf("add room %s in path\n", tmp_rooms->name);
 			path->path[i] = tmp_rooms->room_id;
 			i++;
 			break ;
 		}
 		tmp_rooms = tmp_rooms->next;
 	}
-	print_all_paths(farm); // TMP
 	while (i < path->length)
 		retrieve_path(farm, path, tmp_rooms->parent->room_id, i);
-	return (SUCCESS);
-}
-
-/*
-** find_layer() returns from witch distance the end room is from the start
-** room. This will help us know the size of the path.
-*/
-
-static int	find_layer(t_farm *farm)
-{
-	t_rooms	*tmp_rooms;
-
-	tmp_rooms = farm->rooms;
-	while (tmp_rooms)
-	{
-		if (tmp_rooms->start_end == 2)
-			return (tmp_rooms->layer);
-		tmp_rooms = tmp_rooms->next;
-	}
 	return (SUCCESS);
 }
 
@@ -126,24 +105,17 @@ int			fill_path(t_farm *farm)
 
 	tmp_path = farm->paths;
 	tmp_rooms = farm->rooms;
-	layer = find_layer(farm);
+	layer = farm->end->layer;
 	while (tmp_path->path)
 		tmp_path = tmp_path->next;
 	tmp_path->length = layer + 1;
 	if (!(tmp_path->path = ft_memalloc(sizeof(int) * (layer + 1))))
 		return (ERROR);
-	while (tmp_rooms)
-	{
-		if (tmp_rooms->start_end == 2)
-		{
-			retrieve_path(farm, tmp_path, tmp_rooms->room_id, 0);
-			save_found_path(farm, tmp_path);
-			if (check_paths(farm) == SUCCESS)
-				return (FAILURE);
-			farm->nb_paths++;
-		}
-		tmp_rooms = tmp_rooms->next;
-	}
+	retrieve_path(farm, tmp_path, farm->end->room_id, 0);
+	save_found_path(farm, tmp_path);
+	if (check_paths(farm) == SUCCESS)
+		return (FAILURE);
+	farm->nb_paths++;
 	return (SUCCESS);
 }
 

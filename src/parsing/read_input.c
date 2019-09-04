@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/07/29 17:47:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/04 16:32:12 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,9 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 		if (line && line[0] == '#' && line[1] != '#')
 			line_nb--;
 		line_nb++;
+		ft_putstr("error = ");
+		ft_putnbr(error);
+		ft_putchar('\n');
 	}
 	error = check_start_end(error, farm);
 	return (error);
