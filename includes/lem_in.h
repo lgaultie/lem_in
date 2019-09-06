@@ -51,6 +51,7 @@ typedef struct			s_rooms
 	int					start_end;
 	int					visited;
 	int					reserved;
+	int					to_reserve;
 	int					nb_links;
 	int					layer;
 	struct s_rooms		*prev;
@@ -64,6 +65,8 @@ typedef struct			s_farm
 	int					nb_paths;
 	int					ants;
 	int					total_rooms;
+	int				size_released;
+	int					*released_rooms;
 	t_rooms				**all_rooms;
 	t_queue				*queue;
 	t_rooms				*rooms;
