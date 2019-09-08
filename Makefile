@@ -35,7 +35,8 @@ SRCS =	main.c							\
 		$(ALGO_DIR)/choose_paths.c      \
 		$(ALGO_DIR)/path.c              \
 		$(ALGO_DIR)/path_set.c          \
-		$(ALGO_DIR)/manage_rooms.c
+		$(ALGO_DIR)/manage_rooms.c      \
+		$(ALGO_DIR)/move_ants.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 #voir GNU 8.3 Functions for File Names

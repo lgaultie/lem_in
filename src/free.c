@@ -52,7 +52,7 @@ void			free_found_paths(t_farm *farm)
 	}
 }
 
-void			free_all_paths(t_farm *farm)
+void			free_sets(t_farm *farm)
 {
 	int			i;
 	t_paths		*tmp_tab;
@@ -61,7 +61,7 @@ void			free_all_paths(t_farm *farm)
 	i = 0;
 	while (i < farm->nb_paths)
 	{
-		tmp_tab = farm->all_paths[i];
+		tmp_tab = farm->sets[i];
 		while (tmp_tab)
 		{
 			new = tmp_tab->next;
@@ -71,7 +71,7 @@ void			free_all_paths(t_farm *farm)
 		}
 		i++;
 	}
-	ft_memdel((void**)&farm->all_paths);
+	ft_memdel((void**)&farm->sets);
 }
 
 /*

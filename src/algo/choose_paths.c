@@ -29,7 +29,7 @@ static void	unvisit_rooms(t_farm *farm)
 }
 
 /*
-** check_all_paths() checks if we have two similar paths in our paths structure.
+** check_paths() checks if we have two similar paths in our paths structure.
 ** If this is the case, we have found all the paths possible, and we no longer
 ** need to call our algorithm. We delete the first similar path.
 */

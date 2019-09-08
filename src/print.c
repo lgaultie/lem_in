@@ -19,9 +19,9 @@ void		print_tab_paths(t_farm *farm)
 
 	i = 0;
 	ft_putstr("-----------tableau de save_paths-------------\n");
-	while (i <= farm->nb_paths - 1)
+	while (i < farm->nb_paths)
 	{
-		tmp_tab = farm->all_paths[i];
+		tmp_tab = farm->sets[i];
 		ft_putstr("i = ");
 		ft_putnbr(i);
 		ft_putchar('\n');
@@ -71,7 +71,7 @@ void		print_free_rooms(t_farm *farm)
 	ft_putstr("--------------\n");
 }
 
-void		print_all_paths(t_farm *farm)
+void		print_paths(t_farm *farm)
 {
 	t_paths		*tmp_path;
 	tmp_path = farm->paths;

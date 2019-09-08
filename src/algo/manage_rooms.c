@@ -233,7 +233,7 @@ void	release_rooms_on_same_path(t_farm *farm, int id)
 	int			i;
 	int			j;
 
-	print_all_paths(farm);
+	print_paths(farm);
 	tmp = farm->paths;
 	while (tmp)
 	{

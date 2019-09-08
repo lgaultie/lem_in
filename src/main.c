@@ -23,12 +23,12 @@ static void	free_farm(t_farm *farm, int **matrice)
 	free_queue(farm);
 	free_paths(farm);
 	free_found_paths(farm);
-	free_all_paths(farm);
+	free_sets(farm);
 	ft_memdel((void**)&farm);
 }
 
 /*
-** found_all_paths() calculates the maximum number of paths we can find. It's
+** max_paths() calculates the maximum number of paths we can find. It's
 ** the maximum number between the number of links to the start room, or the end
 ** room. The real number may be less.
 */
@@ -82,15 +82,15 @@ int		init_all_rooms(t_farm *farm)
 }
 
 /*
-** init_all_paths() initializes the array of paths structures.
+** init_sets() initializes the array of paths structures.
 */
 
-int		init_all_paths(t_farm *farm)
+int		init_sets(t_farm *farm)
 {
 	int		max_path;
 
 	max_path = max_paths(farm);
-	if (!(farm->all_paths = ft_memalloc(sizeof(t_paths*) * max_path)))
+	if (!(farm->sets = ft_memalloc(sizeof(t_paths*) * max_path)))
 		return (ERROR);
 	return (SUCCESS);
 }
@@ -112,9 +112,10 @@ int			main(void)
 	if (!(farm = ft_memalloc(sizeof(t_farm))) \
 		|| read_input(farm, line_nb, error, error) == ERROR \
 		|| init_all_rooms(farm) == ERROR \
-		|| init_all_paths(farm) == ERROR \
+		|| init_sets(farm) == ERROR \
 		|| (matrice = matrice_create(farm)) == NULL)
 		return (free_farm_error(farm));
+	choose_set(farm);
 	free_farm(farm, matrice);
 	return (FAILURE);
 }

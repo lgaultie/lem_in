@@ -79,7 +79,7 @@ void	delete_set(t_farm *farm, t_paths *paths_on_set)
 		ft_memdel((void**)&tmp);
 		tmp = new;
 	}
-	farm->all_paths[farm->nb_paths - 1] = NULL;
+	farm->sets[farm->nb_paths - 1] = NULL;
 }
 
 /*
@@ -101,16 +101,16 @@ int			save_path(t_farm *farm, t_paths *paths)
 	paths_cpy = NULL;
 	if (init_paths_cpy(paths, &paths_cpy) == ERROR)
 		return (ERROR);
-	paths_on_set = farm->all_paths[farm->nb_paths - 1];
+	paths_on_set = farm->sets[farm->nb_paths - 1];
 	i = 0;
 	j = 0;
 	if (paths_on_set == NULL)
 	{
-		farm->all_paths[farm->nb_paths - 1] = paths_cpy;
+		farm->sets[farm->nb_paths - 1] = paths_cpy;
 	}
 	else
 	{
-		paths_on_set = farm->all_paths[farm->nb_paths - 1];
+		paths_on_set = farm->sets[farm->nb_paths - 1];
 		while (paths_on_set)
 		{
 			i += paths_on_set->length;
@@ -124,10 +124,10 @@ int			save_path(t_farm *farm, t_paths *paths)
 		}
 		if (i > j)
 		{
-			delete_set(farm, farm->all_paths[farm->nb_paths - 1]);
+			delete_set(farm, farm->sets[farm->nb_paths - 1]);
 			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
 				return (ERROR);
-			farm->all_paths[farm->nb_paths - 1] = paths_cpy;
+			farm->sets[farm->nb_paths - 1] = paths_cpy;
 		}
 	}
 	return (SUCCESS);

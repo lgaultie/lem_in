@@ -74,7 +74,7 @@ typedef struct			s_farm
 	t_rooms				*end;
 	t_paths				*paths;
 	t_paths				*found_paths;
-	t_paths				**all_paths;
+	t_paths				**sets;
 }						t_farm;
 
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
@@ -100,11 +100,12 @@ void	delete_path(t_farm *farm, t_paths *path);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
-void	free_all_paths(t_farm *farm);
+void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
+void	choose_set(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
-void	print_all_paths(t_farm *farm);
+void	print_paths(t_farm *farm);
 
 #endif
