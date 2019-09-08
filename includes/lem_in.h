@@ -16,10 +16,10 @@
 # include "../libft/libft.h"
 #include <stdio.h> // TMP
 
-# define SUCCESS 1
-# define FAILURE 0
-# define ERROR -1
-# define ERROR_MSG "ERROR"
+# define SUCCESS		1
+# define FAILURE		0
+# define ERROR			-1
+# define ERROR_MSG		"ERROR"
 
 typedef struct			s_queue
 {
@@ -65,7 +65,7 @@ typedef struct			s_farm
 	int					nb_paths;
 	int					ants;
 	int					total_rooms;
-	int				size_released;
+	int					size_released;
 	int					*released_rooms;
 	t_rooms				**all_rooms;
 	t_queue				*queue;

@@ -43,9 +43,6 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 	return (SUCCESS);
 }
 
-//all_paths[1]->next->path
-//all_paths[3]->lenght
-
 /*
 ** matrice_create() creates an int** that references every links of the map.
 ** Each rows and columns correspond to a room. We fill the matrice by calling

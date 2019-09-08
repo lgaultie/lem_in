@@ -58,8 +58,7 @@ int			check_paths(t_farm *farm)
 				ft_putstr("There is 2 similar paths in all_paths, we delete the first similar path.\n");
 				delete_path(farm, tmp_path);
 				save_path(farm, farm->paths);
-				print_tab_paths(farm);
-				// print_all_paths(farm);
+				print_tab_paths(farm); // TMP
 				return (SUCCESS);
 			}
 		}

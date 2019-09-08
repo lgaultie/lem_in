@@ -154,7 +154,8 @@ void		visit_rooms(t_farm *farm)
 		}
 		i++;
 	}
-	//free tab
+	ft_memdel((void**)&farm->released_rooms);
+	farm->size_released = 0;
 }
 
 /*
