@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/04 19:01:06 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/09 14:29:30 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,8 @@ int			main(void)
 		|| init_sets(farm) == ERROR \
 		|| (matrice = matrice_create(farm)) == NULL)
 		return (free_farm_error(farm));
-	choose_set(farm);
+	// choose_set(farm);
+	how_much_ants_per_paths(farm);
 	free_farm(farm, matrice);
 	return (FAILURE);
 }

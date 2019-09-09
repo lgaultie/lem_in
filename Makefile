@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/07/31 11:23:28 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/09/09 19:32:17 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,11 +43,25 @@ OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 
 _GREEN=\e[32m
 _PURPLE=\e[35m
+_BLUE=\e[34m
 _YELLOW=\e[33m
 _CYAN=\e[36m
+_RED=\e[31m
 _END=\e[0m
 
 all: $(NAME)
+	@printf "$(_PURPLE)                                 _      _       $(_END)   __$(_PURPLE)  _                   _ _   _      _      \n"
+	@printf "$(_CYAN)  ___ _ __ ___   ___  _   _  ___| | ___( )___   $(_END)  / /$(_CYAN) | | __ _  __ _ _   _| | |_(_) ___( )___  \n"
+	@printf "$(_GREEN) / __| '_ ' _ \ / _ \| | | |/ _ \ |/ _ \// __| $(_END)  / /$(_GREEN)  | |/ _| |/ _' | | | | | __| |/ _ \// __| \n"
+	@printf "$(_YELLOW)| (__| | | | | | (_) | |_| |  __/ |  __/ \__ \ $(_END) / / $(_YELLOW)  | | (_| | (_| | |_| | | |_| |  __/ \__ \ \n"
+	@printf "$(_PURPLE) \___|_| |_| |_|\___/ \__,_|\___|_|\___| |___/ $(_END)/_/  $(_PURPLE)  |_|\__, |\__,_|\__,_|_|\__|_|\___| |___/ \n"
+	@printf "$(_PURPLE)                                                         |___/                                 \n"
+	@printf "$(_CYAN) _                      _       \n"
+	@printf "$(_CYAN)| | ___ _ __ ___       (_)_ __  \n"
+	@printf "$(_GREEN)| |/ _ \ '_ ' _ \ _____| | '_ \  \n"
+	@printf "$(_YELLOW)| |  __/ | | | | |_____| | | | |\n"
+	@printf "$(_PURPLE)|_|\___|_| |_| |_|     |_|_| |_|\n"
+	@printf " $(_END)\n"
 
 $(NAME): $(OBJ)
 	@printf "$(_YELLOW)Compiling libft... $(_END)"

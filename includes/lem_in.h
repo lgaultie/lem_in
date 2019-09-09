@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/04 19:13:10 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/09 14:37:43 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct			s_queue
 typedef struct			s_paths
 {
 	int					length;
+	int					ants_to_send;
 	int					*path;
 	struct s_paths		*prev;
 	struct s_paths		*next;
@@ -62,6 +63,7 @@ typedef struct			s_rooms
 
 typedef struct			s_farm
 {
+	int					nb_moves;
 	int					nb_paths;
 	int					ants;
 	int					total_rooms;
@@ -102,7 +104,8 @@ int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
 void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
-void	choose_set(t_farm *farm);
+int		choose_set(t_farm *farm);
+void	how_much_ants_per_paths(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
