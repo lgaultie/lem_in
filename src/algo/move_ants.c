@@ -2,24 +2,10 @@
 
 #include <lem_in.h>
 
-// Calculer le nb de coups par sets pour choisir le meilleur set
-// nb_ants = nb_tours - length (length = nb de salles entre start et end)
-// nb_tours = (nb_ants + sum(length) - (2 * nb_paths)) / nb_paths
-
-// Calculer combien de fourmis on envoie par chemins
-// nb_ants = nb_tours - length (length = nb de salles entre start et end)
-
-// Créer un tableau contenant, pour chaque fourmi, un compteur: commence a 0,
-// si la fourmi bouge dune case le compteur sincremente de 1, etc...
-// si la fourmi a bouge de 10 case, le compteur est a 10, on regarde dans le tableau
-// de path a quel id de salle correspond lindex 10, et on a sa position: l'id de la
-// salle dans laquelle elle est, on met un int visited a 1 : la salle est occupee
-// si le compteur est egale a la taille du chemin, on ne lincremente plus, la fourmi est
-// arrivee
-
 /*
-** choose_set() searches best set to use, the one with minimum moves (int min) :
-** returns index_min the index of this optimized set.
+** choose_set() searches for the best set of paths to use (the one with the
+** minimum moves number of moves). It returns the index of the optimized set.
+** Formula: nb_moves = (nb_ants + sum(length) - (2 * nb_paths)) / nb_paths.
 */
 
 int		choose_set(t_farm *farm)
@@ -59,9 +45,55 @@ int		choose_set(t_farm *farm)
 			tmp = farm->sets[i];
 	}
 	printf("min: %d\n", min);
-	printf("chose the %d paths set !!\n", index_min + 1);
+	printf("choose the set with index %d!\n", index_min);
 	farm->nb_moves = min;
 	return (index_min);
+}
+
+/*
+** ants_per_paths() calls choose_set() to find the optimized set of paths. It
+** then calculates the number of ants we need to send to each path of the
+** optimized set and saves it. Formula: nb_ants = nb_moves - (length - 2). If
+** the number of ants sent is different from the original number, we dispatch
+** ants randomly in the paths until the original number is reached.
+*/
+
+void	ants_per_paths(t_farm *farm)
+{
+	int		index_of_set;
+	int		total_ants_sent;
+	t_paths	*tmp;
+
+	index_of_set = choose_set(farm);
+	total_ants_sent = 0;
+	tmp = farm->sets[index_of_set];
+	while (tmp)
+	{
+		//probleme: avec peu de ants renvoie des nb negatifs
+		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
+		printf("farm->nb_moves = %d, length = %d, ants a envoyer = %d\n", farm->nb_moves, tmp->length, tmp->ants_to_send);
+		total_ants_sent += tmp->ants_to_send;
+		tmp = tmp->next;
+	}
+	printf("total de fourmis dans la map = %d\n", farm->ants);
+	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
+	if (total_ants_sent < farm->ants)
+	{
+		printf("on renvoie des fourmis !\n");
+		tmp = farm->sets[index_of_set];
+		while (total_ants_sent < farm->ants)
+		{
+			while (tmp)
+			{
+				tmp->ants_to_send++;
+				tmp = tmp->next;
+			}
+			total_ants_sent++;
+		}
+	}
+	printf("total de fourmis dans la map = %d\n", farm->ants);
+	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
+	// send_ants(farm);
 }
 
 // // Créer un tableau contenant, pour chaque fourmi, un compteur: commence a 0,
@@ -75,7 +107,7 @@ int		choose_set(t_farm *farm)
 // {
 // 	int		*ants;
 // 	int		arrived;
-	
+
 // 	arrived = 0;
 // 	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
 // 		return ;
@@ -84,27 +116,3 @@ int		choose_set(t_farm *farm)
 // 		//si ants[x] = salle end, alors arrived++
 // 	}
 // }
-
-/*
-** how_much_ants_per_paths() calculates how many ants we need to send to each paths
-** of the set using this formula: nb_ants = nb_moves - length + 1
-** save in path->ants_to_send the numbers of ants to end to each paths
-*/
-
-void		how_much_ants_per_paths(t_farm *farm)
-{
-	int		index_of_set;
-	t_paths	*tmp;
-
-	index_of_set = choose_set(farm);
-	tmp = farm->sets[index_of_set];
-	while (tmp)
-	{
-		//probleme: avec peu de ants renvoie des nb negatifs
-		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
-		printf("farm->nb_moves = %d, length = %d, ants a envoyer = %d\n", farm->nb_moves, tmp->length, tmp->ants_to_send);
-		tmp = tmp->next;
-	}
-	// send_ants(farm);
-	printf("nb_ants = %d\n",farm->ants);
-}

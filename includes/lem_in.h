@@ -105,7 +105,7 @@ int		path_to_delete(t_farm *farm, int id_room);
 void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
 int		choose_set(t_farm *farm);
-void	how_much_ants_per_paths(t_farm *farm);
+void	ants_per_paths(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);

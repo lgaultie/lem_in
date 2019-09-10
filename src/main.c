@@ -115,8 +115,7 @@ int			main(void)
 		|| init_sets(farm) == ERROR \
 		|| (matrice = matrice_create(farm)) == NULL)
 		return (free_farm_error(farm));
-	// choose_set(farm);
-	how_much_ants_per_paths(farm);
+	ants_per_paths(farm);
 	free_farm(farm, matrice);
 	return (FAILURE);
 }
