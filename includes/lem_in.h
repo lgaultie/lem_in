@@ -31,6 +31,8 @@ typedef struct			s_paths
 {
 	int					length;
 	int					ants_to_send;
+	int					left_seg;
+	int					right_seg;
 	int					*path;
 	struct s_paths		*prev;
 	struct s_paths		*next;
@@ -104,8 +106,7 @@ int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
 void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
-int		choose_set(t_farm *farm);
-void	ants_per_paths(t_farm *farm);
+int		ants_per_paths(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);

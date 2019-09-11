@@ -1,4 +1,14 @@
-// Header 42
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_ants.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
+/*   Updated: 2019/09/11 11:02:33 by cmouele          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <lem_in.h>
 
@@ -14,32 +24,51 @@
 ** send_ants()
 */
 
-void	send_ants(t_farm *farm, int index_of_set)
+/*static int	send_ants(t_farm *farm, int index_of_set)
 {
-	/*int	*ants;
-	int	arrived;
-
-	arrived = 0;
-	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
-	return ;
-	while (arrived < farm->ants)
-	{
-		//si ants[x] = salle end, alors arrived++
-	}*/
-
-	int 	id_ant;
+	int		*ants;
+	int		i;
 	t_paths	*tmp;
 
-	id_ant = 1;
+	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
+		return (ERROR);
+	i = 0;
 	tmp = farm->sets[index_of_set];
 	while (tmp)
 	{
-		printf("ants a envoyer = %d\n", tmp->ants_to_send);
+		printf("ants a envoyer dans le chemin = %d\n", tmp->ants_to_send);
 		// la fourmi visite sur une salle du chemin
 		// on met la salle d'où elle vient à visited = 0
 		// on met la salle où elle est à visited = 1
 		// si la fourmi doit aller sur une salle déjà visited, on ne fait rien
 		// om imprime
+		tmp = tmp->next;
+	}
+	return (SUCCESS);
+}*/
+
+/*
+** segment_ants() creates, for each path, a segment with the id of the first
+** ant and the id of the last ant.
+*/
+
+static void	segment_ants(t_farm *farm, int index_of_set)
+{
+	t_paths	*tmp;
+	int		id_ant;
+	int		left_segment;
+	int		right_segment;
+
+	tmp = farm->sets[index_of_set];
+	id_ant = 1;
+	while (tmp)
+	{
+		left_segment = id_ant;
+		right_segment = left_segment + tmp->ants_to_send - 1;
+		id_ant = right_segment + 1;
+		tmp->left_seg = left_segment;
+		tmp->right_seg = right_segment;
+		printf("path - left segment: %d, right segment: %d\n", tmp->left_seg, tmp->right_seg);
 		tmp = tmp->next;
 	}
 }
@@ -50,7 +79,7 @@ void	send_ants(t_farm *farm, int index_of_set)
 ** Formula: nb_moves = (nb_ants + sum(length) - (2 * nb_paths)) / nb_paths.
 */
 
-int		choose_set(t_farm *farm)
+static int	choose_set(t_farm *farm)
 {
 	int		i;
 	int		length;
@@ -100,7 +129,7 @@ int		choose_set(t_farm *farm)
 ** ants randomly in the paths until the original number is reached.
 */
 
-void	ants_per_paths(t_farm *farm)
+int			ants_per_paths(t_farm *farm)
 {
 	int		index_of_set;
 	int		total_ants_sent;
@@ -132,5 +161,8 @@ void	ants_per_paths(t_farm *farm)
 	}
 	printf("total de fourmis dans la map = %d\n", farm->ants);
 	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
-	send_ants(farm, index_of_set);
+	segment_ants(farm, index_of_set);
+	/*if (send_ants(farm, index_of_set) == ERROR)
+		return (ERROR);*/
+	return (SUCCESS);
 }

@@ -113,9 +113,9 @@ int			main(void)
 		|| read_input(farm, line_nb, error, error) == ERROR \
 		|| init_all_rooms(farm) == ERROR \
 		|| init_sets(farm) == ERROR \
-		|| (matrice = matrice_create(farm)) == NULL)
+		|| (matrice = matrice_create(farm)) == NULL \
+		|| ants_per_paths(farm) == ERROR)
 		return (free_farm_error(farm));
-	ants_per_paths(farm);
 	free_farm(farm, matrice);
 	return (FAILURE);
 }
