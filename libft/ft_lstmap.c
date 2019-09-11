@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/21 15:11:37 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/22 11:28:49 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/23 10:53:08 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/24 11:50:58 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,23 @@
 
 t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list	*start;
-	t_list	*current;
+	t_list	*tmp;
+	t_list	*newlist;
+	t_list	*res;
 
-	if (lst == NULL || *f == NULL || f == NULL)
+	if (lst == NULL || f == NULL)
 		return (NULL);
-	start = f(lst);
-	if (start == NULL)
+	tmp = f(lst);
+	if (!(newlist = ft_lstnew(tmp->content, tmp->content_size)))
 		return (NULL);
-	current = start;
+	res = newlist;
 	lst = lst->next;
 	while (lst)
 	{
-		current->next = f(lst);
-		if (current->next == NULL)
-			return (NULL);
-		current = current->next;
+		tmp = f(lst);
+		newlist->next = ft_lstnew(tmp->content, tmp->content_size);
+		newlist = newlist->next;
 		lst = lst->next;
 	}
-	return (start);
+	return (res);
 }

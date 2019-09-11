@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   move_ants.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/11 11:02:33 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/09/11 23:15:16 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 ** ant and the id of the last ant.
 */
 
-static void	segment_ants(t_farm *farm, int index_of_set)
+static void		segment_ants(t_farm *farm, int index_of_set)
 {
 	t_paths	*tmp;
 	int		id_ant;

@@ -1,31 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_sqrt_rounded.c                                  :+:      :+:    :+:   */
+/*   ft_display_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/16 13:24:53 by cmouele           #+#    #+#             */
-/*   Updated: 2018/12/16 15:01:11 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/22 18:30:53 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/23 14:31:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_sqrt_rounded(int nb)
+void	ft_display_array(char **tab)
 {
-	int c;
+	int		i;
+	int		j;
+	int		size;
 
-	c = 0;
-	if (nb <= 0)
-		return (0);
-	if (nb == 1)
-		return (1);
-	while (c <= nb && c <= 46340)
+	i = 0;
+	j = 0;
+	size = 0;
+	while (tab[i] != NULL)
 	{
-		if (c * c >= nb)
-			return (c);
-		c++;
+		size++;
+		i++;
 	}
-	return (0);
+	i = 0;
+	while (i < size)
+	{
+		while (tab[i][j] != '\0')
+		{
+			ft_putchar(tab[i][j]);
+			j++;
+		}
+		ft_putchar('\n');
+		j = 0;
+		i++;
+	}
 }

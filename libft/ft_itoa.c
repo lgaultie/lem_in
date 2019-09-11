@@ -3,97 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:26:48 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 17:33:01 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/16 18:01:35 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/23 15:19:29 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		ft_sign_n(int n_sign)
+static	void	ft_final(char *str, int n, int len)
 {
-	if (n_sign < 0)
-		n_sign = n_sign * -1;
-	return (n_sign);
-}
-
-static int		ft_size_n(int n_size)
-{
-	int	count_int;
-
-	count_int = 1;
-	if (n_size < 0)
-		count_int++;
-	while (n_size / 10 != 0)
+	if (n >= 10)
 	{
-		n_size = n_size / 10;
-		count_int++;
-	}
-	return (count_int);
-}
-
-static char		*ft_allocate(int n, int count_int, int n_quotient, int n_remain)
-{
-	char	*str;
-
-	str = (char*)malloc(sizeof(char) * (count_int + 1));
-	if (str == NULL)
-		return (NULL);
-	str[count_int] = '\0';
-	count_int--;
-	while (count_int >= 0)
-	{
-		if (count_int == 0 && n < 0)
-			str[count_int] = '-';
-		else
+		while (len >= 0)
 		{
-			n_quotient = n_quotient / 10;
-			n_remain = n_remain % 10;
-			str[count_int] = n_remain + '0';
-			n_remain = n_quotient;
+			str[len - 1] = n % 10 + '0';
+			n = n / 10;
+			len--;
 		}
-		count_int--;
 	}
-	return (str);
 }
 
-static char		*ft_allocate_minint(void)
+static	void	*ft_number(char *str, int n, int neg, int len)
 {
-	char	*str;
+	if (n >= 0 && n < 10)
+	{
+		if (neg == 1)
+		{
+			str[0] = '-';
+			str[1] = n + '0';
+			str[2] = '\0';
+			return (str);
+		}
+		if (neg == 0)
+		{
+			str[0] = n + '0';
+			str[1] = '\0';
+			return (str);
+		}
+	}
+	ft_final(str, n, len);
+	return (0);
+}
 
-	str = (char*)malloc(sizeof(char) * 12);
-	if (str == NULL)
-		return (NULL);
-	str[0] = '-';
-	str[1] = '2';
-	str[2] = '1';
-	str[3] = '4';
-	str[4] = '7';
-	str[5] = '4';
-	str[6] = '8';
-	str[7] = '3';
-	str[8] = '6';
-	str[9] = '4';
-	str[10] = '8';
-	str[11] = '\0';
-	return (str);
+static	char	*ft_neg_equal_1(char *s1, int y)
+{
+	s1[0] = '-';
+	s1[y] = '\0';
+	return (s1);
 }
 
 char			*ft_itoa(int n)
 {
 	char	*str;
-	int		count_int;
-	int		n_quotient;
-	int		n_remain;
+	int		len;
+	int		neg;
+	int		j;
 
-	count_int = ft_size_n(n);
-	n_quotient = ft_sign_n(n);
-	n_remain = ft_sign_n(n);
+	neg = 0;
+	j = ft_intlen(n);
+	len = ft_intlen(n);
+	if (!(str = (char*)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	if (n > 2147483647 || n < -2147483648 || n == 0)
+		return (ft_strdup("0"));
 	if (n == -2147483648)
-		str = ft_allocate_minint();
-	else
-		str = ft_allocate(n, count_int, n_quotient, n_remain);
+		return (ft_strdup("-2147483648"));
+	if (n < 0)
+	{
+		n = -n;
+		neg = 1;
+	}
+	if (n >= 0)
+		ft_number(str, n, neg, len);
+	if (neg == 1)
+		ft_neg_equal_1(str, j);
+	str[j] = '\0';
 	return (str);
 }

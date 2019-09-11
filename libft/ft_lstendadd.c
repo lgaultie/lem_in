@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_recursive_power.c                               :+:      :+:    :+:   */
+/*   ft_lstendadd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/22 08:04:18 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/22 08:04:52 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/22 15:35:05 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/23 14:01:08 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_recursive_power(int nb, int power)
+void	ft_lstendadd(t_list *alst, t_list *new)
 {
-	int result;
+	t_list	*tmp;
 
-	result = 1;
-	if (power < 0)
-		return (0);
-	else if (power == 0)
-		return (1);
-	else if (power == 1)
-		return (nb);
-	else
-		result = nb * ft_recursive_power(nb, power - 1);
-	return (result);
+	tmp = alst;
+	if (!alst)
+		return ;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	if (new)
+	{
+		tmp->next = new;
+		new->next = NULL;
+	}
 }

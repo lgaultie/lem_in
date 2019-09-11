@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/04 16:32:12 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/11 22:49:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,21 +100,24 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 	{
 		ft_memdel((void*)&line);
 		ret = get_next_line(0, &line);
-		error = check_line(line, error);
-		start_end = is_start_end(start_end, line);
-		error = check_nb_ants(line_nb, farm, line, error);
-		if (line && error == 0 && line_nb > 1 && line[0] != '#')
+		if (ret != 0)
 		{
-			if (parse(farm, line, start_end) == ERROR)
-				error = -1;
-			start_end = 0;
+			error = check_line(line, error);
+			start_end = is_start_end(start_end, line);
+			error = check_nb_ants(line_nb, farm, line, error);
+			if (line && error == 0 && line_nb > 1 && line[0] != '#')
+			{
+				if (parse(farm, line, start_end) == ERROR)
+					error = -1;
+				start_end = 0;
+			}
+			if (line && line[0] == '#' && line[1] != '#')
+				line_nb--;
+			line_nb++;
 		}
-		if (line && line[0] == '#' && line[1] != '#')
-			line_nb--;
-		line_nb++;
-		ft_putstr("error = ");
-		ft_putnbr(error);
-		ft_putchar('\n');
+		// ft_putstr("error = ");
+		// ft_putnbr(error);
+		// ft_putchar('\n');
 	}
 	error = check_start_end(error, farm);
 	return (error);

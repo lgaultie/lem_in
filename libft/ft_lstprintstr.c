@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_swap.c                                          :+:      :+:    :+:   */
+/*   ft_lstprintstr.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/10 08:54:30 by cmouele           #+#    #+#             */
-/*   Updated: 2019/06/18 19:50:06 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/23 14:25:20 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/23 14:25:23 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_swap(int *a, int *b)
+void	ft_lstprintstr(t_list *list)
 {
-	int	store_value;
-
-	store_value = *a;
-	*a = *b;
-	*b = store_value;
+	while (list != NULL)
+	{
+		ft_putstr(list->content);
+		ft_putchar('\n');
+		list = list->next;
+	}
 }

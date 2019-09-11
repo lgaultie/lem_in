@@ -3,30 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 09:10:42 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/15 08:18:48 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/12 16:56:34 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/12 17:23:05 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strncat(char *s1, const char *s2, size_t n)
+char	*ft_strncat(char *dst, const char *src, size_t n)
 {
-	unsigned int	count_s1;
-	unsigned int	count_s2;
+	size_t			i;
+	size_t			j;
+	unsigned char	*srcs;
 
-	count_s1 = 0;
-	count_s2 = 0;
-	while (s1[count_s1] != '\0')
-		count_s1++;
-	while (s2[count_s2] != '\0' && count_s2 < n)
+	i = 0;
+	j = 0;
+	srcs = (unsigned char*)src;
+	while (dst[i] != '\0')
+		i++;
+	while (srcs[j] != '\0' && j < n)
 	{
-		s1[count_s1] = s2[count_s2];
-		count_s1++;
-		count_s2++;
+		dst[i + j] = srcs[j];
+		j++;
 	}
-	s1[count_s1] = '\0';
-	return (s1);
+	dst[i + j] = '\0';
+	return (dst);
 }

@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/02 19:20:09 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/11 23:15:43 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 		}
 		if (i > j)
 		{
+			ft_putstr("teub\n");
 			delete_set(farm, farm->sets[farm->nb_paths - 1]);
 			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
 				return (ERROR);

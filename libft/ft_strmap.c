@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/16 10:53:43 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/16 15:48:22 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/15 14:26:44 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/11/15 16:41:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 char	*ft_strmap(char const *s, char (*f)(char))
 {
-	int		count;
-	int		count_new;
-	char	*s_new;
+	char	*str;
+	int		i;
 
-	count = 0;
-	count_new = 0;
+	i = 0;
 	if (s == NULL)
+		return (0);
+	if (!(str = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1))))
 		return (NULL);
-	while (s[count] != '\0')
-		count++;
-	s_new = (char*)malloc(sizeof(char) * count + 1);
-	if (s_new == NULL)
-		return (NULL);
-	while (count_new < count)
+	while (s[i] != '\0')
 	{
-		s_new[count_new] = f(s[count_new]);
-		count_new++;
+		str[i] = (*f)(s[i]);
+		i++;
 	}
-	s_new[count_new] = '\0';
-	return (s_new);
+	str[i] = '\0';
+	return (str);
 }

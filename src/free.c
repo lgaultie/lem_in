@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/02 16:55:15 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/11 19:16:41 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,9 @@ void			free_sets(t_farm *farm)
 			ft_memdel((void**)&tmp_tab);
 			tmp_tab = new;
 		}
+		ft_putstr("i = ");
+		ft_putnbr(i);
+		ft_putchar('\n');
 		i++;
 	}
 	ft_memdel((void**)&farm->sets);

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_is_prime.c                                      :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/22 08:01:30 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/22 08:01:51 by cmouele          ###   ########.fr       */
+/*   Created: 2018/12/20 17:51:05 by lgaultie          #+#    #+#             */
+/*   Updated: 2018/12/20 17:51:24 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_is_prime(int nb)
+char	*ft_strndup(const char *src, int n)
 {
-	int counter;
+	int		i;
+	char	*dest;
 
-	counter = 3;
-	if (nb <= 1 || (nb % 2 == 0 && nb != 2))
-		return (0);
-	if (nb == 2 || nb == 2147483647)
-		return (1);
-	while (counter < nb)
+	i = 0;
+	if (!(dest = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1))))
+		return (NULL);
+	while (src[i] != '\0' && i < n)
 	{
-		if (nb % counter == 0)
-			return (0);
-		counter += 2;
+		dest[i] = src[i];
+		i++;
 	}
-	return (1);
+	dest[i] = '\0';
+	return (dest);
 }
