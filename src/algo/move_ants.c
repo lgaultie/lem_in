@@ -12,40 +12,49 @@
 
 #include <lem_in.h>
 
-// Créer un tableau contenant, pour chaque fourmi, un compteur: commence a 0,
-// si la fourmi bouge dune case le compteur sincremente de 1, etc...
-// si la fourmi a bouge de 10 case, le compteur est a 10, on regarde dans le tableau
-// de path a quel id de salle correspond lindex 10, et on a sa position: l'id de la
-// salle dans laquelle elle est, on met un int visited a 1 : la salle est occupee
-// si le compteur est egale a la taille du chemin, on ne lincremente plus, la fourmi est
-// arrivee
-
 /*
-** send_ants()
+** send_ants() creates an array of ants to track their position in the path.
+** For each round, for each path of the optimized set, we increment an id that
+** lets us know how many ants we can move, and we increment their position. If
+** the position equals the length of the path, the ants has arrived to the end
+** room ans we don't need to increment this ants anymore.
 */
 
-/*static int	send_ants(t_farm *farm, int index_of_set)
+static int	send_ants(t_farm *farm, int index_of_set)
 {
 	int		*ants;
 	int		i;
+	int		j;
 	t_paths	*tmp;
 
 	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
 		return (ERROR);
 	i = 0;
-	tmp = farm->sets[index_of_set];
-	while (tmp)
+	while (i < farm->nb_moves) // revoir nb_moves
 	{
-		printf("ants a envoyer dans le chemin = %d\n", tmp->ants_to_send);
-		// la fourmi visite sur une salle du chemin
-		// on met la salle d'où elle vient à visited = 0
-		// on met la salle où elle est à visited = 1
-		// si la fourmi doit aller sur une salle déjà visited, on ne fait rien
-		// om imprime
-		tmp = tmp->next;
+		tmp = farm->sets[index_of_set];
+		while (tmp)
+		{
+			j = 0;
+			while (j < (i + 1))
+			{
+				if (ants[tmp->left_seg + j] < tmp->length \
+					&& (tmp->left_seg + j) <= tmp->right_seg)
+				{
+					printf("L%d-room ", tmp->left_seg + j + 1);
+					ants[tmp->left_seg + j]++;
+				}
+				j++;
+			}
+			tmp = tmp->next;
+		}
+		i++;
+		printf("\n");
 	}
+	// create a function to print rooms names associated with each ant
+	// free int *ants
 	return (SUCCESS);
-}*/
+}
 
 /*
 ** segment_ants() creates, for each path, a segment with the id of the first
@@ -60,7 +69,7 @@ static void		segment_ants(t_farm *farm, int index_of_set)
 	int		right_segment;
 
 	tmp = farm->sets[index_of_set];
-	id_ant = 1;
+	id_ant = 0;
 	while (tmp)
 	{
 		left_segment = id_ant;
@@ -75,7 +84,7 @@ static void		segment_ants(t_farm *farm, int index_of_set)
 
 /*
 ** choose_set() searches for the best set of paths to use (the one with the
-** minimum moves number of moves). It returns the index of the optimized set.
+** minimum number of moves). It returns the index of the optimized set.
 ** Formula: nb_moves = (nb_ants + sum(length) - (2 * nb_paths)) / nb_paths.
 */
 
@@ -104,8 +113,7 @@ static int	choose_set(t_farm *farm)
 		}
 		if (farm->ants >= i + 1)
 			nb_moves = (farm->ants + length - (2 * (i + 1))) / (i + 1);
-		printf("nb_moves: %d\n", nb_moves);
-		printf("length: %d\n", length);
+		printf("index: %d - nb_moves: %d - length: %d\n", i, nb_moves, length);
 		if (min == 0 || nb_moves < min)
 		{
 			min = nb_moves;
@@ -140,13 +148,12 @@ int			ants_per_paths(t_farm *farm)
 	tmp = farm->sets[index_of_set];
 	while (tmp)
 	{
-		//probleme: avec peu de ants renvoie des nb negatifs
 		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
-		printf("farm->nb_moves = %d, length = %d, ants a envoyer = %d\n", farm->nb_moves, tmp->length, tmp->ants_to_send);
+		printf("length = %d, ants a envoyer = %d\n", tmp->length, tmp->ants_to_send);
 		total_ants_sent += tmp->ants_to_send;
 		tmp = tmp->next;
 	}
-	printf("total de fourmis dans la map = %d\n", farm->ants);
+	printf("total de fourmis de la map = %d\n", farm->ants);
 	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
 	tmp = farm->sets[index_of_set];
 	while (tmp)
@@ -159,10 +166,10 @@ int			ants_per_paths(t_farm *farm)
 		}
 		tmp = tmp->next;
 	}
-	printf("total de fourmis dans la map = %d\n", farm->ants);
+	printf("total de fourmis de la map = %d\n", farm->ants);
 	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
 	segment_ants(farm, index_of_set);
-	/*if (send_ants(farm, index_of_set) == ERROR)
-		return (ERROR);*/
+	if (send_ants(farm, index_of_set) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
