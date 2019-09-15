@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/11 23:15:43 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/15 15:10:47 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,29 @@
 ** init_paths_cpy() copies current paths into a new structure.
 */
 
-static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
+static t_paths	*init_paths_cpy(t_paths *paths)
 {
+	t_paths	*first_path;
 	t_paths	*new_path;
 	t_paths	*prev_path;
 	int		i;
 
 	ft_putstr("in init_path_cpy()\n");
+	first_path = NULL;
 	new_path = NULL;
 	while (paths)
 	{
 		prev_path = new_path;
 		if (!(new_path = ft_memalloc(sizeof(t_paths))))
-			return (ERROR);
+			return (NULL);
+		!first_path ? first_path = new_path : 0;
 		if (prev_path)
 			prev_path->next = new_path;
-		else
-			*paths_cpy = new_path;
 		new_path->length = paths->length;
 		if (new_path->length > 0)
 		{
 			if (!(new_path->path = ft_memalloc(sizeof(int) * new_path->length)))
-				return (ERROR);
+				return (NULL);
 			i = 0;
 			while (i < new_path->length)
 			{
@@ -49,7 +50,7 @@ static int	init_paths_cpy(t_paths *paths, t_paths **paths_cpy)
 		new_path->next = NULL;
 		paths = paths->next;
 	}
-	return (SUCCESS);
+	return (first_path);
 }
 
 /*
@@ -82,6 +83,32 @@ void	delete_set(t_farm *farm, t_paths *paths_on_set)
 	farm->sets[farm->nb_paths - 1] = NULL;
 }
 
+void	delete_set2(t_paths **first_path)
+{
+	t_paths	*tmp;
+	t_paths	*new;
+	int		i;
+
+	i = 0;
+	tmp = *first_path;
+	while (tmp)
+	{
+		new = tmp->next;
+		if (tmp->length > 0)
+		{
+			while (i < tmp->length)
+			{
+				ft_memdel((void**)&tmp->path);
+				i++;
+			}
+			i = 0;
+		}
+		ft_memdel((void**)&tmp);
+		tmp = new;
+	}
+}
+
+
 /*
 ** save_path() saves in an array of paths the paths combinations, in an
 ** incremental order. If we have 2 sets that have the same number of paths, we
@@ -98,9 +125,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 
 	if (farm->nb_paths <= 0)
 		return (SUCCESS);
-	paths_cpy = NULL;
-	if (init_paths_cpy(paths, &paths_cpy) == ERROR)
-		return (ERROR);
+	paths_cpy = init_paths_cpy(paths);
 	paths_on_set = farm->sets[farm->nb_paths - 1];
 	i = 0;
 	j = 0;
@@ -125,11 +150,13 @@ int			save_path(t_farm *farm, t_paths *paths)
 		if (i > j)
 		{
 			ft_putstr("teub\n");
-			delete_set(farm, farm->sets[farm->nb_paths - 1]);
-			if (init_paths_cpy(paths, &paths_cpy) == ERROR)
-				return (ERROR);
+			//delete_set(farm, farm->sets[farm->nb_paths - 1]);
+			delete_set2(&farm->sets[farm->nb_paths - 1]);
+			// paths_cpy = init_paths_cpy(paths);
 			farm->sets[farm->nb_paths - 1] = paths_cpy;
 		}
+		else
+			delete_set2(&paths_cpy);
 	}
 	return (SUCCESS);
 }

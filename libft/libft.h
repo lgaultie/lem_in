@@ -6,13 +6,14 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 15:01:17 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/11 17:33:35 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/15 15:30:12 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
-# define BUFF_SIZE 11
+# define BUFF_SIZE 1
+# define FD_MAX 4864
 
 # include <unistd.h>
 # include <stdlib.h>

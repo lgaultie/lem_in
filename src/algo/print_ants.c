@@ -5,12 +5,10 @@
 /*
 ** print_ants()
 */
-/*
-static void	print_ants()
+static void	print_ants(t_farm *farm, t_paths *tmp, int id_ant, int pos)
 {
-
+	printf("L%d-%s ", id_ant + 1, farm->all_rooms[tmp->path[pos]]->name);
 }
-*/
 
 /*
 ** send_ants() creates an array of ants to track their position in the path.
@@ -24,34 +22,54 @@ int			send_ants(t_farm *farm, int index_of_set)
 {
 	int		*ants;
 	int		i;
-	int		j;
 	t_paths	*tmp;
+	int		arrived;
+	int		nb_lines;
 
+	nb_lines = 0;
 	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
 		return (ERROR);
-	i = 0;
-	while (i < farm->nb_moves) // revoir nb_moves
+	arrived = 0;
+	while (arrived < farm->ants)
 	{
 		tmp = farm->sets[index_of_set];
 		while (tmp)
 		{
-			j = 0;
-			while (j < (i + 1))
+			i = tmp->left_seg;
+			while (i <= tmp->right_seg)
 			{
-				if (ants[tmp->left_seg + j] < tmp->length \
-					&& (tmp->left_seg + j) <= tmp->right_seg)
+				ants[i]++;
+				print_ants(farm, tmp, i, tmp->length - 1 - ants[i]);
+				if (ants[i] == tmp->length - 1)
 				{
-					printf("L%d-room ", tmp->left_seg + j + 1);
-					ants[tmp->left_seg + j]++;
+					tmp->left_seg++;
+					arrived++;
 				}
-				j++;
+				if (ants[i] == 1)
+					break ;
+				i++;
 			}
 			tmp = tmp->next;
 		}
-		i++;
 		printf("\n");
+		nb_lines++;
 	}
-	// create a function to print rooms names associated with each ant (print_ants())
 	// free int *ants
+		t_paths	*tmp_tab;
+	tmp_tab = farm->sets[index_of_set];
+	while (tmp_tab)
+	{
+		int x = 0;
+		printf("path %d : ", x);
+		while(x < tmp_tab->length)
+		{
+			printf("%d ",tmp_tab->path[x]);
+			x++;
+		}
+		printf("\n");
+		tmp_tab = tmp_tab->next;
+	}
+	printf("nb_lines = %d\n", nb_lines);
+	ft_memdel((void**)&ants);
 	return (SUCCESS);
 }

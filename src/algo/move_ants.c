@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/11 23:15:16 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/09/15 11:31:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,15 @@ int			ants_per_paths(t_farm *farm)
 	printf("total de fourmis de la map = %d\n", farm->ants);
 	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
 	tmp = farm->sets[index_of_set];
-	while (tmp)
+	while (total_ants_sent < farm->ants)
 	{
-		if (total_ants_sent < farm->ants)
+		while (total_ants_sent < farm->ants && tmp)
 		{
-			printf("on renvoie une fourmi !\n");
 			tmp->ants_to_send++;
 			total_ants_sent++;
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
+		tmp = farm->sets[index_of_set];
 	}
 	printf("total de fourmis de la map = %d\n", farm->ants);
 	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
