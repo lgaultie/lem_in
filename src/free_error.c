@@ -30,6 +30,6 @@ int			free_farm_error(t_farm *farm)
 
 int			free_tab_error(char **tab)
 {
-	ft_free_tab(tab);
+	ft_free_tab(&tab);
 	return (ERROR);
 }

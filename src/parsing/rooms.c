@@ -118,6 +118,6 @@ int			parse_rooms(t_farm *farm, char *line, int start_end)
 	|| (check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
 	|| (add_room(farm, room, start_end) == ERROR))
 		return (free_tab_error(room));
-	ft_free_tab(room);
+	ft_free_tab(&room);
 	return (SUCCESS);
 }

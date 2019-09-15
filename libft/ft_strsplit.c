@@ -85,6 +85,6 @@ char		**ft_strsplit(char const *s, char c)
 	if (word_array == NULL)
 		return (NULL);
 	else
-		!ft_browse_words(s, c, word_array) ? ft_free_tab(word_array) : 0;
+		!ft_browse_words(s, c, word_array) ? ft_free_tab(&word_array) : 0;
 	return (word_array);
 }

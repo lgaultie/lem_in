@@ -113,7 +113,7 @@ int			parse_links(t_farm *farm, char *line)
 			ft_putstr("nameee\n");
 			return (free_tab_error(link));
 		}
-		ft_free_tab(link);
+		ft_free_tab(&link);
 	}
 	return (SUCCESS);
 }

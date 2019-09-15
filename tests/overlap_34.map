@@ -1,0 +1,71 @@
+100
+##start
+Start 0 0
+A 1 1
+B 2 2
+C 3 3
+D 4 4
+E 5 5
+F 7 7
+G 8 8
+H 9 9
+I 10 10
+J 11 11
+K 12 12
+4 13 13
+M 14 14
+N 15 15
+O 16 16
+P 17 17
+Q 18 18
+R 19 19
+S 20 20
+T 21 21
+U 22 22
+V 23 23
+W 24 24
+X 25 25
+Y 26 26
+Z 27 27
+1 28 28
+2 29 29
+3 30 30
+##end
+End 31 31
+Start-A
+A-B
+B-C
+C-End
+Start-D
+D-E
+E-F
+F-C
+E-B
+A-G
+B-G
+G-H
+Start-Q
+Q-R
+H-I
+I-J
+J-End
+R-S
+S-T
+T-U
+U-V
+V-P
+P-End
+Start-K
+K-4
+4-M
+M-N
+N-O
+O-P
+4-W
+W-X
+X-Y
+Y-Z
+Z-1
+1-2
+2-3
+3-End

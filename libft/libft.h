@@ -96,7 +96,7 @@ int				ft_sqrt_rounded(int nb);
 int				get_next_line(const int fd, char **line);
 int				get_next_line_custom(const int fd, char **line);
 void			ft_swap(int *a, int *b);
-void			ft_free_tab(char **tab);
+void			ft_free_tab(char ***tab);
 char			*ft_strjoinfree(char *s1, char *s2, int free_who);
 void			ft_lstendadd(t_list *alst, t_list *new);
 char			*ft_strrealloc(char *str, int len);
