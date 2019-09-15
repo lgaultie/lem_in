@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_recursive_factorial.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:21:10 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:21:35 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/22 08:02:42 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 08:03:10 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int	ft_recursive_factorial(int nb)
 {
-	int	count;
+	int result;
 
-	if (s)
-	{
-		count = 0;
-		while (s[count] != '\0')
-		{
-			ft_putchar(s[count]);
-			count++;
-		}
-	}
+	result = 1;
+	if (nb > 1 && nb < 13)
+		result = nb * ft_recursive_factorial(nb - 1);
+	else if (nb == 1 || nb == 0)
+		return (1);
+	else
+		return (0);
+	return (result);
 }

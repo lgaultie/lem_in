@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:21:10 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:21:35 by cmouele          ###   ########.fr       */
+/*   Created: 2019/06/10 08:54:30 by cmouele           #+#    #+#             */
+/*   Updated: 2019/06/18 19:50:06 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+void	ft_swap(int *a, int *b)
 {
-	int	count;
+	int	store_value;
 
-	if (s)
-	{
-		count = 0;
-		while (s[count] != '\0')
-		{
-			ft_putchar(s[count]);
-			count++;
-		}
-	}
+	store_value = *a;
+	*a = *b;
+	*b = store_value;
 }

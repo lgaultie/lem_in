@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_is_prime.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:21:10 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:21:35 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/22 08:01:30 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 08:01:51 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int	ft_is_prime(int nb)
 {
-	int	count;
+	int counter;
 
-	if (s)
+	counter = 3;
+	if (nb <= 1 || (nb % 2 == 0 && nb != 2))
+		return (0);
+	if (nb == 2 || nb == 2147483647)
+		return (1);
+	while (counter < nb)
 	{
-		count = 0;
-		while (s[count] != '\0')
-		{
-			ft_putchar(s[count]);
-			count++;
-		}
+		if (nb % counter == 0)
+			return (0);
+		counter += 2;
 	}
+	return (1);
 }

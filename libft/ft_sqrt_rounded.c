@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_sqrt_rounded.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:21:10 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:21:35 by cmouele          ###   ########.fr       */
+/*   Created: 2018/12/16 13:24:53 by cmouele           #+#    #+#             */
+/*   Updated: 2018/12/16 15:01:11 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int	ft_sqrt_rounded(int nb)
 {
-	int	count;
+	int c;
 
-	if (s)
+	c = 0;
+	if (nb <= 0)
+		return (0);
+	if (nb == 1)
+		return (1);
+	while (c <= nb && c <= 46340)
 	{
-		count = 0;
-		while (s[count] != '\0')
-		{
-			ft_putchar(s[count]);
-			count++;
-		}
+		if (c * c >= nb)
+			return (c);
+		c++;
 	}
+	return (0);
 }

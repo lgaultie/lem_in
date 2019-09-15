@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_fibonacci.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:21:10 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:21:35 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/22 07:55:48 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 07:56:30 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int	ft_fibonacci(int index)
 {
-	int	count;
+	int element;
 
-	if (s)
-	{
-		count = 0;
-		while (s[count] != '\0')
-		{
-			ft_putchar(s[count]);
-			count++;
-		}
-	}
+	element = 0;
+	if (index < 0)
+		return (-1);
+	else if (index == 0)
+		return (0);
+	else if (index == 1 || index == 2)
+		return (1);
+	else
+		element = ft_fibonacci(index - 1) + ft_fibonacci(index - 2);
+	return (element);
 }

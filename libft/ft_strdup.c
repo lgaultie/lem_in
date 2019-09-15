@@ -3,28 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/09 15:17:04 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/12 19:37:03 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/12 09:06:43 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/15 08:20:23 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *src)
+static size_t	ft_strlength(const char *s)
 {
-	int		i;
-	char	*dest;
+	unsigned int count;
 
-	i = 0;
-	if (!(dest = (char *)malloc(sizeof(char) * (ft_strlen(src) + 1))))
+	count = 0;
+	while (s[count] != '\0')
+		count++;
+	return (count);
+}
+
+char			*ft_strdup(const char *s1)
+{
+	char	*dst;
+	int		count;
+
+	count = 0;
+	dst = (char*)malloc(sizeof(char) * (ft_strlength(s1) + 1));
+	if (dst == NULL)
 		return (NULL);
-	while (src[i] != '\0')
+	while (s1[count] != '\0')
 	{
-		dest[i] = src[i];
-		i++;
+		dst[count] = s1[count];
+		count++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	dst[count] = '\0';
+	return (dst);
 }

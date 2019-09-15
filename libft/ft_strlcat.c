@@ -3,33 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 17:35:24 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/14 16:01:10 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/12 09:08:23 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/15 15:27:43 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t			i;
-	size_t			taille_src;
-	size_t			taille_dst;
-	unsigned char	*srcs;
+	unsigned int	count_dst;
+	unsigned int	count_src;
+	unsigned int	length_dst;
+	unsigned int	length_src;
 
-	taille_src = ft_strlen(src);
-	taille_dst = ft_strlen(dst);
-	srcs = (unsigned char*)src;
-	i = 0;
-	if (size < taille_dst)
-		return (taille_src + size);
-	while (size > taille_dst + i + 1 && srcs[i] != '\0')
+	count_dst = 0;
+	count_src = 0;
+	length_src = 0;
+	while (dst[count_dst] != '\0')
+		count_dst++;
+	length_dst = count_dst;
+	while (src[length_src] != '\0')
+		length_src++;
+	if (dstsize < length_dst)
+		return (dstsize + length_src);
+	while (src[count_src] != '\0' && count_dst < dstsize - 1)
 	{
-		dst[taille_dst + i] = srcs[i];
-		i++;
+		dst[count_dst] = src[count_src];
+		count_dst++;
+		count_src++;
 	}
-	dst[taille_dst + i] = '\0';
-	return (taille_src + taille_dst);
+	dst[count_dst] = '\0';
+	return (length_dst + length_src);
 }

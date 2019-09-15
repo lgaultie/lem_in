@@ -1,29 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*   ft_atoi_long.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/12 11:34:42 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/15 08:07:40 by cmouele          ###   ########.fr       */
+/*   Created: 2019/05/28 15:33:38 by cmouele           #+#    #+#             */
+/*   Updated: 2019/06/18 19:50:51 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int c, size_t n)
+long	ft_atoi_long(const char *str)
 {
-	char			*s_cpy;
-	unsigned int	count;
+	long	count;
+	long	sign;
+	long	nb;
 
-	s_cpy = (char*)s;
 	count = 0;
-	while (count < n)
+	sign = 1;
+	nb = 0;
+	while (str[count] == ' ' || str[count] == '\t' || str[count] == '\n' ||
+		str[count] == '\v' || str[count] == '\f' || str[count] == '\r')
+		count++;
+	if (str[count] == '-')
 	{
-		if (s_cpy[count] == (char)c)
-			return ((void*)(s_cpy + count));
+		sign = -1;
 		count++;
 	}
-	return (NULL);
+	else if (str[count] == '+')
+		count++;
+	while (str[count] >= '0' && str[count] <= '9')
+	{
+		nb *= 10;
+		nb += str[count] - '0';
+		count++;
+	}
+	return (sign * nb);
 }

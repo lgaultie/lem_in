@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_recursive_power.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/19 08:21:10 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:21:35 by cmouele          ###   ########.fr       */
+/*   Created: 2018/11/22 08:04:18 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/22 08:04:52 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putstr(char const *s)
+int	ft_recursive_power(int nb, int power)
 {
-	int	count;
+	int result;
 
-	if (s)
-	{
-		count = 0;
-		while (s[count] != '\0')
-		{
-			ft_putchar(s[count]);
-			count++;
-		}
-	}
+	result = 1;
+	if (power < 0)
+		return (0);
+	else if (power == 0)
+		return (1);
+	else if (power == 1)
+		return (nb);
+	else
+		result = nb * ft_recursive_power(nb, power - 1);
+	return (result);
 }

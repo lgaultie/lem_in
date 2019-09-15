@@ -3,38 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 12:34:26 by lgaultie          #+#    #+#             */
-/*   Updated: 2018/11/17 14:06:56 by lgaultie         ###   ########.fr       */
+/*   Created: 2018/11/19 08:25:16 by cmouele           #+#    #+#             */
+/*   Updated: 2018/11/19 08:30:09 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr_fd(int n, int fd)
+static void	ft_putnbr_max(int fd)
 {
-	if (n > 2147483647 || n < -2147483648)
-		return ;
+	ft_putchar_fd('-', fd);
+	ft_putchar_fd('2', fd);
+	ft_putchar_fd('1', fd);
+	ft_putchar_fd('4', fd);
+	ft_putchar_fd('7', fd);
+	ft_putchar_fd('4', fd);
+	ft_putchar_fd('8', fd);
+	ft_putchar_fd('3', fd);
+	ft_putchar_fd('6', fd);
+	ft_putchar_fd('4', fd);
+	ft_putchar_fd('8', fd);
+}
+
+void		ft_putnbr_fd(int n, int fd)
+{
+	int	quotient;
+	int	remainder;
+
+	quotient = 0;
+	remainder = 0;
+	if (n < 0 && n != -2147483648)
+	{
+		ft_putchar_fd('-', fd);
+		n = n * -1;
+	}
 	if (n == -2147483648)
 	{
-		ft_putstr_fd("-2147483648", fd);
+		ft_putnbr_max(fd);
 		return ;
 	}
-	if (n < 0)
+	quotient = n / 10;
+	if (quotient != 0)
 	{
-		n = n * (-1);
-		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(quotient, fd);
 	}
-	if (n < 10)
-	{
-		ft_putchar_fd(n + 48, fd);
-		return ;
-	}
-	if (n >= 10)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd((n % 10) + 48, fd);
-		return ;
-	}
+	remainder = n % 10;
+	ft_putchar_fd(remainder + 48, fd);
 }

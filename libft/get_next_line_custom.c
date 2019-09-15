@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_custom.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/23 10:31:59 by cmouele           #+#    #+#             */
-/*   Updated: 2019/07/02 08:57:28 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/07/04 08:49:34 by cmouele          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static int	ft_read(const int fd, char *static_buff, char **line)
 	if (read_nb == -1)
 		return (-1);
 	if (read_nb == 0)
+	{
+		if (*line)
+			return (2);
 		return (0);
+	}
 	static_buff[read_nb] = '\0';
 	tmp = *line;
 	*line = ft_strjoin(*line, static_buff);
@@ -60,12 +64,12 @@ static int	ft_n_found(char *static_buff, char **line)
 }
 
 /*
-** get_next_line() checks if we have something in static_buff. If we do, we put
-** it in line and call ft_n_found() to check if we find a \n. Else, we call
-** ft_read() and ft_f_found() on the line.
+** get_next_line_custom() checks if we have something in static_buff. If we do
+** we put it in line and call ft_n_found() to check if we find a \n. Else, we
+** call ft_read() and ft_f_found() on the line.
 */
 
-int			get_next_line(const int fd, char **line)
+int			get_next_line_custom(const int fd, char **line)
 {
 	static char	static_buff[FD_MAX + 1][BUFF_SIZE + 1];
 	int			ret;
@@ -84,7 +88,9 @@ int			get_next_line(const int fd, char **line)
 			return (1);
 	}
 	while ((ret = ft_read(fd, static_buff[fd], line)))
-		if (ft_strlen(*line))
+		if (ret == 2)
+			return (2);
+		else if (ft_strlen(*line))
 			if ((ft_n_found(static_buff[fd], line)) == 1)
 				return (1);
 	if (*line)
