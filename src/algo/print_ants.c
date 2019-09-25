@@ -54,8 +54,8 @@ int			send_ants(t_farm *farm, int index_of_set)
 		printf("\n");
 		nb_lines++;
 	}
-	// free int *ants
-		t_paths	*tmp_tab;
+	// TMP
+	t_paths	*tmp_tab;
 	tmp_tab = farm->sets[index_of_set];
 	while (tmp_tab)
 	{
@@ -70,6 +70,7 @@ int			send_ants(t_farm *farm, int index_of_set)
 		tmp_tab = tmp_tab->next;
 	}
 	printf("nb_lines = %d\n", nb_lines);
+	// END TMP
 	ft_memdel((void**)&ants);
 	return (SUCCESS);
 }

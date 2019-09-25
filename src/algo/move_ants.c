@@ -89,6 +89,7 @@ static int	choose_set(t_farm *farm)
 ** ants_per_paths() calls choose_set() to find the optimized set of paths. It
 ** then calculates the number of ants we need to send to each path of the
 ** optimized set and saves it. Formula: nb_ants = nb_moves - (length - 2). If
+** the number of ants to send is negative, we delete the path from the set. If
 ** the number of ants sent is different from the original number, we dispatch
 ** ants randomly in the paths until the original number is reached.
 */
@@ -106,7 +107,10 @@ int			ants_per_paths(t_farm *farm)
 	{
 		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
 		printf("length = %d, ants a envoyer = %d\n", tmp->length, tmp->ants_to_send);
-		total_ants_sent += tmp->ants_to_send;
+		if (tmp->ants_to_send <= 0)
+			delete_path(&(farm->sets[index_of_set]), tmp);
+		else
+			total_ants_sent += tmp->ants_to_send;
 		tmp = tmp->next;
 	}
 	printf("total de fourmis de la map = %d\n", farm->ants);

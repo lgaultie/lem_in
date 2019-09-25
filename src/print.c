@@ -91,3 +91,33 @@ void		print_paths(t_farm *farm)
 	}
 	ft_putchar('\n');
 }
+
+void		display_sets(t_farm *farm)
+{
+	int		i;
+	int 	j;
+	t_paths	**sets;
+	t_paths *list;
+
+	printf("****DISPLAY SETS****\n");
+	sets = farm->sets;
+	printf("sets addr: %p\n", sets);
+	i = 0;
+	while (i < farm->nb_paths)
+	{
+		printf("path[%d] addr: %p\n", i, sets[i]);
+		list = sets[i];
+		while (list)
+		{
+			j = 0;
+			while (j < list->length)
+			{
+				printf("%d ", list->path[j]);
+				j++;
+			}
+			printf("\n");
+			list = list->next;
+		}
+		i++;
+	}
+}

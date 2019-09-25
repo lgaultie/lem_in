@@ -100,7 +100,7 @@ int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
 int		fill_reserved(t_farm *farm);
 int		backtrack_paths(int block, t_farm *farm);
-void	delete_path(t_farm *farm, t_paths *path);
+void	delete_path(t_paths **source, t_paths *path);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
@@ -112,5 +112,6 @@ int		send_ants(t_farm *farm, int index_of_set);
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
 void	print_paths(t_farm *farm);
+void	display_sets(t_farm *farm);
 
 #endif

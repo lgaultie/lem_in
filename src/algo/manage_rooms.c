@@ -66,10 +66,10 @@ int		fill_reserved(t_farm *farm)
 }
 
 /*
-** delete_path() deletes the path from paths structure.
+** delete_path() deletes a path from its source list.
 */
 
-void	delete_path(t_farm *farm, t_paths *path)
+void	delete_path(t_paths **source, t_paths *path)
 {
 	t_paths	*tmp;
 	int		i;
@@ -93,7 +93,7 @@ void	delete_path(t_farm *farm, t_paths *path)
 		path = tmp;
 		if (path)
 			path->prev = NULL;
-		farm->paths = path;
+		*source = path;
 	}
 	else
 	{
@@ -211,7 +211,7 @@ int			path_to_delete(t_farm *farm, int id_room)
 			if (tmp->path[i] == id_room)
 			{
 				unvisit_rooms(tmp->path, tmp->length, farm, id_room);
-				delete_path(farm, tmp);
+				delete_path(&(farm->paths), tmp);
 				farm->nb_paths--;
 				tmp = farm->paths;
 				return (SUCCESS);
