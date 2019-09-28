@@ -17,7 +17,7 @@
 ** ant and the id of the last ant.
 */
 
-static void		segment_ants(t_farm *farm, int index_of_set)
+static void	segment_ants(t_farm *farm, int index_of_set)
 {
 	t_paths	*tmp;
 	int		id_ant;
@@ -33,7 +33,6 @@ static void		segment_ants(t_farm *farm, int index_of_set)
 		id_ant = right_segment + 1;
 		tmp->left_seg = left_segment;
 		tmp->right_seg = right_segment;
-		printf("path - left segment: %d, right segment: %d\n", tmp->left_seg, tmp->right_seg);
 		tmp = tmp->next;
 	}
 }
@@ -69,7 +68,6 @@ static int	choose_set(t_farm *farm)
 		}
 		if (farm->ants >= i + 1)
 			nb_moves = (farm->ants + length - (2 * (i + 1))) / (i + 1);
-		printf("index: %d - nb_moves: %d - length: %d\n", i, nb_moves, length);
 		if (min == 0 || nb_moves < min)
 		{
 			min = nb_moves;
@@ -79,8 +77,6 @@ static int	choose_set(t_farm *farm)
 		if (i < farm->nb_paths)
 			tmp = farm->sets[i];
 	}
-	printf("min: %d\n", min);
-	printf("choose the set with index %d!\n", index_min);
 	farm->nb_moves = min;
 	return (index_min);
 }
@@ -106,15 +102,12 @@ int			ants_per_paths(t_farm *farm)
 	while (tmp)
 	{
 		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
-		printf("length = %d, ants a envoyer = %d\n", tmp->length, tmp->ants_to_send);
 		if (tmp->ants_to_send <= 0)
 			delete_path(&(farm->sets[index_of_set]), tmp);
 		else
 			total_ants_sent += tmp->ants_to_send;
 		tmp = tmp->next;
 	}
-	printf("total de fourmis de la map = %d\n", farm->ants);
-	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
 	tmp = farm->sets[index_of_set];
 	while (total_ants_sent < farm->ants)
 	{
@@ -126,8 +119,6 @@ int			ants_per_paths(t_farm *farm)
 		}
 		tmp = farm->sets[index_of_set];
 	}
-	printf("total de fourmis de la map = %d\n", farm->ants);
-	printf("total de fourmis envoyées dans les chemins = %d\n", total_ants_sent);
 	segment_ants(farm, index_of_set);
 	if (send_ants(farm, index_of_set) == ERROR)
 		return (ERROR);

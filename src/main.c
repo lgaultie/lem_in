@@ -35,7 +35,7 @@ static void	free_farm(t_farm *farm, int **matrice)
 ** room. The real number may be less.
 */
 
-int		max_paths(t_farm *farm)
+static int	max_paths(t_farm *farm)
 {
 	int		max_paths;
 	int		links_of_start;
@@ -55,17 +55,15 @@ int		max_paths(t_farm *farm)
 		max_paths = links_of_end;
 	else
 		max_paths = links_of_start;
-	ft_putstr("maximum possible de paths: ");
-	ft_putnbr(max_paths);
-	ft_putchar('\n');
 	return (max_paths);
 }
 
 /*
-** init_all_rooms()
+** init_all_rooms() initializes an array of rooms. Each cell points to a
+** room's structure link.
 */
 
-int		init_all_rooms(t_farm *farm)
+static int	init_all_rooms(t_farm *farm)
 {
 	t_rooms	*tmp;
 	int		i;
@@ -84,12 +82,13 @@ int		init_all_rooms(t_farm *farm)
 }
 
 /*
-** init_sets() initializes the array of paths structures.
+** init_sets() initializes the array of paths. Each cell corresponds to a set
+** of paths.
 */
 
-int		init_sets(t_farm *farm)
+static int	init_sets(t_farm *farm)
 {
-	int		max_path;
+	int	max_path;
 
 	max_path = max_paths(farm);
 	if (!(farm->sets = ft_memalloc(sizeof(t_paths*) * max_path)))
@@ -98,16 +97,15 @@ int		init_sets(t_farm *farm)
 }
 
 /*
-** main() creates farm structure, calls read_input() to read the map, creates
-** the matrice, then frees the farm.
+** main()
 */
 
 int			main(void)
 {
-	int			line_nb;
-	int			error;
-	t_farm		*farm;
-	int 		**matrice;
+	int		line_nb;
+	int		error;
+	t_farm	*farm;
+	int 	**matrice;
 
 	line_nb = 1;
 	error = 0;

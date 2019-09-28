@@ -40,7 +40,6 @@ int			check_paths(t_farm *farm)
 	t_paths	*tmp_path;
 	t_paths	*tmp_all_paths;
 
-	ft_putstr("check all paths\n");
 	tmp_path = farm->paths;
 	while (tmp_path->next)
 		tmp_path = tmp_path->next;
@@ -55,10 +54,8 @@ int			check_paths(t_farm *farm)
 				j++;
 			if (j == tmp_path->length)
 			{
-				ft_putstr("There is 2 similar paths in all_paths, we delete the first similar path.\n");
 				delete_path(&(farm->paths), tmp_path);
 				save_path(farm, farm->paths);
-				print_tab_paths(farm); // TMP
 				return (SUCCESS);
 			}
 		}
@@ -77,10 +74,10 @@ int			check_paths(t_farm *farm)
 
 int			find_paths(t_farm *farm, int **matrice)
 {
-	int				ret_algo;
-	int				ret_fill_path;
-	static int		ret_backtrack = -1;
-	static int		just_deleted = -1;
+	int			ret_algo;
+	int			ret_fill_path;
+	static int	ret_backtrack = -1;
+	static int	just_deleted = -1;
 
 	while ((ret_algo = algo(farm, matrice)) == -2)
 	{
@@ -103,16 +100,10 @@ int			find_paths(t_farm *farm, int **matrice)
 		}
 		just_deleted = -1;
 	}
-	ft_putstr("ret_algo: ");
-	ft_putnbr(ret_algo);
-	ft_putchar('\n');
 	if (ret_algo != -2)
 	{
 		unvisit_rooms(farm);
 		ret_backtrack = backtrack_paths(ret_algo, farm);
-		ft_putstr("ret_backtrack: ");
-		ft_putnbr(ret_backtrack);
-		ft_putchar('\n');
 		if (ret_backtrack == ERROR)
 			return (ERROR);
 	}

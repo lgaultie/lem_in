@@ -30,9 +30,6 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 	{
 		if (tmp_rooms->room_id == id)
 		{
-			ft_putstr("add room to path: ");
-			ft_putnbr(tmp_rooms->room_id);
-			ft_putchar('\n');
 			path->path[i] = tmp_rooms->room_id;
 			i++;
 			break ;
@@ -45,12 +42,13 @@ static int	retrieve_path(t_farm *farm, t_paths *path, int id, int j)
 }
 
 /*
-** save_found_path()
+** path_cpy() copies the path found, not to share the same pointer with the
+** path in paths structure.
 */
 
-void 	path_cpy(t_paths *new, t_paths *path)
+static void	path_cpy(t_paths *new, t_paths *path)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (!(new->path = ft_memalloc(sizeof(int) * path->length)))
@@ -63,10 +61,11 @@ void 	path_cpy(t_paths *new, t_paths *path)
 }
 
 /*
-** save_found_path() initializes the list of all found paths.
+** save_found_path() initializes and registers the list of all found paths,
+** calling path_cpy().
 */
 
-void	save_found_path(t_farm *farm, t_paths *path)
+void		save_found_path(t_farm *farm, t_paths *path)
 {
 	t_paths	*tmp;
 	t_paths	*new;

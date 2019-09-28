@@ -14,11 +14,11 @@
 
 /*
 ** parse() checks data for rooms and links, calls parse_rooms() and
-** parse_links(). Static int order equals 2 when parsing rooms, and 3 when
-** parsing links to prevent wrong order in the map file.
+** parse_links(). 'order' equals 2 when parsing rooms, and 3 when
+** parsing links, to prevent wrong order during the check.
 */
 
-int			parse(t_farm *farm, char *line, int start_end)
+int	parse(t_farm *farm, char *line, int start_end)
 {
 	static int	order = 1;
 
@@ -38,10 +38,7 @@ int			parse(t_farm *farm, char *line, int start_end)
 			return (ERROR);
 		order = 3;
 		if (parse_links(farm, line) == ERROR)
-		{
-			ft_putstr("parse link error\n");
 			return (ERROR);
-		}
 	}
 	return (SUCCESS);
 }

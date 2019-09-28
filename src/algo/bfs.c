@@ -54,32 +54,46 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room)
 }
 
 /*
+** fill_reserved() put the rooms in the path to reserved = 1 and visited = 0,
+** except for the start and end rooms.
+*/
+
+int			fill_reserved(t_farm *farm)
+{
+	t_paths	*tmp_paths;
+	t_rooms	*tmp_rooms;
+	int		i;
+
+	tmp_paths = farm->paths;
+	tmp_rooms = farm->rooms;
+	while (tmp_paths->next)
+		tmp_paths = tmp_paths->next;
+	while (tmp_rooms)
+	{
+		i = 0;
+		while (i < tmp_paths->length)
+		{
+			if (tmp_rooms->room_id == tmp_paths->path[i] \
+				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
+			{
+				if (check_if_in_released_rooms(farm, tmp_rooms->room_id) == SUCCESS)
+					tmp_rooms->to_reserve = 1;
+				tmp_rooms->reserved = 1;
+			}
+			i++;
+		}
+		tmp_rooms->visited = 0;
+		tmp_rooms = tmp_rooms->next;
+	}
+	return (SUCCESS);
+}
+
+/*
 ** blocking_room() checks, with the room id we specified in the parameters
 ** (that corresponds to the last link that was deleted from the queue), that
 ** this room is linked to an other room. If it is, the linked room is the
 ** blocking room.
 */
-
-// version avec direct les pointeurs mais bug...
-// static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
-// {
-// 	int		i;
-//
-// 	i = 0;
-// 	while (i < farm->total_rooms)
-// 	{
-// 		if (matrice[last_valid_room][i] == 1 && farm->all_rooms[i].reserved == 1)
-// 		{
-// 			ft_putstr("blocking room: ");
-// 			ft_putnbr(farm->all_rooms[i].room_id);
-// 			ft_putchar('\n');
-// 			// printf("room qui bloque = %d\n", tmp_rooms->room_id);
-// 			return (i);
-// 		}
-// 		i++;
-// 	}
-// 	return (i);
-// }
 
 static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 {
@@ -95,13 +109,7 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 			while (tmp_rooms)
 			{
 				if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1)
-				{
-					ft_putstr("blocking room: ");
-					ft_putnbr(tmp_rooms->room_id);
-					ft_putchar('\n');
-					// printf("room qui bloque = %d\n", tmp_rooms->room_id);
 					return (i);
-				}
 				tmp_rooms = tmp_rooms->next;
 			}
 		}
@@ -130,19 +138,13 @@ static int	fill_queue(t_farm *farm, int **matrice)
 			if (tmp_rooms->room_id == farm->queue->id)
 			{
 				first_of_queue = farm->queue->id;
-				ft_putstr("farm->queue id =  ");
-				ft_putnbr(first_of_queue);
-				ft_putchar('\n');
 				check_bfs = bfs(farm, matrice, tmp_rooms);
 				if (check_bfs == ERROR)
 					return (ERROR);
 				if (check_bfs == -2)
 					return (-2);
 				if (check_bfs == FAILURE && !farm->queue)
-				{
-					ft_putstr("check_bfs failed, et farm queue existe pas\n");
 					return (blocking_room(farm, matrice, first_of_queue));
-				}
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
@@ -155,7 +157,7 @@ static int	fill_queue(t_farm *farm, int **matrice)
 ** queue(), then calls check_queue() to add rooms to the queue.
 */
 
-int		algo(t_farm *farm, int **matrice)
+int			algo(t_farm *farm, int **matrice)
 {
 	t_rooms	*tmp_rooms;
 	int		ret_fill_queue;

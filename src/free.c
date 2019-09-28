@@ -13,14 +13,13 @@
 #include <lem_in.h>
 
 /*
-** free_paths() frees paths when they exist.
+** free_paths() frees paths structure.
 */
 
-
-void			free_paths(t_farm *farm)
+void		free_paths(t_farm *farm)
 {
-	t_paths		*tmp;
-	t_paths		*new;
+	t_paths	*tmp;
+	t_paths	*new;
 
 	tmp = farm->paths;
 	while (tmp)
@@ -33,55 +32,10 @@ void			free_paths(t_farm *farm)
 }
 
 /*
-** free_paths() frees paths when they exist.
+** free_queue() frees queue structure.
 */
 
-
-void			free_found_paths(t_farm *farm)
-{
-	t_paths		*tmp;
-	t_paths		*new;
-
-	tmp = farm->found_paths;
-	while (tmp)
-	{
-		new = tmp->next;
-		ft_memdel((void**)&tmp->path);
-		ft_memdel((void**)&tmp);
-		tmp = new;
-	}
-}
-
-void			free_sets(t_farm *farm)
-{
-	int			i;
-	t_paths		*tmp_tab;
-	t_paths		*new;
-
-	i = 0;
-	while (i < farm->nb_paths)
-	{
-		tmp_tab = farm->sets[i];
-		while (tmp_tab)
-		{
-			new = tmp_tab->next;
-			ft_memdel((void**)&tmp_tab->path);
-			ft_memdel((void**)&tmp_tab);
-			tmp_tab = new;
-		}
-		ft_putstr("i = ");
-		ft_putnbr(i);
-		ft_putchar('\n');
-		i++;
-	}
-	ft_memdel((void**)&farm->sets);
-}
-
-/*
-** free_queue() frees queue when it exists.
-*/
-
-void			free_queue(t_farm *farm)
+void		free_queue(t_farm *farm)
 {
 	t_queue	*tmp;
 	t_queue	*new;
@@ -97,12 +51,12 @@ void			free_queue(t_farm *farm)
 }
 
 /*
-** free_links() frees links when they exist.
+** free_links() frees links structure.
 */
 
-static void		free_links(t_links *links)
+static void	free_links(t_links *links)
 {
-	t_links		*tmp;
+	t_links	*tmp;
 
 	while (links->next)
 	{
@@ -119,12 +73,12 @@ static void		free_links(t_links *links)
 }
 
 /*
-** free_rooms() frees rooms when they exist.
+** free_rooms() frees rooms structure.
 */
 
-void			free_rooms(t_rooms *rooms)
+void		free_rooms(t_rooms *rooms)
 {
-	t_rooms		*tmp;
+	t_rooms	*tmp;
 
 	while (rooms)
 	{
@@ -141,9 +95,9 @@ void			free_rooms(t_rooms *rooms)
 ** free_matrice() frees the matrice.
 */
 
-void 			free_matrice(t_farm *farm, int **matrice)
+void 		free_matrice(t_farm *farm, int **matrice)
 {
-	int 	i;
+	int	i;
 
 	i = 0;
 	while (i < farm->total_rooms)

@@ -12,9 +12,9 @@
 
 #include <lem_in.h>
 
-void		print_tab_paths(t_farm *farm)
+void	print_tab_paths(t_farm *farm)
 {
-	int	i;
+	int		i;
 	t_paths	*tmp_tab;
 
 	i = 0;
@@ -43,7 +43,7 @@ void		print_tab_paths(t_farm *farm)
 	ft_putchar('\n');
 }
 
-void		print_free_rooms(t_farm *farm)
+void	print_free_rooms(t_farm *farm)
 {
 	t_rooms *tmp;
 
@@ -71,7 +71,7 @@ void		print_free_rooms(t_farm *farm)
 	ft_putstr("--------------\n");
 }
 
-void		print_paths(t_farm *farm)
+void	print_paths(t_farm *farm)
 {
 	t_paths		*tmp_path;
 	tmp_path = farm->paths;
@@ -92,7 +92,7 @@ void		print_paths(t_farm *farm)
 	ft_putchar('\n');
 }
 
-void		display_sets(t_farm *farm)
+void	display_sets(t_farm *farm)
 {
 	int		i;
 	int 	j;

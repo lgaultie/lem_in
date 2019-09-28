@@ -33,7 +33,7 @@ static int	check_nb_ants(int line_nb, t_farm *farm, char *line, int error)
 
 /*
 ** check_start_end() reviews all rooms to check if there is a start and an end.
-** also checks if there is an ant number.
+** It also checks if there are links for the rooms, and a valid ant number.
 */
 
 static int	check_start_end(int error, t_farm *farm)
@@ -91,8 +91,8 @@ static int	check_line(char *line, int error)
 
 int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 {
-	char		*line;
-	int			ret;
+	char	*line;
+	int		ret;
 
 	line = NULL;
 	ret = 1;
@@ -115,10 +115,8 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 				line_nb--;
 			line_nb++;
 		}
-		// ft_putstr("error = ");
-		// ft_putnbr(error);
-		// ft_putchar('\n');
 	}
 	error = check_start_end(error, farm);
+	ft_putchar('\n');
 	return (error);
 }

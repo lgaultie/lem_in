@@ -3,11 +3,16 @@
 #include <lem_in.h>
 
 /*
-** print_ants()
+** print_ants() writes the paths taken by the ants on the standard output.
 */
+
 static void	print_ants(t_farm *farm, t_paths *tmp, int id_ant, int pos)
 {
-	printf("L%d-%s ", id_ant + 1, farm->all_rooms[tmp->path[pos]]->name);
+	ft_putchar('L');
+	ft_putnbr(id_ant + 1);
+	ft_putchar('-');
+	ft_putstr(farm->all_rooms[tmp->path[pos]]->name);
+	ft_putchar(' ');
 }
 
 /*
@@ -51,26 +56,9 @@ int			send_ants(t_farm *farm, int index_of_set)
 			}
 			tmp = tmp->next;
 		}
-		printf("\n");
+		ft_putchar('\n');
 		nb_lines++;
 	}
-	// TMP
-	t_paths	*tmp_tab;
-	tmp_tab = farm->sets[index_of_set];
-	while (tmp_tab)
-	{
-		int x = 0;
-		printf("path %d : ", x);
-		while(x < tmp_tab->length)
-		{
-			printf("%d ",tmp_tab->path[x]);
-			x++;
-		}
-		printf("\n");
-		tmp_tab = tmp_tab->next;
-	}
-	printf("nb_lines = %d\n", nb_lines);
-	// END TMP
 	ft_memdel((void**)&ants);
 	return (SUCCESS);
 }

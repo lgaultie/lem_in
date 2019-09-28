@@ -16,7 +16,7 @@
 ** free_farm_error() frees farm and writes an error message.
 */
 
-int			free_farm_error(t_farm *farm)
+int	free_farm_error(t_farm *farm)
 {
 	free_rooms(farm->rooms);
 	ft_memdel((void**)&farm);
@@ -28,7 +28,7 @@ int			free_farm_error(t_farm *farm)
 ** free_tab_error() frees tab.
 */
 
-int			free_tab_error(char **tab)
+int	free_tab_error(char **tab)
 {
 	ft_free_tab(&tab);
 	return (ERROR);

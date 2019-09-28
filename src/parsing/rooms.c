@@ -38,8 +38,8 @@ static int	init_room(t_rooms *new, char **tab, int startend)
 
 static int	add_room(t_farm *farm, char **tab, int startend)
 {
-	t_rooms		*tmp;
-	t_rooms		*new;
+	t_rooms	*tmp;
+	t_rooms	*new;
 
 	tmp = farm->rooms;
 	if ((new = ft_memalloc(sizeof(t_rooms))) == NULL)
@@ -71,7 +71,7 @@ static int	add_room(t_farm *farm, char **tab, int startend)
 
 static int	check_tab_of_three(char **rooms)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	while (rooms[i])
@@ -88,7 +88,7 @@ static int	check_tab_of_three(char **rooms)
 
 static int	check_if_name_taken(char **room, t_farm *farm)
 {
-	t_rooms		*tmp;
+	t_rooms	*tmp;
 
 	if (!(farm->rooms))
 		return (SUCCESS);
@@ -109,7 +109,7 @@ static int	check_if_name_taken(char **room, t_farm *farm)
 
 int			parse_rooms(t_farm *farm, char *line, int start_end)
 {
-	char		**room;
+	char	**room;
 
 	farm->total_rooms++;
 	if (!(room = ft_strsplit(line, ' ')))

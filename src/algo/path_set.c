@@ -23,7 +23,6 @@ static t_paths	*init_paths_cpy(t_paths *paths)
 	t_paths	*prev_path;
 	int		i;
 
-	ft_putstr("in init_path_cpy()\n");
 	first_path = NULL;
 	new_path = NULL;
 	while (paths)
@@ -57,33 +56,7 @@ static t_paths	*init_paths_cpy(t_paths *paths)
 ** delete_set() frees and deletes the set of path we want to replace.
 */
 
-void	delete_set(t_farm *farm, t_paths *paths_on_set)
-{
-	t_paths	*tmp;
-	t_paths	*new;
-	int		i;
-
-	i = 0;
-	tmp = paths_on_set;
-	while (tmp)
-	{
-		new = tmp->next;
-		if (tmp->length > 0)
-		{
-			while (i < tmp->length)
-			{
-				ft_memdel((void**)&tmp->path);
-				i++;
-			}
-			i = 0;
-		}
-		ft_memdel((void**)&tmp);
-		tmp = new;
-	}
-	farm->sets[farm->nb_paths - 1] = NULL;
-}
-
-void	delete_set2(t_paths **first_path)
+static void		delete_set(t_paths **first_path)
 {
 	t_paths	*tmp;
 	t_paths	*new;
@@ -108,14 +81,13 @@ void	delete_set2(t_paths **first_path)
 	}
 }
 
-
 /*
 ** save_path() saves in an array of paths the paths combinations, in an
 ** incremental order. If we have 2 sets that have the same number of paths, we
 ** compare them and keep the set that has the lower number of rooms.
 */
 
-int			save_path(t_farm *farm, t_paths *paths)
+int				save_path(t_farm *farm, t_paths *paths)
 {
 	t_paths	*paths_on_set;
 	t_paths	*paths_cpy;
@@ -130,9 +102,7 @@ int			save_path(t_farm *farm, t_paths *paths)
 	i = 0;
 	j = 0;
 	if (paths_on_set == NULL)
-	{
 		farm->sets[farm->nb_paths - 1] = paths_cpy;
-	}
 	else
 	{
 		paths_on_set = farm->sets[farm->nb_paths - 1];
@@ -149,14 +119,11 @@ int			save_path(t_farm *farm, t_paths *paths)
 		}
 		if (i > j)
 		{
-			ft_putstr("teub\n");
-			//delete_set(farm, farm->sets[farm->nb_paths - 1]);
-			delete_set2(&farm->sets[farm->nb_paths - 1]);
-			// paths_cpy = init_paths_cpy(paths);
+			delete_set(&farm->sets[farm->nb_paths - 1]);
 			farm->sets[farm->nb_paths - 1] = paths_cpy;
 		}
 		else
-			delete_set2(&paths_cpy);
+			delete_set(&paths_cpy);
 	}
 	return (SUCCESS);
 }

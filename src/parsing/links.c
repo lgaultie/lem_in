@@ -74,9 +74,9 @@ static int	add_link(t_farm *farm, char **tab)
 
 static int	check_valid_room_name(char **links, t_farm *farm)
 {
-	t_rooms		*tmp;
-	int			success_1;
-	int			success_2;
+	t_rooms	*tmp;
+	int		success_1;
+	int		success_2;
 
 	success_1 = 0;
 	success_2 = 0;
@@ -101,7 +101,7 @@ static int	check_valid_room_name(char **links, t_farm *farm)
 
 int			parse_links(t_farm *farm, char *line)
 {
-	char		**link;
+	char	**link;
 
 	if (ft_strchr(line, '-'))
 	{
@@ -109,10 +109,7 @@ int			parse_links(t_farm *farm, char *line)
 			return (ERROR);
 		if (check_valid_room_name(link, farm) == ERROR \
 		|| add_link(farm, link) == ERROR)
-		{
-			ft_putstr("nameee\n");
 			return (free_tab_error(link));
-		}
 		ft_free_tab(&link);
 	}
 	return (SUCCESS);
