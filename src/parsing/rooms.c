@@ -56,7 +56,8 @@ static int	add_room(t_farm *farm, char **tab, int startend)
 		new->prev = NULL;
 		farm->rooms = new;
 	}
-	init_room(new, tab, startend);
+	if (init_room(new, tab, startend) == ERROR)
+		return (ERROR);
 	if (startend == 1)
 		farm->start = new;
 	if (startend == 2)
@@ -82,20 +83,24 @@ static int	check_tab_of_three(char **rooms)
 }
 
 /*
-** check_if_name_taken() checks if the new room uses a name already given to
-** another room.
+** already_exists() checks if the new room uses a name or the coordinates
+** already given to another room.
 */
 
-static int	check_if_name_taken(char **room, t_farm *farm)
+static int	already_exists(char **room, t_farm *farm)
 {
 	t_rooms	*tmp;
 
 	if (!(farm->rooms))
 		return (SUCCESS);
+	if (!ft_isnumber(room[1]) && !ft_isnumber(room[2]))
+		return (ERROR);
 	tmp = farm->rooms;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, room[0]) == 0)
+			return (ERROR);
+		if ((tmp->x_pos == ft_atoi(room[1])) && (tmp->y_pos == ft_atoi(room[2])))
 			return (ERROR);
 		tmp = tmp->next;
 	}
@@ -114,8 +119,8 @@ int			parse_rooms(t_farm *farm, char *line, int start_end)
 	farm->total_rooms++;
 	if (!(room = ft_strsplit(line, ' ')))
 		return (ERROR);
-	if ((check_if_name_taken(room, farm) == ERROR) \
-	|| (check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
+	if ((check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
+ 	|| (already_exists(room, farm) == ERROR) \
 	|| (add_room(farm, room, start_end) == ERROR))
 		return (free_tab_error(room));
 	ft_free_tab(&room);

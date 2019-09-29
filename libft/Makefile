@@ -89,7 +89,8 @@ SRCS = ft_memset.c \
 	ft_lstprintstr.c \
 	ft_display_array.c \
 	ft_intlen.c \
-	ft_strndup.c
+	ft_strndup.c \
+	ft_isnumber.c
 OBJ = $(SRCS:.c=.o)
 HEADER = .
 

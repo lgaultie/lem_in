@@ -16,6 +16,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 # define BUFF_SIZE 1
 # define FD_MAX 4864
@@ -104,5 +105,6 @@ void			ft_lstprintstr(t_list *list);
 void			ft_display_array(char **tab);
 int				ft_intlen(int nb);
 char			*ft_strndup(const char *src, int n);
+int				ft_isnumber(char *number);
 
 #endif
