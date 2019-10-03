@@ -1,14 +1,14 @@
-#******************************************************************************#
+# **************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: cmouele <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/08 09:48:35 by cmouele           #+#    #+#              #
-#    Updated: 2019/07/02 08:43:47 by cmouele          ###   ########.fr        #
+#    Updated: 2019/10/02 10:11:12 by lgaultie         ###   ########.fr        #
 #                                                                              #
-#******************************************************************************#
+# **************************************************************************** #
 
 NAME = libft.a
 CC = @clang
@@ -94,27 +94,18 @@ SRCS = ft_memset.c \
 OBJ = $(SRCS:.c=.o)
 HEADER = .
 
-_GREEN=\e[32m
-_PURPLE=\e[35m
-_YELLOW=\e[33m
-_CYAN=\e[36m
-_END=\e[0m
-
 all: $(NAME)
 
 $(NAME):
-	@printf "$(_YELLOW)compiling libft..$(_END)\n"
 	@$(CC) $(CFLAGS) -c $(SRCS) -I$(HEADER)
 	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 
 clean:
 	@rm -f $(OBJ)
-	@printf "$(_PURPLE)libft $(_YELLOW)cleaned.. $(_END)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@printf "$(_CYAN)libft fcleaned$(_END)\n"
 
 .PHONY: clean fclean
 

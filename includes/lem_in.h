@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/09 14:37:43 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 13:33:04 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define SUCCESS		1
 # define FAILURE		0
 # define ERROR			-1
+# define DEADEND		-10
 # define ERROR_MSG		"ERROR"
 
 typedef struct			s_queue

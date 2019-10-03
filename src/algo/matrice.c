@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/04 18:19:47 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 13:33:14 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int			**matrice_create(t_farm *farm)
 	{
 		if ((ret_find_path = find_paths(farm, matrice)) == ERROR)
 			return (NULL);
+		if (ret_find_path == DEADEND)
+			break ;
 		if (ret_find_path == FAILURE)
 			return (matrice);
 	}
