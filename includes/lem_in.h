@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 15:40:21 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 16:58:27 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		free_tab_error(char **tab);
 int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
-int		fill_reserved(t_farm *farm);
+void	fill_reserved(t_farm *farm);
 int		in_released_rooms(t_farm *farm, int id);
 int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_paths **source, t_paths *path);
