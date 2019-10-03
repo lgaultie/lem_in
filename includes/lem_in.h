@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 13:33:04 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:40:21 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,11 +100,11 @@ int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
 int		fill_reserved(t_farm *farm);
-int		check_if_in_released_rooms(t_farm *farm, int id);
+int		in_released_rooms(t_farm *farm, int id);
 int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_paths **source, t_paths *path);
 int		unvisit(int *path, int length, t_farm *farm, int id_room);
-int		find_paths(t_farm *farm, int **matrice);
+int		find_paths(t_farm *farm, int **matrice, int ret_algo, int ret);
 int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
 void	free_sets(t_farm *farm);

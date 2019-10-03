@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/15 14:55:21 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:45:15 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int			main(void)
 	int		line_nb;
 	int		error;
 	t_farm	*farm;
-	int 	**matrice;
+	int		**matrice;
 
 	line_nb = 1;
 	error = 0;

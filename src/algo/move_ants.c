@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/09/15 11:31:26 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:49:18 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,8 @@ static void	segment_ants(t_farm *farm, int index_of_set)
 ** Formula: nb_moves = (nb_ants + sum(length) - (2 * nb_paths)) / nb_paths.
 */
 
-static int	choose_set(t_farm *farm)
+static int	choose_set(t_farm *farm, int i)
 {
-	int		i;
 	int		length;
 	int		nb_moves;
 	int		min;
@@ -96,8 +95,8 @@ int			ants_per_paths(t_farm *farm)
 	int		total_ants_sent;
 	t_paths	*tmp;
 
-	index_of_set = choose_set(farm);
 	total_ants_sent = 0;
+	index_of_set = choose_set(farm, total_ants_sent);
 	tmp = farm->sets[index_of_set];
 	while (tmp)
 	{

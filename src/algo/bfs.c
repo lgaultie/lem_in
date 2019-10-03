@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/11 23:15:22 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:42:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			fill_reserved(t_farm *farm)
 			if (tmp_rooms->room_id == tmp_paths->path[i] \
 				&& tmp_rooms->start_end != 1 && tmp_rooms->start_end != 2)
 			{
-				if (check_if_in_released_rooms(farm, tmp_rooms->room_id) == SUCCESS)
+				if (in_released_rooms(farm, tmp_rooms->room_id) == SUCCESS)
 					tmp_rooms->to_reserve = 1;
 				tmp_rooms->reserved = 1;
 			}
@@ -126,7 +126,7 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 static int	fill_queue(t_farm *farm, int **matrice)
 {
 	t_rooms	*tmp_rooms;
-	int 	check_bfs;
+	int		check_bfs;
 	int		first_of_queue;
 
 	check_bfs = 0;

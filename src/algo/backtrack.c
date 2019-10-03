@@ -6,18 +6,18 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/09/11 23:15:38 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:40:10 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
 
 /*
-** check_if_in_released_rooms() checks if the room_id provided is in
+** in_released_rooms() checks if the room_id provided is in
 ** farm->released_rooms array.
 */
 
-int			check_if_in_released_rooms(t_farm *farm, int id)
+int			in_released_rooms(t_farm *farm, int id)
 {
 	int	i;
 
