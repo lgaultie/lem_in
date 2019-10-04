@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 13:33:04 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 12:06:38 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct			s_farm
 	int					nb_moves;
 	int					nb_paths;
 	int					ants;
+	int					visu;
 	int					total_rooms;
 	int					size_released;
 	int					*released_rooms;
@@ -116,5 +117,6 @@ void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
 void	print_paths(t_farm *farm);
 void	display_sets(t_farm *farm);
+void	print_chosen_paths(t_farm *farm, int index);
 
 #endif
