@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 13:33:21 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/03 15:35:31 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,46 @@ static void	unvisit_rooms(t_farm *farm)
 int			check_paths(t_farm *farm)
 {
 	int		j;
-	t_paths	*tmp_path;
-	t_paths	*tmp_all_paths;
+	t_paths	*path;
+	t_paths	*all_paths;
 
-	tmp_path = farm->paths;
-	while (tmp_path->next)
-		tmp_path = tmp_path->next;
-	tmp_all_paths = farm->found_paths;
-	while (tmp_all_paths->next)
+	path = farm->paths;
+	while (path->next)
+		path = path->next;
+	all_paths = farm->found_paths;
+	while (all_paths->next)
 	{
 		j = 0;
-		if (tmp_path->length == tmp_all_paths->length)
+		if (path->length == all_paths->length)
 		{
-			while (j < tmp_path->length &&
-				tmp_path->path[j] == tmp_all_paths->path[j])
+			while (j < path->length && path->path[j] == all_paths->path[j])
 				j++;
-			if (j == tmp_path->length)
+			if (j == path->length)
 			{
-				delete_path(&(farm->paths), tmp_path);
+				delete_path(&(farm->paths), path);
 				save_path(farm, farm->paths);
 				return (SUCCESS);
 			}
 		}
-		tmp_all_paths = tmp_all_paths->next;
+		all_paths = all_paths->next;
 	}
 	return (FAILURE);
+}
+
+int			find_paths_bis(int ret_algo, int ret_backtrack, t_farm *farm)
+{
+	if (ret_algo != -2)
+	{
+		unvisit_rooms(farm);
+		ret_backtrack = backtrack_paths(ret_algo, farm);
+		if (ret_backtrack == ERROR)
+		{
+			if (farm->nb_paths > 0)
+				return (DEADEND);
+			return (ERROR);
+		}
+	}
+	return (SUCCESS);
 }
 
 /*
@@ -72,18 +87,16 @@ int			check_paths(t_farm *farm)
 ** call backtrack_paths() to unreserve the room.
 */
 
-int			find_paths(t_farm *farm, int **matrice)
+int			find_paths(t_farm *farm, int **matrice, int ret_algo, int ret)
 {
-	int			ret_algo;
-	int			ret_fill_path;
 	static int	ret_backtrack = -1;
 	static int	just_deleted = -1;
 
 	while ((ret_algo = algo(farm, matrice)) == -2)
 	{
-		if (init_paths(farm) == ERROR || ((ret_fill_path = fill_path(farm)) == ERROR))
+		if (init_paths(farm) == ERROR || ((ret = fill_path(farm)) == ERROR))
 			return (ERROR);
-		if (ret_fill_path == FAILURE)
+		if (ret == FAILURE)
 			return (FAILURE);
 		free_queue(farm);
 		fill_reserved(farm);
@@ -100,16 +113,5 @@ int			find_paths(t_farm *farm, int **matrice)
 		}
 		just_deleted = -1;
 	}
-	if (ret_algo != -2)
-	{
-		unvisit_rooms(farm);
-		ret_backtrack = backtrack_paths(ret_algo, farm);
-		if (ret_backtrack == ERROR)
-		{
-			if (farm->nb_paths > 0)
-				return (DEADEND);
-			return (ERROR);
-		}
-	}
-	return (SUCCESS);
+	return (find_paths_bis(ret_algo, ret_backtrack, farm));
 }

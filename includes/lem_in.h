@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 12:06:38 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 12:17:17 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "../libft/libft.h"
 #include <stdio.h> // TMP
 
-# define SUCCESS		1
-# define FAILURE		0
-# define ERROR			-1
 # define DEADEND		-10
+# define ERROR			-1
+# define FAILURE		0
+# define SUCCESS		1
 # define ERROR_MSG		"ERROR"
 
 typedef struct			s_queue
@@ -100,12 +100,12 @@ int		free_tab_error(char **tab);
 int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
-int		fill_reserved(t_farm *farm);
-int		check_if_in_released_rooms(t_farm *farm, int id);
+void	fill_reserved(t_farm *farm);
+int		in_released_rooms(t_farm *farm, int id);
 int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_paths **source, t_paths *path);
 int		unvisit(int *path, int length, t_farm *farm, int id_room);
-int		find_paths(t_farm *farm, int **matrice);
+int		find_paths(t_farm *farm, int **matrice, int ret_algo, int ret);
 int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
 void	free_sets(t_farm *farm);

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 13:33:14 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 10:54:58 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,26 +53,22 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 int			**matrice_create(t_farm *farm)
 {
 	int		i;
-	int		j;
-	int		total_rooms;
 	int		**matrice;
 	int		ret_find_path;
 
 	i = 0;
-	j = 0;
-	total_rooms = farm->total_rooms;
-	if (!(matrice = ft_memalloc(sizeof(int*) * total_rooms)))
+	if (!(matrice = ft_memalloc(sizeof(int*) * farm->total_rooms)))
 		return (NULL);
-	while (i < total_rooms)
+	while (i < farm->total_rooms)
 	{
-		if (!(matrice[i] = ft_memalloc(sizeof(int) * total_rooms)))
+		if (!(matrice[i] = ft_memalloc(sizeof(int) * farm->total_rooms)))
 			return (NULL);
 		i++;
 	}
 	matrice_fill(farm, matrice);
 	while (farm->paths == NULL || check_paths(farm) == FAILURE)
 	{
-		if ((ret_find_path = find_paths(farm, matrice)) == ERROR)
+		if ((ret_find_path = find_paths(farm, matrice, i, i)) == ERROR)
 			return (NULL);
 		if (ret_find_path == DEADEND)
 			break ;
