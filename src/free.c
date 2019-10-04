@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 15:45:01 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 12:23:17 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void		free_rooms(t_rooms *rooms)
 ** free_matrice() frees the matrice.
 */
 
-void		free_matrice(t_farm *farm, int **matrice)
+void 		free_matrice(t_farm *farm, int **matrice)
 {
 	int	i;
 

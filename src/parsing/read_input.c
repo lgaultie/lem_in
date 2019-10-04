@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 16:29:01 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 12:23:53 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static int	check_start_end(int error, t_farm *farm)
 	}
 	if (check_startend != 2 || farm->ants <= 0)
 		error = -1;
-	ft_putchar('\n');
 	return (error);
 }
 
@@ -112,9 +111,12 @@ int			read_input(t_farm *farm, int line_nb, int error, int start_end)
 					error = -1;
 				start_end = 0;
 			}
-			(line && line[0] == '#' && line[1] != '#') ? line_nb-- : line_nb++;
+			if (line && line[0] == '#' && line[1] != '#')
+				line_nb--;
+			line_nb++;
 		}
 	}
 	error = check_start_end(error, farm);
+	ft_putchar('\n');
 	return (error);
 }

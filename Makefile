@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/10/03 17:00:04 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/10/04 12:26:56 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,6 @@ SRCS =	main.c							\
 		$(PARS_DIR)/rooms.c				\
 		$(PARS_DIR)/links.c				\
 		$(ALGO_DIR)/bfs.c				\
-		$(ALGO_DIR)/bfs_bis.c			\
 		$(ALGO_DIR)/queue.c				\
 		$(ALGO_DIR)/matrice.c			\
 		$(ALGO_DIR)/choose_paths.c      \
