@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:52:43 by christel          #+#    #+#             */
-/*   Updated: 2019/10/04 12:25:06 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:16:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,19 @@
 
 static void	print_ants(t_farm *farm, t_paths *tmp, int id_ant, int pos)
 {
+	// if (farm->visu == 1)
+	// ft_putstr("\e[33m");
+	if (farm->visu == 1 && (pos == tmp->length - 2))
+		ft_putstr("\e[35m");
+	if (farm->visu == 1 && ((farm->all_rooms[tmp->path[pos]]->start_end == 2)))
+		ft_putstr("\e[32m");
 	ft_putchar('L');
 	ft_putnbr(id_ant + 1);
 	ft_putchar('-');
 	ft_putstr(farm->all_rooms[tmp->path[pos]]->name);
+	if (farm->visu == 1 && ((farm->all_rooms[tmp->path[pos]]->start_end == 1) \
+		|| (farm->all_rooms[tmp->path[pos]]->start_end == 2)))
+		ft_putstr("\e[0m");
 	ft_putchar(' ');
 }
 

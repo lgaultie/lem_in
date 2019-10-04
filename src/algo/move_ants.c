@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/10/04 12:29:19 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 14:50:57 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ static int	choose_set(t_farm *farm)
 	min = 0;
 	index_min = 0;
 	tmp = farm->sets[i];
+	if (farm->visu == 1)
+		print_tab_paths(farm);
 	while (i < farm->nb_paths)
 	{
 		length = 0;
@@ -68,6 +70,15 @@ static int	choose_set(t_farm *farm)
 		}
 		if (farm->ants >= i + 1)
 			nb_moves = (farm->ants + length - (2 * (i + 1))) / (i + 1);
+		if (farm->visu == 1)
+		{
+			ft_putstr("Using \e[36m");
+			ft_putnbr(i + 1);
+			ft_putstr(" \e[0mpath(s) will take \e[36m");
+			ft_putnbr(nb_moves);
+			ft_putstr(" \e[0mmoves to complete.\n");
+
+		}
 		if (min == 0 || nb_moves < min)
 		{
 			min = nb_moves;
@@ -98,10 +109,7 @@ int			ants_per_paths(t_farm *farm)
 
 	index_of_set = choose_set(farm);
 	if (farm->visu == 1)
-	{
-		print_tab_paths(farm);
 		print_chosen_paths(farm, index_of_set);
-	}
 	total_ants_sent = 0;
 	tmp = farm->sets[index_of_set];
 	while (tmp)
