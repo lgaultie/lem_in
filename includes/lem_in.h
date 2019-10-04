@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 12:29:39 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:30:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		read_input(t_farm *farm, int line_nb, int error, int start_end);
 int		parse(t_farm *farm, char *line, int start_end);
 int		parse_rooms(t_farm *farm, char *line, int start_end);
 int		parse_links(t_farm *farm, char *line);
-int		**matrice_create(t_farm *farm);
+int		**matrice_create(t_farm *farm, int i);
 int		algo(t_farm *farm, int **matrice);
 int		queue(t_farm *farm, int room_id);
 int		unqueue(t_farm *farm);
@@ -100,8 +100,7 @@ int		free_tab_error(char **tab);
 int		init_paths(t_farm *farm);
 int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
-int		fill_reserved(t_farm *farm);
-int		check_if_in_released_rooms(t_farm *farm, int id);
+int		in_released_rooms(t_farm *farm, int id);
 int		backtrack_paths(int block, t_farm *farm);
 void	delete_path(t_paths **source, t_paths *path);
 int		unvisit(int *path, int length, t_farm *farm, int id_room);
@@ -112,11 +111,14 @@ void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
 int		ants_per_paths(t_farm *farm);
 int		send_ants(t_farm *farm, int index_of_set);
+int		choose_set(t_farm *farm, int i, int length, int nb_moves);
+void	fill_reserved(t_farm *farm);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
 void	print_paths(t_farm *farm);
 void	display_sets(t_farm *farm);
 void	print_chosen_paths(t_farm *farm, int index);
+void	print_nb_moves(int i, int nb_moves);
 
 #endif

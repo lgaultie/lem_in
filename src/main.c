@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 12:29:03 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:52:01 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int			main(int ac, char **av)
 	if (read_input(farm, line_nb, error, error) == ERROR \
 	|| init_all_rooms(farm) == ERROR \
 	|| init_sets(farm) == ERROR \
-	|| (matrice = matrice_create(farm)) == NULL \
+	|| (matrice = matrice_create(farm, error)) == NULL \
 	|| ants_per_paths(farm) == ERROR)
 		return (free_farm_error(farm));
 	free_farm(farm, matrice);

@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/10/04 14:50:57 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 16:59:12 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,61 +38,6 @@ static void	segment_ants(t_farm *farm, int index_of_set)
 }
 
 /*
-** choose_set() searches for the best set of paths to use (the one with the
-** minimum number of moves). It returns the index of the optimized set.
-** Formula: nb_moves = (nb_ants + sum(length) - (2 * nb_paths)) / nb_paths.
-*/
-
-static int	choose_set(t_farm *farm)
-{
-	int		i;
-	int		length;
-	int		nb_moves;
-	int		min;
-	int		index_min;
-	t_paths	*tmp;
-
-	i = 0;
-	length = 0;
-	nb_moves = 0;
-	min = 0;
-	index_min = 0;
-	tmp = farm->sets[i];
-	if (farm->visu == 1)
-		print_tab_paths(farm);
-	while (i < farm->nb_paths)
-	{
-		length = 0;
-		while (tmp)
-		{
-			length += farm->sets[i]->length;
-			tmp = tmp->next;
-		}
-		if (farm->ants >= i + 1)
-			nb_moves = (farm->ants + length - (2 * (i + 1))) / (i + 1);
-		if (farm->visu == 1)
-		{
-			ft_putstr("Using \e[36m");
-			ft_putnbr(i + 1);
-			ft_putstr(" \e[0mpath(s) will take \e[36m");
-			ft_putnbr(nb_moves);
-			ft_putstr(" \e[0mmoves to complete.\n");
-
-		}
-		if (min == 0 || nb_moves < min)
-		{
-			min = nb_moves;
-			index_min = i;
-		}
-		i++;
-		if (i < farm->nb_paths)
-			tmp = farm->sets[i];
-	}
-	farm->nb_moves = min;
-	return (index_min);
-}
-
-/*
 ** ants_per_paths() calls choose_set() to find the optimized set of paths. It
 ** then calculates the number of ants we need to send to each path of the
 ** optimized set and saves it. Formula: nb_ants = nb_moves - (length - 2). If
@@ -104,30 +49,41 @@ static int	choose_set(t_farm *farm)
 int			ants_per_paths(t_farm *farm)
 {
 	int		index_of_set;
-	int		total_ants_sent;
+	int		ants_sent;
 	t_paths	*tmp;
+	int		i;
 
-	index_of_set = choose_set(farm);
+	i = 0;
+	ants_sent = 0;
+	index_of_set = choose_set(farm, ants_sent, ants_sent, ants_sent);
 	if (farm->visu == 1)
 		print_chosen_paths(farm, index_of_set);
-	total_ants_sent = 0;
 	tmp = farm->sets[index_of_set];
 	while (tmp)
 	{
+		i++;
 		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
 		if (tmp->ants_to_send <= 0)
 			delete_path(&(farm->sets[index_of_set]), tmp);
 		else
-			total_ants_sent += tmp->ants_to_send;
+			ants_sent += tmp->ants_to_send;
+		if (farm->visu == 1)
+		{
+			ft_putstr("We'll send \e[35m");
+			ft_putnbr(tmp->ants_to_send);
+			ft_putstr(" ant(s)\e[0m in the path ");
+			ft_putnbr(i);
+			ft_putstr(".\n");
+		}
 		tmp = tmp->next;
 	}
 	tmp = farm->sets[index_of_set];
-	while (total_ants_sent < farm->ants)
+	while (ants_sent < farm->ants)
 	{
-		while (total_ants_sent < farm->ants && tmp)
+		while (ants_sent < farm->ants && tmp)
 		{
 			tmp->ants_to_send++;
-			total_ants_sent++;
+			ants_sent++;
 			tmp = tmp->next;
 		}
 		tmp = farm->sets[index_of_set];

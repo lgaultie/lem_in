@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:52:43 by christel          #+#    #+#             */
-/*   Updated: 2019/10/04 15:16:50 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 17:03:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 
 static void	print_ants(t_farm *farm, t_paths *tmp, int id_ant, int pos)
 {
-	// if (farm->visu == 1)
-	// ft_putstr("\e[33m");
 	if (farm->visu == 1 && (pos == tmp->length - 2))
 		ft_putstr("\e[35m");
 	if (farm->visu == 1 && ((farm->all_rooms[tmp->path[pos]]->start_end == 2)))
@@ -54,6 +52,13 @@ int			send_ants(t_farm *farm, int index_of_set)
 	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
 		return (ERROR);
 	arrived = 0;
+	if (farm->visu == 1)
+	{
+		ft_putstr("Possible remaining ants will follow.\n");
+		ft_putstr("\e[0m---------------------------------------------\n");
+		ft_putstr("\n· \e[35mpurple\e[0m: first step of a new ant.\n");
+		ft_putstr("· white: ant ongoing.\n· \e[32mgreen\e[0m: ant arrives.\n\n");
+	}
 	while (arrived < farm->ants)
 	{
 		tmp = farm->sets[index_of_set];

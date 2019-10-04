@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:13 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 12:23:37 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:41:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,20 +87,20 @@ static int	check_tab_of_three(char **rooms)
 ** already given to another room.
 */
 
-static int	already_exists(char **room, t_farm *farm)
+static int	already_exists(char **rm, t_farm *farm)
 {
 	t_rooms	*tmp;
 
 	if (!(farm->rooms))
 		return (SUCCESS);
-	if (!ft_isnumber(room[1]) && !ft_isnumber(room[2]))
+	if (!ft_isnumber(rm[1]) && !ft_isnumber(rm[2]))
 		return (ERROR);
 	tmp = farm->rooms;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, room[0]) == 0)
+		if (ft_strcmp(tmp->name, rm[0]) == 0)
 			return (ERROR);
-		if ((tmp->x_pos == ft_atoi(room[1])) && (tmp->y_pos == ft_atoi(room[2])))
+		if ((tmp->x_pos == ft_atoi(rm[1])) && (tmp->y_pos == ft_atoi(rm[2])))
 			return (ERROR);
 		tmp = tmp->next;
 	}
@@ -120,7 +120,7 @@ int			parse_rooms(t_farm *farm, char *line, int start_end)
 	if (!(room = ft_strsplit(line, ' ')))
 		return (ERROR);
 	if ((check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
- 	|| (already_exists(room, farm) == ERROR) \
+	|| (already_exists(room, farm) == ERROR) \
 	|| (add_room(farm, room, start_end) == ERROR))
 		return (free_tab_error(room));
 	ft_free_tab(&room);

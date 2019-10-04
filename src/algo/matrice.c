@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 12:25:43 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:47:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,13 @@ static int	matrice_fill(t_farm *farm, int **matrice)
 ** until we found two similar paths.
 */
 
-int			**matrice_create(t_farm *farm)
+int			**matrice_create(t_farm *farm, int i)
 {
-	int		i;
-	int		j;
 	int		total_rooms;
 	int		**matrice;
 	int		ret_find_path;
 
 	i = 0;
-	j = 0;
 	total_rooms = farm->total_rooms;
 	if (!(matrice = ft_memalloc(sizeof(int*) * total_rooms)))
 		return (NULL);

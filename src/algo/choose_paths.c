@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 12:26:06 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 15:49:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,29 +37,28 @@ static void	unvisit_rooms(t_farm *farm)
 int			check_paths(t_farm *farm)
 {
 	int		j;
-	t_paths	*tmp_path;
-	t_paths	*tmp_all_paths;
+	t_paths	*path;
+	t_paths	*all_paths;
 
-	tmp_path = farm->paths;
-	while (tmp_path->next)
-		tmp_path = tmp_path->next;
-	tmp_all_paths = farm->found_paths;
-	while (tmp_all_paths->next)
+	path = farm->paths;
+	while (path->next)
+		path = path->next;
+	all_paths = farm->found_paths;
+	while (all_paths->next)
 	{
 		j = 0;
-		if (tmp_path->length == tmp_all_paths->length)
+		if (path->length == all_paths->length)
 		{
-			while (j < tmp_path->length &&
-				tmp_path->path[j] == tmp_all_paths->path[j])
+			while (j < path->length && path->path[j] == all_paths->path[j])
 				j++;
-			if (j == tmp_path->length)
+			if (j == path->length)
 			{
-				delete_path(&(farm->paths), tmp_path);
+				delete_path(&(farm->paths), path);
 				save_path(farm, farm->paths);
 				return (SUCCESS);
 			}
 		}
-		tmp_all_paths = tmp_all_paths->next;
+		all_paths = all_paths->next;
 	}
 	return (FAILURE);
 }
