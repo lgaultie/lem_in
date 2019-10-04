@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 16:58:27 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 11:47:45 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # include "../libft/libft.h"
 #include <stdio.h> // TMP
 
-# define SUCCESS		1
-# define FAILURE		0
-# define ERROR			-1
 # define DEADEND		-10
+# define ERROR			-1
+# define FAILURE		0
+# define SUCCESS		1
 # define ERROR_MSG		"ERROR"
 
 typedef struct			s_queue
@@ -69,6 +69,7 @@ typedef struct			s_farm
 	int					nb_moves;
 	int					nb_paths;
 	int					ants;
+	int					visu;
 	int					total_rooms;
 	int					size_released;
 	int					*released_rooms;
@@ -116,5 +117,6 @@ void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
 void	print_paths(t_farm *farm);
 void	display_sets(t_farm *farm);
+void	print_chosen_paths(t_farm *farm, int index);
 
 #endif

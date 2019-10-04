@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/10/03 17:21:46 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 11:06:16 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ int			ants_per_paths(t_farm *farm)
 
 	total_sent = 0;
 	index_of_set = choose_set(farm, total_sent, total_sent, total_sent);
+	if (farm->visu == 1)
+	{
+		print_tab_paths(farm);
+		print_chosen_paths(farm, index_of_set);
+	}
 	tmp = farm->sets[index_of_set];
 	while (tmp)
 	{

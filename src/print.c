@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 10:18:36 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/03 15:45:58 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/04 11:37:39 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,19 @@
 void	print_tab_paths(t_farm *farm)
 {
 	int		i;
+	int		x;
 	t_paths	*tmp_tab;
 
 	i = 0;
-	ft_putstr("-----------tableau de save_paths-------------\n");
+	ft_putstr("\n\e[36mALL POSSIBLE PATHS\e[0m\n");
 	while (i < farm->nb_paths)
 	{
+		ft_putstr("\e[0m--------------------------------------------------------\n");
+		ft_putstr("\e[33m");
 		tmp_tab = farm->sets[i];
-		ft_putstr("i = ");
-		ft_putnbr(i);
-		ft_putchar('\n');
 		while (tmp_tab)
 		{
-			int x = 0;
+			x = 0;
 			while(x < tmp_tab->length)
 			{
 				ft_putnbr(tmp_tab->path[x]);
@@ -37,10 +37,38 @@ void	print_tab_paths(t_farm *farm)
 			ft_putchar('\n');
 			tmp_tab = tmp_tab->next;
 		}
-		ft_putstr("\n-----------tableau de save_paths-------------\n");
 		i++;
 	}
-	ft_putchar('\n');
+	ft_putstr("\e[0m--------------------------------------------------------\e[0m\n");
+}
+
+void	print_chosen_paths(t_farm *farm, int index)
+{
+	int		i;
+	int		x;
+	t_paths	*tmp_tab;
+
+	i = 0;
+	ft_putstr("Here the set of \e[36m");
+	ft_putnbr(index + 1);
+	ft_putstr(" path(s)\e[0m is the more optimized with\napproximately \e[36m");
+	ft_putnbr(farm->nb_moves);
+	ft_putstr("\e[0m moves to complete.\nSo we use: \e[32m\n");
+	tmp_tab = farm->sets[index];
+	while (tmp_tab)
+	{
+		x = 0;
+		while(x < tmp_tab->length)
+		{
+			ft_putnbr(tmp_tab->path[x]);
+			ft_putchar(' ');
+			x++;
+		}
+		ft_putchar('\n');
+		tmp_tab = tmp_tab->next;
+	}
+	ft_putstr("\e[0m");
+	ft_putstr("--------------------------------------------------------\n\n");
 }
 
 void	print_free_rooms(t_farm *farm)
