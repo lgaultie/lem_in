@@ -17,7 +17,7 @@
 ** except for the start and end rooms.
 */
 
-void		fill_reserved(t_farm *farm)
+void    fill_reserved(t_farm *farm)
 {
 	t_paths	*tmp_paths;
 	t_rooms	*tmp_rooms;

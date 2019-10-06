@@ -41,9 +41,10 @@ static void	segment_ants(t_farm *farm, int index_of_set)
 ** ants_per_paths() calls choose_set() to find the optimized set of paths. It
 ** then calculates the number of ants we need to send to each path of the
 ** optimized set and saves it. Formula: nb_ants = nb_moves - (length - 2). If
-** the number of ants to send is negative, we delete the path from the set. If
-** the number of ants sent is different from the original number, we dispatch
-** ants randomly in the paths until the original number is reached.
+** the number of ants to send is negative, we delete the path from the set and
+** call the previous functions again (choose_set(), number of ants). If the
+** number of ants sent is different from the original number, we dispatch ants
+** randomly in the paths until the original number is reached.
 */
 
 int			ants_per_paths(t_farm *farm)
@@ -52,9 +53,12 @@ int			ants_per_paths(t_farm *farm)
 	int		ants_sent;
 	t_paths	*tmp;
 	int		i;
+	int     delete;
 
 	i = 0;
 	ants_sent = 0;
+	delete = 0;
+	farm->nb_sets = farm->nb_paths;
 	index_of_set = choose_set(farm, ants_sent, ants_sent, ants_sent);
 	if (farm->visu == 1)
 		print_chosen_paths(farm, index_of_set);
@@ -63,8 +67,13 @@ int			ants_per_paths(t_farm *farm)
 	{
 		i++;
 		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
-		if (tmp->ants_to_send <= 0)
-			delete_path(&(farm->sets[index_of_set]), tmp);
+		if (tmp->ants_to_send <= 0 && farm->sets_size[index_of_set] > 1)
+        {
+			delete_path(farm, &(farm->sets[index_of_set]), tmp, index_of_set);
+		    delete = 1;
+		    tmp = tmp->next;
+            continue ;
+        }
 		else
 			ants_sent += tmp->ants_to_send;
 		if (farm->visu == 1)
@@ -77,6 +86,11 @@ int			ants_per_paths(t_farm *farm)
 		}
 		tmp = tmp->next;
 	}
+	if (delete == 1)
+    {
+        choose_set(farm, 0, 0, 0);
+        return (ants_per_paths(farm));
+    }
 	tmp = farm->sets[index_of_set];
 	while (ants_sent < farm->ants)
 	{

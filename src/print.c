@@ -29,7 +29,7 @@ void	print_tab_paths(t_farm *farm)
 
 	i = 0;
 	ft_putstr("\e[35mAll possible paths:\n\e[0m");
-	while (i < farm->nb_paths)
+	while (i < farm->nb_sets)
 	{
 		ft_putstr("\e[0m---------------------------------------------\e[33m\n");
 		tmp_tab = farm->sets[i];

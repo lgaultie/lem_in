@@ -19,7 +19,7 @@
 # define SUCCESS		1
 # define FAILURE		0
 # define ERROR			-1
-# define DEADEND		-10
+# define DEADEND		-3
 # define ERROR_MSG		"ERROR"
 
 typedef struct			s_queue
@@ -68,6 +68,7 @@ typedef struct			s_farm
 {
 	int					nb_moves;
 	int					nb_paths;
+	int					nb_sets;
 	int					ants;
 	int					visu;
 	int					total_rooms;
@@ -81,6 +82,7 @@ typedef struct			s_farm
 	t_paths				*paths;
 	t_paths				*found_paths;
 	t_paths				**sets;
+	int                 *sets_size;
 }						t_farm;
 
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
@@ -102,7 +104,7 @@ int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
 int		in_released_rooms(t_farm *farm, int id);
 int		backtrack_paths(int block, t_farm *farm);
-void	delete_path(t_paths **source, t_paths *path);
+void	delete_path(t_farm *farm, t_paths **source, t_paths *path, int set_id);
 int		unvisit(int *path, int length, t_farm *farm, int id_room);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);

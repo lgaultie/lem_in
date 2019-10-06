@@ -42,7 +42,7 @@ void	free_sets(t_farm *farm)
 	t_paths	*new;
 
 	i = 0;
-	while (i < farm->nb_paths)
+	while (i < farm->nb_sets)
 	{
 		tmp_tab = farm->sets[i];
 		while (tmp_tab)

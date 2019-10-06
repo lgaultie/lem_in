@@ -83,16 +83,24 @@ static int	init_all_rooms(t_farm *farm)
 
 /*
 ** init_sets() initializes the array of paths. Each cell corresponds to a set
-** of paths.
+** of paths. It also initializes the array that contains the size of each sets.
 */
 
 static int	init_sets(t_farm *farm)
 {
 	int	max_path;
+	int i;
 
 	max_path = max_paths(farm);
-	if (!(farm->sets = ft_memalloc(sizeof(t_paths*) * max_path)))
+	i = 0;
+	if (!(farm->sets = ft_memalloc(sizeof(t_paths*) * max_path)) \
+	    || !(farm->sets_size = ft_memalloc(sizeof(int) * max_path)))
 		return (ERROR);
+	while (i < max_path)
+    {
+	    farm->sets_size[i] = i + 1;
+	    i++;
+    }
 	return (SUCCESS);
 }
 
