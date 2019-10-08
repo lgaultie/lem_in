@@ -53,7 +53,7 @@ int			check_paths(t_farm *farm)
 				j++;
 			if (j == path->length)
 			{
-				delete_path(&(farm->paths), path);
+				delete_path(farm, &(farm->paths), path, -1);
 				save_path(farm, farm->paths);
 				return (SUCCESS);
 			}

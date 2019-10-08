@@ -16,7 +16,7 @@
 ** delete_path() deletes a path from its source list.
 */
 
-void	delete_path(t_paths **source, t_paths *path)
+void    delete_path(t_farm *farm, t_paths **source, t_paths *path, int set_id)
 {
 	t_paths	*tmp;
 	int		i;
@@ -28,8 +28,7 @@ void	delete_path(t_paths **source, t_paths *path)
 		ft_memdel((void**)&path->path);
 		ft_memdel((void**)&path);
 		path = tmp;
-		if (path)
-			path->prev = NULL;
+		path->prev = NULL;
 		*source = path;
 	}
 	else
@@ -41,6 +40,8 @@ void	delete_path(t_paths **source, t_paths *path)
 		ft_memdel((void**)&path->path);
 		ft_memdel((void**)&path);
 	}
+	if (set_id >= 0)
+	    farm->sets_size[set_id]--;
 }
 
 /*
@@ -62,7 +63,7 @@ int		path_to_delete(t_farm *farm, int id_room)
 			if (tmp->path[i] == id_room)
 			{
 				unvisit(tmp->path, tmp->length, farm, id_room);
-				delete_path(&(farm->paths), tmp);
+				delete_path(farm, &(farm->paths), tmp, -1);
 				farm->nb_paths--;
 				tmp = farm->paths;
 				return (SUCCESS);

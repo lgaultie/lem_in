@@ -12,6 +12,12 @@
 
 #include <lem_in.h>
 
+/*
+** init_tmp() calls queue() to add the room id to the queue. Then it updates
+** the informations of the room : it is now visited, have a parent room and a
+** layer.
+*/
+
 static int	init_tmp(t_rooms *tmp_rooms, t_rooms *parent, t_farm *farm, int i)
 {
 	if (queue(farm, i) == ERROR)
@@ -25,9 +31,9 @@ static int	init_tmp(t_rooms *tmp_rooms, t_rooms *parent, t_farm *farm, int i)
 /*
 ** bfs() browses the matrice to see if the room id that we specified in the
 ** parameters is linked to other rooms. If that is the case, and the room is
-** not visited nor reserved, we call queue() to add its id to the queue. When
-** we have found all the links, we call unqueue() to unqueue the room id
-** specified in the parameters. When we add the end room, we have finished.
+** not visited nor reserved, we call init_tmp(). When we have found all the
+** links, we call unqueue() to unqueue the room id specified in the parameters.
+** When we add the end room, we have finished.
 */
 
 static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room, int i)
