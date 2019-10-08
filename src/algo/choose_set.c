@@ -14,7 +14,7 @@
 
 /*
 ** calc_nb_moves() calculates how many moves we'll need on the set.
-** Formula: nb_moves = (nb_ants + sum(length) - size_set) / size_set.
+** Formula: nb_moves = (nb_ants + sum(length) - 2 * size_set) / size_set.
 */
 
 static int	calc_nb_moves(int nb_moves, int i, int length, t_farm *farm)
