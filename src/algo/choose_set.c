@@ -19,8 +19,7 @@
 
 static int	calc_nb_moves(int nb_moves, int i, int length, t_farm *farm)
 {
-	if (farm->ants >= i + 1)
-		nb_moves = (farm->ants + length - 2 * farm->sets_size[i]) / farm->sets_size[i];
+    nb_moves = (farm->ants + length - 2 * farm->sets_size[i]) / farm->sets_size[i];
 	if (farm->visu == 1)
 		print_nb_moves(i, nb_moves);
 	return (nb_moves);
@@ -30,12 +29,12 @@ static int	calc_nb_moves(int nb_moves, int i, int length, t_farm *farm)
 ** calc_length() calculates the total length of all the paths of a set.
 */
 
-static int	calc_length(t_paths *tmp, t_farm *farm, int length, int i)
+static int	calc_length(t_paths *tmp, int length)
 {
 	length = 0;
 	while (tmp)
 	{
-		length += farm->sets[i]->length;
+		length += tmp->length;
 		tmp = tmp->next;
 	}
 	return (length);
@@ -59,7 +58,7 @@ int			choose_set(t_farm *farm, int i, int length, int nb_moves)
 	while (i < farm->nb_sets)
 	{
         tmp = farm->sets[i];
-		length = calc_length(tmp, farm, length, i);
+		length = calc_length(tmp, length);
 		nb_moves = calc_nb_moves(nb_moves, i, length, farm);
 		if (min == 0 || nb_moves < min)
 		{
