@@ -2,6 +2,8 @@
 #coding: utf8
 
 import re
+import sys
+from init_farm_ants import anthill
 
 def	regex_compile():
 	patterns = {}
@@ -47,3 +49,39 @@ def parse_move(farm, line):
 		pre_final.append(room)
 		final.append(pre_final)
 	farm.move.append(final)
+
+def make_farm():
+	farm = anthill()
+	status = None
+	patterns = regex_compile()
+	for line in sys.stdin:
+		status = check_status(farm, status, line)
+		if (patterns["ants"].search(line)):
+			farm.nb_ants = int(line)
+		elif (patterns["start"].search(line)):
+			status = "start"
+		elif (patterns["end"].search(line)):
+			status = "end"
+		elif (patterns["comment"].search(line)):
+			status = "comment"
+		elif (patterns["room"].search(line)):
+			parse_room(farm, line)
+		elif (patterns["link"].search(line)):
+			parse_link(farm, line)
+		elif (patterns["move"].search(line)):
+			parse_move(farm, line)
+			farm.nb_move += 1
+	print "nb_ants ---------------------------"
+	print farm.nb_ants
+	print "start et end ----------------------"
+	print farm.start
+	print farm.end
+	print "les rooms ------------------------"
+	print farm.room
+	print "les links ------------------------"
+	print farm.link
+	print "les moves ------------------------"
+	print farm.move
+	print "nb moves  ------------------------"
+	print farm.nb_move
+	return (farm)
