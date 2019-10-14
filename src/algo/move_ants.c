@@ -17,93 +17,110 @@
 ** ant and the id of the last ant.
 */
 
-static void	segment_ants(t_farm *farm, int index_of_set)
+static void	segment_ants(t_paths *paths)
 {
-	t_paths	*tmp;
+	t_paths	*tmp_path;
 	int		id_ant;
 	int		left_segment;
 	int		right_segment;
 
-	tmp = farm->sets[index_of_set];
+	tmp_path = paths;
 	id_ant = 0;
-	while (tmp)
+	while (tmp_path)
 	{
 		left_segment = id_ant;
-		right_segment = left_segment + tmp->ants_to_send - 1;
+		right_segment = left_segment + tmp_path->ants_to_send - 1;
 		id_ant = right_segment + 1;
-		tmp->left_seg = left_segment;
-		tmp->right_seg = right_segment;
-		tmp = tmp->next;
+		tmp_path->left_seg = left_segment;
+		tmp_path->right_seg = right_segment;
+		tmp_path = tmp_path->next;
 	}
 }
 
 /*
-** ants_per_paths() calls choose_set() to find the optimized set of paths. It
-** then calculates the number of ants we need to send to each path of the
-** optimized set and saves it. Formula: nb_ants = nb_moves - (length - 2). If
-** the number of ants to send is negative, we delete the path from the set and
-** call the previous functions again (choose_set(), number of ants). If the
-** number of ants sent is different from the original number, we dispatch ants
-** randomly in the paths until the original number is reached.
+** allocate_sets() calculates the number moves we need for each set and the
+** number of ants we need to send to each path. If the number of ants to send
+** is negative, we delete the path from the set and call the function again to
+** calculate the number of moves and ants. Then it calls choose_set() to find
+** the optimized set. If the number of ants sent is lower than the original
+** number, we dispatch one ant in each path until the original number is
+** reached. Then it calls segment_ants() and send_ants().
 */
 
-int			ants_per_paths(t_farm *farm)
+int			allocate_sets(t_farm *farm)
 {
-	int		index_of_set;
-	int		ants_sent;
-	t_paths	*tmp;
+	t_sets	*tmp_set;
+	t_paths	*tmp_path;
+	int		length;
 	int		i;
-	int     delete;
+	int		deleted;
 
-	i = 0;
-	ants_sent = 0;
-	delete = 0;
-	farm->nb_sets = farm->nb_paths;
-	index_of_set = choose_set(farm, ants_sent, ants_sent, ants_sent);
-	if (farm->visu == 1)
-		print_chosen_paths(farm, index_of_set);
-	tmp = farm->sets[index_of_set];
-	while (tmp)
+	tmp_set = farm->sets;
+	deleted = 0;
+	while (tmp_set)
 	{
-		i++;
-		tmp->ants_to_send = farm->nb_moves - (tmp->length - 2);
-		if (tmp->ants_to_send <= 0 && farm->sets_size[index_of_set] > 1)
-        {
-			delete_path(farm, &(farm->sets[index_of_set]), tmp, index_of_set);
-		    delete = 1;
-		    tmp = tmp->next;
-            continue ;
-        }
-		else
-			ants_sent += tmp->ants_to_send;
-		if (farm->visu == 1)
+		i = 0;
+		tmp_path = tmp_set->paths;
+		length = calc_length(tmp_set->paths, 0);
+		tmp_set->moves = calc_moves(0, tmp_set->size, length, farm);
+		while (tmp_path)
 		{
-			ft_putstr("We'll send \e[35m");
-			ft_putnbr(tmp->ants_to_send);
-			ft_putstr(" ant(s)\e[0m in the path ");
-			ft_putnbr(i);
-			ft_putstr(".\n");
+			i++;
+			tmp_path->ants_to_send = tmp_set->moves - (tmp_path->length - 2);
+			if (tmp_path->ants_to_send <= 0 && tmp_set->size > 1)
+			{
+				if (tmp_path->next)
+				{
+					tmp_path = tmp_path->next;
+					delete_path(farm, &(tmp_set->paths), tmp_path->prev, i);
+				}
+				else
+				{
+					delete_path(farm, &(tmp_set->paths), tmp_path, i);
+					tmp_path = NULL;
+				}
+				deleted = 1;
+			}
+			else
+				tmp_set->ants_sent += tmp_path->ants_to_send;
+			if (farm->visu == 1)
+			{
+				ft_putstr("We'll send \e[35m");
+				ft_putnbr(tmp_path->ants_to_send);
+				ft_putstr(" ant(s)\e[0m in the path ");
+				ft_putnbr(i);
+				ft_putstr(".\n");
+			}
+			tmp_path = tmp_path->next;
 		}
-		tmp = tmp->next;
+		if (deleted == 1)
+			return (allocate_sets(farm));
+		tmp_set = tmp_set->next;
 	}
-	if (delete == 1)
-    {
-        choose_set(farm, 0, 0, 0);
-        return (ants_per_paths(farm));
-    }
-	tmp = farm->sets[index_of_set];
-	while (ants_sent < farm->ants)
+	choose_set(farm);
+	tmp_set = farm->sets;
+	while (tmp_set)
 	{
-		while (ants_sent < farm->ants && tmp)
+		if (tmp_set->moves == farm->nb_moves)
 		{
-			tmp->ants_to_send++;
-			ants_sent++;
-			tmp = tmp->next;
+			if (farm->visu == 1)
+				print_chosen_paths(farm, tmp_set);
+			while (tmp_set->ants_sent < farm->ants)
+			{
+				tmp_path = tmp_set->paths;
+				while (tmp_set->ants_sent < farm->ants && tmp_path)
+				{
+					tmp_path->ants_to_send++;
+					tmp_set->ants_sent++;
+					tmp_path = tmp_path->next;
+				}
+			}
+			segment_ants(tmp_set->paths);
+			if (send_ants(farm, tmp_set->paths ) == ERROR)
+				return (ERROR);
+			break ;
 		}
-		tmp = farm->sets[index_of_set];
+		tmp_set = tmp_set->next;
 	}
-	segment_ants(farm, index_of_set);
-	if (send_ants(farm, index_of_set) == ERROR)
-		return (ERROR);
 	return (SUCCESS);
 }

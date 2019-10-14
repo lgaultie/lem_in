@@ -13,15 +13,15 @@
 #include <lem_in.h>
 
 /*
-** calc_nb_moves() calculates how many moves we'll need on the set.
+** calc_moves() calculates how many moves we'll need on the set.
 ** Formula: nb_moves = (nb_ants + sum(length) - 2 * size_set) / size_set.
 */
 
-static int	calc_nb_moves(int nb_moves, int i, int length, t_farm *farm)
+int		calc_moves(int nb_moves, int size, int len, t_farm *farm)
 {
-    nb_moves = (farm->ants + length - 2 * farm->sets_size[i]) / farm->sets_size[i];
+    nb_moves = (farm->ants + len - 2 * size) / size;
 	if (farm->visu == 1)
-		print_nb_moves(i, nb_moves);
+		print_nb_moves(size, nb_moves);
 	return (nb_moves);
 }
 
@@ -29,7 +29,7 @@ static int	calc_nb_moves(int nb_moves, int i, int length, t_farm *farm)
 ** calc_length() calculates the total length of all the paths of a set.
 */
 
-static int	calc_length(t_paths *tmp, int length)
+int		calc_length(t_paths *tmp, int length)
 {
 	length = 0;
 	while (tmp)
@@ -42,31 +42,23 @@ static int	calc_length(t_paths *tmp, int length)
 
 /*
 ** choose_set() searches for the best set of paths to use (the one with the
-** minimum number of moves). It returns the index of the optimized set.
+** minimum number of moves).
 */
 
-int			choose_set(t_farm *farm, int i, int length, int nb_moves)
+void	choose_set(t_farm *farm)
 {
-	int		min;
-	int		index_min;
-	t_paths	*tmp;
+	int		min_moves;
+	t_sets	*tmp_set;
 
-	min = 0;
-	index_min = 0;
+	min_moves = 0;
+	tmp_set = farm->sets;
 	if (farm->visu == 1)
 		print_tab_paths(farm);
-	while (i < farm->nb_sets)
+	while (tmp_set)
 	{
-        tmp = farm->sets[i];
-		length = calc_length(tmp, length);
-		nb_moves = calc_nb_moves(nb_moves, i, length, farm);
-		if (min == 0 || nb_moves < min)
-		{
-			index_min = i;
-			min = nb_moves;
-		}
-		i++;
+		if (min_moves == 0 || tmp_set->moves < min_moves)
+			min_moves = tmp_set->moves;
+		tmp_set = tmp_set->next;
 	}
-	farm->nb_moves = min;
-	return (index_min);
+	farm->nb_moves = min_moves;
 }

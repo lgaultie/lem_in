@@ -39,6 +39,15 @@ typedef struct			s_paths
 	struct s_paths		*next;
 }						t_paths;
 
+typedef struct			s_sets
+{
+	int					size;
+	int					ants_sent;
+	t_paths				*paths;
+	int					moves;
+	struct s_sets		*next;
+}						t_sets;
+
 typedef struct			s_links
 {
 	struct s_links      *next;
@@ -81,8 +90,7 @@ typedef struct			s_farm
 	t_rooms				*end;
 	t_paths				*paths;
 	t_paths				*found_paths;
-	t_paths				**sets;
-	int                 *sets_size;
+	t_sets				*sets;
 }						t_farm;
 
 int		read_input(t_farm *farm, int line_nb, int error, int start_end);
@@ -111,16 +119,19 @@ int		check_paths(t_farm *farm);
 int		path_to_delete(t_farm *farm, int id_room);
 void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
-int		ants_per_paths(t_farm *farm);
-int		send_ants(t_farm *farm, int index_of_set);
-int		choose_set(t_farm *farm, int i, int length, int nb_moves);
+int		allocate_sets(t_farm *farm);
+int		send_ants(t_farm *farm, t_paths *paths);
+void	choose_set(t_farm *farm);
 void	fill_reserved(t_farm *farm);
+int		init_sets(t_farm *farm);
+int		calc_moves(int nb_moves, int size, int len, t_farm *farm);
+int		calc_length(t_paths *tmp, int length);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
 void	print_paths(t_farm *farm);
 void	display_sets(t_farm *farm);
-void	print_chosen_paths(t_farm *farm, int index);
+void	print_chosen_paths(t_farm *farm, t_sets *set);
 void	print_nb_moves(int i, int nb_moves);
 
 #endif

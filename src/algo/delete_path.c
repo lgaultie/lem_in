@@ -19,8 +19,10 @@
 void    delete_path(t_farm *farm, t_paths **source, t_paths *path, int set_id)
 {
 	t_paths	*tmp;
+	t_sets	*tmp_sets;
 	int		i;
 
+	tmp_sets = farm->sets;
 	i = 0;
 	if (path->prev == NULL)
 	{
@@ -41,7 +43,14 @@ void    delete_path(t_farm *farm, t_paths **source, t_paths *path, int set_id)
 		ft_memdel((void**)&path);
 	}
 	if (set_id >= 0)
-	    farm->sets_size[set_id]--;
+	{
+		while (i < set_id)
+		{
+			tmp_sets = tmp_sets->next;
+			i++;
+		}
+		tmp_sets->size--;
+	}
 }
 
 /*

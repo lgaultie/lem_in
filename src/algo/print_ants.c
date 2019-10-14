@@ -40,17 +40,17 @@ static void	print_ants(t_farm *farm, t_paths *tmp, int id_ant, int pos)
 ** room ans we don't need to increment this ants anymore.
 */
 
-int			send_ants(t_farm *farm, int index_of_set)
+int			send_ants(t_farm *farm, t_paths *paths)
 {
 	int		*ants;
-	int		i;
 	t_paths	*tmp;
-	int		arrived;
 	int		nb_lines;
+	int		arrived;
+	int		i;
 
-	nb_lines = 0;
 	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
 		return (ERROR);
+	nb_lines = 0;
 	arrived = 0;
 	if (farm->visu == 1)
 	{
@@ -61,7 +61,7 @@ int			send_ants(t_farm *farm, int index_of_set)
 	}
 	while (arrived < farm->ants)
 	{
-		tmp = farm->sets[index_of_set];
+		tmp = paths;
 		while (tmp)
 		{
 			i = tmp->left_seg;

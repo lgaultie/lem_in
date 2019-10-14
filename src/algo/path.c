@@ -92,8 +92,8 @@ void		save_found_path(t_farm *farm, t_paths *path)
 
 /*
 ** fill_path() fills a link from the paths structure. It calls find_layer() and
-** retrieve_path() to help fill the link, and save_path() to save the set of
-** paths we found.
+** retrieve_path() to help fill the link, and save_found_path() to save the set
+** of paths we found.
 */
 
 int			fill_path(t_farm *farm)

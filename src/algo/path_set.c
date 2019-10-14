@@ -82,7 +82,7 @@ static void		delete_set(t_paths **first_path)
 }
 
 /*
-** save_path() saves in an array of paths the paths combinations, in an
+** save_path() saves in the sets structure the paths combinations, in an
 ** incremental order. If we have 2 sets that have the same number of paths, we
 ** compare them and keep the set that has the lower number of rooms.
 */
@@ -92,26 +92,35 @@ int				save_path(t_farm *farm, t_paths *paths)
 	t_paths	*paths_on_set;
 	t_paths	*paths_cpy;
 	t_paths	*tmp_paths_cpy;
+	t_sets	*tmp_sets;
+	int		h;
 	int		i;
 	int		j;
 
 	if (farm->nb_paths <= 0)
 		return (SUCCESS);
+	h = 0;
 	paths_cpy = init_paths_cpy(paths);
-	paths_on_set = farm->sets[farm->nb_paths - 1];
-	i = 0;
-	j = 0;
+	tmp_sets = farm->sets;
+	while (h < farm->nb_paths - 1)
+	{
+		tmp_sets = tmp_sets->next;
+		h++;
+	}
+	paths_on_set = tmp_sets->paths;
 	if (paths_on_set == NULL)
-		farm->sets[farm->nb_paths - 1] = paths_cpy;
+		tmp_sets->paths = paths_cpy;
 	else
 	{
-		paths_on_set = farm->sets[farm->nb_paths - 1];
+		paths_on_set = tmp_sets->paths;
+		i = 0;
 		while (paths_on_set)
 		{
 			i += paths_on_set->length;
 			paths_on_set = paths_on_set->next;
 		}
 		tmp_paths_cpy = paths_cpy;
+		j = 0;
 		while (tmp_paths_cpy)
 		{
 			j += tmp_paths_cpy->length;
@@ -119,8 +128,8 @@ int				save_path(t_farm *farm, t_paths *paths)
 		}
 		if (i > j)
 		{
-			delete_set(&farm->sets[farm->nb_paths - 1]);
-			farm->sets[farm->nb_paths - 1] = paths_cpy;
+			delete_set(&(tmp_sets->paths));
+			tmp_sets->paths = paths_cpy;
 		}
 		else
 			delete_set(&paths_cpy);

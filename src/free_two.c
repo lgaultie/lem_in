@@ -32,27 +32,29 @@ void	free_found_paths(t_farm *farm)
 }
 
 /*
-** free_sets() frees each cell of the sets array from their paths structure.
+** free_sets() frees sets structure.
 */
 
 void	free_sets(t_farm *farm)
 {
-	int		i;
-	t_paths	*tmp_tab;
-	t_paths	*new;
+	t_sets	*tmp_set;
+	t_sets	*new_set;
+	t_paths	*tmp_path;
+	t_paths	*new_path;
 
-	i = 0;
-	while (i < farm->nb_sets)
+	tmp_set = farm->sets;
+	while (tmp_set)
 	{
-		tmp_tab = farm->sets[i];
-		while (tmp_tab)
+		new_set = tmp_set->next;
+		tmp_path = tmp_set->paths;
+		while (tmp_path)
 		{
-			new = tmp_tab->next;
-			ft_memdel((void**)&tmp_tab->path);
-			ft_memdel((void**)&tmp_tab);
-			tmp_tab = new;
+			new_path = tmp_path->next;
+			ft_memdel((void**)&tmp_path->path);
+			ft_memdel((void**)&tmp_path);
+			tmp_path = new_path;
 		}
-		i++;
+		ft_memdel((void**)&tmp_set);
+		tmp_set = new_set;
 	}
-	ft_memdel((void**)&farm->sets);
 }

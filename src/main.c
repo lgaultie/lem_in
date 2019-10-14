@@ -82,25 +82,35 @@ static int	init_all_rooms(t_farm *farm)
 }
 
 /*
-** init_sets() initializes the array of paths. Each cell corresponds to a set
-** of paths. It also initializes the array that contains the size of each sets.
+** init_sets() initializes the sets structure. Each node contains the size of
+** the set (how many paths there are in the set), the paths, and the number of
+** moves needed for the ants to go from start to end.
 */
 
-static int	init_sets(t_farm *farm)
+int	init_sets(t_farm *farm)
 {
-	int	max_path;
-	int i;
+	t_sets	*tmp;
+	t_sets	*new;
+	int		i;
 
-	max_path = max_paths(farm);
 	i = 0;
-	if (!(farm->sets = ft_memalloc(sizeof(t_paths*) * max_path)) \
-	    || !(farm->sets_size = ft_memalloc(sizeof(int) * max_path)))
-		return (ERROR);
-	while (i < max_path)
-    {
-	    farm->sets_size[i] = i + 1;
-	    i++;
-    }
+	while (i < max_paths(farm))
+	{
+		tmp = farm->sets;
+		if (!(new = ft_memalloc(sizeof(t_sets))))
+			return (ERROR);
+		if (tmp)
+		{
+			while (tmp->next)
+				tmp = tmp->next;
+			tmp->next = new;
+		}
+		else
+			farm->sets = new;
+		new->size = i + 1;
+		new->next = NULL;
+		i++;
+	}
 	return (SUCCESS);
 }
 
@@ -131,7 +141,7 @@ int			main(int ac, char **av)
 	|| init_all_rooms(farm) == ERROR \
 	|| init_sets(farm) == ERROR \
 	|| (matrice = matrice_create(farm, error)) == NULL \
-	|| ants_per_paths(farm) == ERROR)
+	|| allocate_sets(farm) == ERROR)
 		return (free_farm_error(farm));
 	free_farm(farm, matrice);
 	return (FAILURE);
