@@ -76,7 +76,7 @@ $(NAME): $(OBJ)
 	@$(CC) $(CFLAGS) $(OBJ) $(LIB) -I$(INC) -o $(NAME)
 	@printf "$(_GREEN)lem_in done [✓]$(_END)\n"
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
+$(OBJDIR)/%.o: $(SRCDIR)/%.c includes/lem_in.h
 	@$(CC) $(CFLAGS) -c -I$(INC) $< -o $@
 
 $(OBJDIR) :
