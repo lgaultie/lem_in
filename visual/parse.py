@@ -16,6 +16,7 @@ def	regex_compile():
 	patterns["move"] = re.compile("^(L[\d]+)-([\d\w]+)")
 	return (patterns)
 
+
 def check_status(farm, status, line):
 	if (status == None):
 		return status
@@ -28,14 +29,17 @@ def check_status(farm, status, line):
 	status = None
 	return status
 
+
 def parse_room(farm, line):
 	line_split = line.split(" ")
 	room_name = line_split[0]
 	farm.room.append(room_name)
 
+
 def parse_link(farm, line):
 	line_split = line.strip().split("-")
 	farm.link.append(line_split)
+
 
 def parse_move(farm, line):
 	final = []
@@ -71,17 +75,4 @@ def make_farm():
 		elif (patterns["move"].search(line)):
 			parse_move(farm, line)
 			farm.nb_move += 1
-	print "nb_ants ---------------------------"
-	print farm.nb_ants
-	print "start et end ----------------------"
-	print farm.start
-	print farm.end
-	print "les rooms ------------------------"
-	print farm.room
-	print "les links ------------------------"
-	print farm.link
-	print "les moves ------------------------"
-	print farm.move
-	print "nb moves  ------------------------"
-	print farm.nb_move
 	return (farm)

@@ -14,7 +14,7 @@ class anthill:
 		self.move	  	= []
 		self.nb_move	= 0
 
-class Ant():
+class Ant:
 
 	def __init__(self, number, node_path=None,
 				journey=None, color='g.'):
@@ -22,7 +22,7 @@ class Ant():
 		self.node_path	= node_path
 		self.journey	= journey
 		self.color		= color
-		# self.current_location = location
+
 
 	def set_node_path(self, farm):
 		self.node_path = []
@@ -36,9 +36,11 @@ class Ant():
 			if not started:
 				self.node_path.append(farm.start)
 
+
 	def set_location(self, pos, farm):
 		location = pos[farm.start]
 		self.current_location = location
+
 
 	def set_journey(self, pos, num_steps, farm):
 		location_list = []

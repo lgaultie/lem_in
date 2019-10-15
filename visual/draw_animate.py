@@ -7,11 +7,10 @@ from matplotlib.animation import FuncAnimation
 from init_farm_ants import anthill, Ant
 from parse import make_farm, regex_compile, check_status, parse_room, parse_link, parse_move
 
-#---------------------------------------------
 
 def draw_single_room(name, g, pos, color, size):
 	node_list = []
-	node_list.append(name) #cette liste contient qu'un element
+	node_list.append(name) #this list contains one element
 	node = nx.draw_networkx_nodes(
 	g,
 	pos,
@@ -20,23 +19,17 @@ def draw_single_room(name, g, pos, color, size):
 	width = 0,
 	node_size = size)
 	node.set_edgecolor('#e79e85')
-	# node.set_edgecolor('#160f30')
 
-#---------------------------------------------
 
 def draw_rooms(farm, g, pos):
 	for name in farm.room:
 		if name == farm.start:
 			draw_single_room(name, g, pos, '#bb5a5a', 800)
-			# draw_single_room(name, g, pos, '#ff7657', 900)
 		elif name == farm.end:
 			draw_single_room(name, g, pos, '#42b883', 800)
-			# draw_single_room(name, g, pos, '#42b883', 900)
 		else:
 			draw_single_room(name, g, pos, '#eaceb4', 800)
-			# draw_single_room(name, g, pos, '#f0d9da', 700)
 
-#---------------------------------------------
 
 def draw_links(farm, g, pos):
 	for link in farm.link:
@@ -46,31 +39,25 @@ def draw_links(farm, g, pos):
 		g,
 		pos,
 		edge_color = '#bb5a5a',
-		# edge_color = '#278ea5',
 		width= 3,
 		style = 'dashed',
 		)
 		return (link)
 
-#---------------------------------------------
 
 def draw_label(g, pos):
 	nx.draw_networkx_labels(
 	g,
 	pos,
-	# label = dict([(farm.start, 'START'), (farm.end, 'END')]),
-	# faire un dico ou trouver l'index
 	font_size= 18,
 	font_family='calibri',
 	font_color= '#bb5a5a')
-	# font_color= '#202040')
 
 def draw_ant(position, color):
 	ant = plt.plot([position[0]], [position[1]],
 	color=color, marker='.', markersize = 20)
 	return (ant)
 
-#---------------------------------------------
 
 def make_graph(farm):
 	g = nx.Graph()
@@ -78,7 +65,6 @@ def make_graph(farm):
 	g.add_edges_from(farm.link)
 	return (g)
 
-#---------------------------------------------
 
 def create_ants(farm, pos, nb_steps):
 	ants = []
@@ -88,11 +74,9 @@ def create_ants(farm, pos, nb_steps):
 		ant.set_location(pos, farm)
 		ant.set_journey(pos, nb_steps, farm)
 		ant.color = '#3c4245'
-		# ant.color = '#f54291'
 		ants.append(ant)
 	return (ants)
 
-#---------------------------------------------
 
 def update(num, g, pos, nb_steps, farm, ants):
 
@@ -107,16 +91,10 @@ def update(num, g, pos, nb_steps, farm, ants):
 
 	draw_label(g, pos)
 	# background color
-	# fig.set_facecolor('#6c4343')
-	# fig.set_facecolor('#8f5b4a')
 	fig.set_facecolor('#e79e85')
-	# fig.set_facecolor('#bb5a5a')
-	# fig.set_facecolor('#160f30')
 	# hide axis
 	plt.axis('off')
 
-
-#---------------------------------------------
 
 
 # parse rooms,links and moves in farm
@@ -137,7 +115,7 @@ fig = plt.figure()
 # animate
 ani = FuncAnimation(
 	fig,
-	update,
+	update, #arguments of upate are below
 	frames = farm.nb_move * nb_steps,
 	fargs = (
 		g,
