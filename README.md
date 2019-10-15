@@ -26,9 +26,16 @@ We then calculate how many ants to send to each path in the set and print the re
 ## The visualisator
 
 As the result of Lem-in can be pretty confusing, a visualisator in python was made in plus.
-You can launch it this way: 
+It recquires networkX and matplotlib, install them with:
 ```shell
-./lem-in < tests/ex3.map | python visual/visualisator.py
+pip install networkx
+pip install matplotlib
+```
+Launch visualisator:
+```shell
+make && ./lem-in < tests/ex3.map | python visual/visualisator.py
 ```
 
 ![Screen Shot 2019-10-15 at 3 58 03 PM](https://user-images.githubusercontent.com/45974214/66838220-98c00580-ef64-11e9-85c6-daee8e57fc37.png)
+
+Authors: Kinstelle & lgaultie
