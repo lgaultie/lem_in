@@ -72,17 +72,17 @@ int			allocate_sets(t_farm *farm)
 				if (tmp_path->next)
 				{
 					tmp_path = tmp_path->next;
-					delete_path(farm, &(tmp_set->paths), tmp_path->prev, i);
+					delete_path(tmp_set, &(tmp_set->paths), tmp_path->prev);
 				}
 				else
 				{
-					delete_path(farm, &(tmp_set->paths), tmp_path, i);
+					delete_path(tmp_set, &(tmp_set->paths), tmp_path);
 					tmp_path = NULL;
 				}
 				deleted = 1;
+				continue ;
 			}
-			else
-				tmp_set->ants_sent += tmp_path->ants_to_send;
+			tmp_set->ants_sent += tmp_path->ants_to_send;
 			if (farm->visu == 1)
 			{
 				ft_putstr("We'll send \e[35m");
@@ -99,7 +99,7 @@ int			allocate_sets(t_farm *farm)
 	}
 	choose_set(farm);
 	tmp_set = farm->sets;
-	while (tmp_set)
+	while (tmp_set && tmp_set->paths)
 	{
 		if (tmp_set->moves == farm->nb_moves)
 		{
@@ -116,7 +116,7 @@ int			allocate_sets(t_farm *farm)
 				}
 			}
 			segment_ants(tmp_set->paths);
-			if (send_ants(farm, tmp_set->paths ) == ERROR)
+			if (send_ants(farm, tmp_set->paths) == ERROR)
 				return (ERROR);
 			break ;
 		}

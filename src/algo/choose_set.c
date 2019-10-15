@@ -54,7 +54,7 @@ void	choose_set(t_farm *farm)
 	tmp_set = farm->sets;
 	if (farm->visu == 1)
 		print_tab_paths(farm);
-	while (tmp_set)
+	while (tmp_set && tmp_set->paths)
 	{
 		if (min_moves == 0 || tmp_set->moves < min_moves)
 			min_moves = tmp_set->moves;

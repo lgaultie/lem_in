@@ -112,7 +112,7 @@ int		fill_path(t_farm *farm);
 int		save_path(t_farm *farm, t_paths *paths);
 int		in_released_rooms(t_farm *farm, int id);
 int		backtrack_paths(int block, t_farm *farm);
-void	delete_path(t_farm *farm, t_paths **source, t_paths *path, int set_id);
+void	delete_path(t_sets *set, t_paths **src, t_paths *path);
 int		unvisit(int *path, int length, t_farm *farm, int id_room);
 int		find_paths(t_farm *farm, int **matrice);
 int		check_paths(t_farm *farm);
