@@ -19,9 +19,7 @@
 void    delete_path(t_sets *set, t_paths **src, t_paths *path)
 {
 	t_paths	*tmp;
-	int		i;
 
-	i = 0;
 	if (path->prev == NULL)
 	{
 		tmp = path->next;

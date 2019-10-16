@@ -20,8 +20,6 @@
 int		calc_moves(int nb_moves, int size, int len, t_farm *farm)
 {
     nb_moves = (farm->ants + len - 2 * size) / size;
-	if (farm->visu == 1)
-		print_nb_moves(size, nb_moves);
 	return (nb_moves);
 }
 

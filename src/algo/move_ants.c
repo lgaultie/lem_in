@@ -51,13 +51,14 @@ int			allocate_sets(t_farm *farm)
 {
 	t_sets	*tmp_set;
 	t_paths	*tmp_path;
+	t_paths *next;
 	int		length;
 	int		i;
 	int		deleted;
 
 	tmp_set = farm->sets;
 	deleted = 0;
-	while (tmp_set)
+	while (tmp_set && tmp_set->paths)
 	{
 		i = 0;
 		tmp_path = tmp_set->paths;
@@ -69,58 +70,51 @@ int			allocate_sets(t_farm *farm)
 			tmp_path->ants_to_send = tmp_set->moves - (tmp_path->length - 2);
 			if (tmp_path->ants_to_send <= 0 && tmp_set->size > 1)
 			{
-				if (tmp_path->next)
-				{
-					tmp_path = tmp_path->next;
-					delete_path(tmp_set, &(tmp_set->paths), tmp_path->prev);
-				}
-				else
-				{
-					delete_path(tmp_set, &(tmp_set->paths), tmp_path);
-					tmp_path = NULL;
-				}
+				next = tmp_path->next;
+				delete_path(tmp_set, &(tmp_set->paths), tmp_path);
+				tmp_path = next;
 				deleted = 1;
 				continue ;
 			}
-			tmp_set->ants_sent += tmp_path->ants_to_send;
-			if (farm->visu == 1)
-			{
-				ft_putstr("We'll send \e[35m");
-				ft_putnbr(tmp_path->ants_to_send);
-				ft_putstr(" ant(s)\e[0m in the path ");
-				ft_putnbr(i);
-				ft_putstr(".\n");
-			}
-			tmp_path = tmp_path->next;
+            if (deleted == 1)
+            {
+                tmp_path = tmp_path->next;
+                continue;
+            }
+            tmp_set->ants_sent += tmp_path->ants_to_send;
+            tmp_path = tmp_path->next;
 		}
 		if (deleted == 1)
-			return (allocate_sets(farm));
+        {
+		    tmp_set->ants_sent = 0;
+			deleted = 0;
+			tmp_path = tmp_set->paths;
+            continue ;
+        }
 		tmp_set = tmp_set->next;
 	}
+    tmp_set = farm->sets;
+    while (tmp_set && tmp_set->paths)
+    {
+        if (farm->visu == 1)
+            print_nb_moves(tmp_set->size, tmp_set->moves);
+        tmp_set = tmp_set->next;
+    }
 	choose_set(farm);
 	tmp_set = farm->sets;
-	while (tmp_set && tmp_set->paths)
+	while (tmp_set && tmp_set->paths && tmp_set->moves != farm->nb_moves)
+	    tmp_set = tmp_set->next;
+    if (farm->visu == 1)
+        print_chosen_paths(farm, tmp_set);
+    tmp_path = tmp_set->paths;
+	while (tmp_path && tmp_set->ants_sent < farm->ants)
 	{
-		if (tmp_set->moves == farm->nb_moves)
-		{
-			if (farm->visu == 1)
-				print_chosen_paths(farm, tmp_set);
-			while (tmp_set->ants_sent < farm->ants)
-			{
-				tmp_path = tmp_set->paths;
-				while (tmp_set->ants_sent < farm->ants && tmp_path)
-				{
-					tmp_path->ants_to_send++;
-					tmp_set->ants_sent++;
-					tmp_path = tmp_path->next;
-				}
-			}
-			segment_ants(tmp_set->paths);
-			if (send_ants(farm, tmp_set->paths) == ERROR)
-				return (ERROR);
-			break ;
-		}
-		tmp_set = tmp_set->next;
-	}
+        tmp_path->ants_to_send++;
+        tmp_set->ants_sent++;
+        tmp_path = tmp_path->next;
+    }
+    segment_ants(tmp_set->paths);
+    if (send_ants(farm, tmp_set->paths) == ERROR)
+        return (ERROR);
 	return (SUCCESS);
 }
