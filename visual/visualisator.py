@@ -124,7 +124,7 @@ ani = FuncAnimation(
 		farm,
 		ants),
 	interval = 1,
-	repeat = False
+	repeat = True
 	)
 
 # open canvas

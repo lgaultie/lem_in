@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:52:43 by christel          #+#    #+#             */
-/*   Updated: 2019/10/04 17:03:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/16 15:05:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 
 /*
 ** print_ants() writes the paths taken by the ants on the standard output.
+** f stands for farm, p for position, t for tmp
 */
 
-static void	print_ants(t_farm *farm, t_paths *tmp, int id_ant, int pos)
+static void	print_ants(t_farm *f, t_paths *t, int id_ant, int p)
 {
-	if (farm->visu == 1 && (pos == tmp->length - 2))
-		ft_putstr("\e[35m");
-	if (farm->visu == 1 && ((farm->all_rooms[tmp->path[pos]]->start_end == 2)))
-		ft_putstr("\e[32m");
+	if (f->visu == 1)
+	{
+		if (f->all_rooms[t->path[p]]->name == f->all_rooms[t->path[t->length - 2]]->name)
+			ft_putstr("\e[35m");
+		else
+			ft_putstr("\e[0m");
+		if (f->all_rooms[t->path[p]]->start_end == 2)
+			ft_putstr("\e[32m");
+	}
 	ft_putchar('L');
 	ft_putnbr(id_ant + 1);
 	ft_putchar('-');
-	ft_putstr(farm->all_rooms[tmp->path[pos]]->name);
-	if (farm->visu == 1 && ((farm->all_rooms[tmp->path[pos]]->start_end == 1) \
-		|| (farm->all_rooms[tmp->path[pos]]->start_end == 2)))
+	ft_putstr(f->all_rooms[t->path[p]]->name);
+	if (f->visu == 1 && ((f->all_rooms[t->path[p]]->start_end == 1) \
+		|| (f->all_rooms[t->path[p]]->start_end == 2)))
 		ft_putstr("\e[0m");
 	ft_putchar(' ');
 }
@@ -54,8 +60,6 @@ int			send_ants(t_farm *farm, t_paths *paths)
 	arrived = 0;
 	if (farm->visu == 1)
 	{
-		ft_putstr("Possible remaining ants will follow.\n");
-		ft_putstr("\e[0m---------------------------------------------\n");
 		ft_putstr("\n· \e[35mpurple\e[0m: first step of a new ant.\n");
 		ft_putstr("· white: ant ongoing.\n· \e[32mgreen\e[0m: ant arrives.\n\n");
 	}

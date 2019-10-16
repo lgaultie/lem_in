@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/11 11:02:29 by cmouele           #+#    #+#             */
-/*   Updated: 2019/10/04 16:59:12 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/16 15:27:58 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,45 +76,45 @@ int			allocate_sets(t_farm *farm)
 				deleted = 1;
 				continue ;
 			}
-            if (deleted == 1)
-            {
-                tmp_path = tmp_path->next;
-                continue;
-            }
-            tmp_set->ants_sent += tmp_path->ants_to_send;
-            tmp_path = tmp_path->next;
+			if (deleted == 1)
+			{
+				tmp_path = tmp_path->next;
+				continue;
+			}
+			tmp_set->ants_sent += tmp_path->ants_to_send;
+			tmp_path = tmp_path->next;
 		}
 		if (deleted == 1)
-        {
-		    tmp_set->ants_sent = 0;
+		{
+			tmp_set->ants_sent = 0;
 			deleted = 0;
 			tmp_path = tmp_set->paths;
-            continue ;
-        }
+			continue ;
+		}
 		tmp_set = tmp_set->next;
 	}
-    tmp_set = farm->sets;
-    while (tmp_set && tmp_set->paths)
-    {
-        if (farm->visu == 1)
-            print_nb_moves(tmp_set->size, tmp_set->moves);
-        tmp_set = tmp_set->next;
-    }
+	tmp_set = farm->sets;
+	while (tmp_set && tmp_set->paths)
+	{
+		if (farm->visu == 1)
+			print_nb_moves(tmp_set->size, tmp_set->moves);
+		tmp_set = tmp_set->next;
+	}
 	choose_set(farm);
 	tmp_set = farm->sets;
 	while (tmp_set && tmp_set->paths && tmp_set->moves != farm->nb_moves)
-	    tmp_set = tmp_set->next;
-    if (farm->visu == 1)
-        print_chosen_paths(farm, tmp_set);
-    tmp_path = tmp_set->paths;
+		tmp_set = tmp_set->next;
+	if (farm->visu == 1)
+		print_chosen_paths(farm, tmp_set);
+	tmp_path = tmp_set->paths;
 	while (tmp_path && tmp_set->ants_sent < farm->ants)
 	{
-        tmp_path->ants_to_send++;
-        tmp_set->ants_sent++;
-        tmp_path = tmp_path->next;
-    }
-    segment_ants(tmp_set->paths);
-    if (send_ants(farm, tmp_set->paths) == ERROR)
-        return (ERROR);
+		tmp_path->ants_to_send++;
+		tmp_set->ants_sent++;
+		tmp_path = tmp_path->next;
+	}
+	segment_ants(tmp_set->paths);
+	if (send_ants(farm, tmp_set->paths) == ERROR)
+		return (ERROR);
 	return (SUCCESS);
 }
