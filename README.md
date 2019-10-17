@@ -19,7 +19,7 @@ We will then select the most optimized set of paths depending on the number of a
 
 We then calculate how many ants to send to each path in the set and print the result, such as:
 
-![Screen Shot 2019-10-15 at 4 08 33 PM](https://user-images.githubusercontent.com/45974214/66839042-12a4be80-ef66-11e9-8cf4-d50adf8deeb9.png)
+![Screen Shot 2019-10-17 at 2 58 06 PM](https://user-images.githubusercontent.com/45974214/67010792-a1444780-f0ee-11e9-9afd-8f44ab7cab39.png)
 
 ---
 
