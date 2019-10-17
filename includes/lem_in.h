@@ -121,17 +121,17 @@ void	free_sets(t_farm *farm);
 void	free_found_paths(t_farm *farm);
 int		allocate_sets(t_farm *farm);
 int		send_ants(t_farm *farm, t_paths *paths);
-void	choose_set(t_farm *farm);
 void	fill_reserved(t_farm *farm);
 int		init_sets(t_farm *farm);
 int		calc_moves(int nb_moves, int size, int len, t_farm *farm);
 int		calc_length(t_paths *tmp, int length);
+int		calc_ants_to_send(t_sets *tmp_set, t_paths *tmp_path);
 //print functions
 void	print_tab_paths(t_farm *farm);
 void	print_free_rooms(t_farm *farm);
 void	print_paths(t_farm *farm);
 void	display_sets(t_farm *farm);
 void	print_chosen_paths(t_farm *farm, t_sets *set);
-void	print_nb_moves(int i, int nb_moves);
+void	print_nb_moves(t_sets *set);
 
 #endif
