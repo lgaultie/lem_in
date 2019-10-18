@@ -35,13 +35,13 @@ SRCS =	main.c							\
 		$(ALGO_DIR)/queue.c				\
 		$(ALGO_DIR)/matrice.c			\
 		$(ALGO_DIR)/choose_paths.c      \
-		$(ALGO_DIR)/choose_set.c     	 \
+		$(ALGO_DIR)/calc_sets.c     	\
 		$(ALGO_DIR)/path.c              \
 		$(ALGO_DIR)/delete_path.c       \
 		$(ALGO_DIR)/visit_rooms.c       \
 		$(ALGO_DIR)/path_set.c          \
 		$(ALGO_DIR)/backtrack.c         \
-		$(ALGO_DIR)/move_ants.c         \
+		$(ALGO_DIR)/sets.c              \
 		$(ALGO_DIR)/print_ants.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))

@@ -12,13 +12,17 @@
 
 #include <lem_in.h>
 
-void		print_nb_moves(int i, int nb_moves)
+void		print_nb_moves(t_sets *set)
 {
-	ft_putstr("Using \e[36m");
-	ft_putnbr(i);
-	ft_putstr(" \e[0mpath(s) will take \e[36m");
-	ft_putnbr(nb_moves);
-	ft_putstr(" \e[0mmoves.\n");
+	while (set && set->paths)
+	{
+		ft_putstr("Using \e[36m");
+		ft_putnbr(set->size);
+		ft_putstr(" \e[0mpath(s) will take \e[36m");
+		ft_putnbr(set->moves);
+		ft_putstr(" \e[0mmoves.\n");
+		set = set->next;
+	}
 }
 
 void		print_tab_paths(t_farm *farm)
