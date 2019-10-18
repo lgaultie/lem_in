@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/16 16:21:41 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:28:37 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,8 @@ static int	max_paths(t_farm *farm)
 	t_rooms	*tmp_room;
 
 	tmp_room = farm->rooms;
-	while (tmp_room)
-	{
-		if (tmp_room->start_end == 1)
-			links_of_start = tmp_room->nb_links;
-		if (tmp_room->start_end == 2)
-			links_of_end = tmp_room->nb_links;
-		tmp_room = tmp_room->next;
-	}
+	links_of_start = farm->start->nb_links;
+	links_of_end = farm->end->nb_links;
 	if (links_of_end < links_of_start)
 		max_paths = links_of_end;
 	else
@@ -138,7 +132,7 @@ int			main(int ac, char **av)
 	if (read_input(farm, 1, error, error) == ERROR \
 	|| init_all_rooms(farm) == ERROR \
 	|| init_sets(farm) == ERROR \
-	|| (matrice = matrice_create(farm, error)) == NULL \
+	|| (matrice = matrice_create(farm, error)) == NULL
 	|| allocate_sets(farm) == ERROR)
 		return (free_farm_error(farm));
 	free_farm(farm, matrice);

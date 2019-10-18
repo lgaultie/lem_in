@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/17 18:47:08 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/16 17:26:49 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:07:03 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,10 @@ static int	check_start_end(int error, t_farm *farm)
 
 	check_startend = 0;
 	tmp_rooms = farm->rooms;
-	while (tmp_rooms)
-	{
-		if (tmp_rooms->start_end == 1 || tmp_rooms->start_end == 2)
-		{
-			check_startend++;
-			if (!(tmp_rooms->links))
-				error = -1;
-		}
-		tmp_rooms = tmp_rooms->next;
-	}
+	if (farm->start)
+		check_startend++;
+	if (farm->end)
+		check_startend++;
 	if (check_startend != 2 || farm->ants <= 0)
 		error = -1;
 	ft_putchar('\n');

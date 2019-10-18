@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:13 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/16 15:47:59 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/17 16:05:26 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,6 @@ int			parse_rooms(t_farm *farm, char *line, int start_end)
 	farm->total_rooms++;
 	if (!(room = ft_strsplit(line, ' ')))
 		return (ERROR);
-	// /////////////////
-	// ft_putendl(room[0]);
-	// /////////////////
 	if ((check_tab_of_three(room) == ERROR) || room[0][0] == 'L' \
 	|| (already_exists(room, farm) == ERROR) \
 	|| (add_room(farm, room, start_end) == ERROR))
