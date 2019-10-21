@@ -36,40 +36,32 @@ int			in_released_rooms(t_farm *farm, int id)
 ** that are on the same path that the room id provided in the parameters.
 */
 
-static void	release_rooms_on_same_path(t_farm *farm, int id)
+static void	release_rooms_on_same_path(t_farm *farm, t_paths *path, int id)
 {
-	t_paths	*tmp;
 	int		i;
 	int		j;
 
-	tmp = farm->paths;
-	while (tmp)
+	i = 0;
+	while (i++ < path->length)
 	{
-		i = 0;
-		while (i < tmp->length)
+		if (path->path[i] == id)
 		{
-			if (tmp->path[i] == id)
+			farm->size_released = path->length;
+			if (!(farm->released_rooms = ft_memalloc(sizeof(int) * farm->size_released)))
+				return ;
+			j = 0;
+			while (--i > 0)
 			{
-				farm->size_released = tmp->length;
-				if (!(farm->released_rooms = ft_memalloc(sizeof(int) * farm->size_released)))
-					return ;
-				j = 0;
-				while (i > 0)
+				if (i > 0)
 				{
-					i--;
-					if (i > 0)
-					{
-						farm->released_rooms[j] = tmp->path[i];
-						j++;
-						farm->all_rooms[tmp->path[i]]->visited = 0;
-						farm->all_rooms[tmp->path[i]]->reserved = 0;
-					}
+					farm->released_rooms[j] = path->path[i];
+					j++;
+					farm->all_rooms[path->path[i]]->visited = 0;
+					farm->all_rooms[path->path[i]]->reserved = 0;
 				}
-				break ;
 			}
-			i++;
+			break ;
 		}
-		tmp = tmp->next;
 	}
 }
 
@@ -82,6 +74,7 @@ static void	release_rooms_on_same_path(t_farm *farm, int id)
 int			backtrack_paths(int room_to_deal, t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
+	t_paths	*tmp_paths;
 
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
@@ -90,7 +83,13 @@ int			backtrack_paths(int room_to_deal, t_farm *farm)
 		{
 			tmp_rooms->visited = 0;
 			tmp_rooms->reserved = 0;
-			release_rooms_on_same_path(farm, room_to_deal);
+			tmp_paths = farm->paths;
+			while (tmp_paths)
+			{
+				free(farm->released_rooms);
+				release_rooms_on_same_path(farm, tmp_paths, room_to_deal);
+				tmp_paths = tmp_paths->next;
+			}
 			return (tmp_rooms->room_id);
 		}
 		tmp_rooms = tmp_rooms->next;

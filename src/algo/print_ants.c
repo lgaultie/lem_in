@@ -39,20 +39,49 @@ static void	print_ants(t_farm *f, t_paths *t, int id_ant, int p)
 }
 
 /*
+** print_turns() increments an id for each path of the optimized set that lets
+** us know how many ants we can move, and we increment their position. If the
+** position equals the length of the path, the ants has arrived to the end room
+** and we don't need to increment the id anymore.
+*/
+
+static int	print_turns(t_farm *farm, t_paths *paths, int arrived, int *ants)
+{
+	t_paths	*tmp;
+	int		i;
+
+	tmp = paths;
+	while (tmp)
+	{
+		i = tmp->left_seg;
+		while (i <= tmp->right_seg)
+		{
+			ants[i]++;
+			print_ants(farm, tmp, i, tmp->length - 1 - ants[i]);
+			if (ants[i] == tmp->length - 1)
+			{
+				tmp->left_seg++;
+				arrived++;
+			}
+			if (ants[i] == 1)
+				break ;
+			i++;
+		}
+		tmp = tmp->next;
+	}
+	return (arrived);
+}
+
+/*
 ** send_ants() creates an array of ants to track their position in the path.
-** For each round, for each path of the optimized set, we increment an id that
-** lets us know how many ants we can move, and we increment their position. If
-** the position equals the length of the path, the ants has arrived to the end
-** room ans we don't need to increment this ants anymore.
+** While all ants aren't arrived to the end room, it calls print_turns().
 */
 
 int			send_ants(t_farm *farm, t_paths *paths)
 {
 	int		*ants;
-	t_paths	*tmp;
 	int		nb_lines;
 	int		arrived;
-	int		i;
 
 	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
 		return (ERROR);
@@ -65,25 +94,7 @@ int			send_ants(t_farm *farm, t_paths *paths)
 	}
 	while (arrived < farm->ants)
 	{
-		tmp = paths;
-		while (tmp)
-		{
-			i = tmp->left_seg;
-			while (i <= tmp->right_seg)
-			{
-				ants[i]++;
-				print_ants(farm, tmp, i, tmp->length - 1 - ants[i]);
-				if (ants[i] == tmp->length - 1)
-				{
-					tmp->left_seg++;
-					arrived++;
-				}
-				if (ants[i] == 1)
-					break ;
-				i++;
-			}
-			tmp = tmp->next;
-		}
+		arrived = print_turns(farm, paths, arrived, ants);
 		ft_putchar('\n');
 		nb_lines++;
 	}

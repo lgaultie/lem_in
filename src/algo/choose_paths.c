@@ -64,41 +64,50 @@ int			check_paths(t_farm *farm)
 }
 
 /*
+** end_room() means that our BFS is complete. We save the path in our structure
+** and reserve the rooms.
+*/
+
+static int	end_room(t_farm *farm, int *ret_backtrack, int *just_deleted)
+{
+	int	ret_fill_path;
+
+	if (init_paths(farm) == ERROR || ((ret_fill_path = fill_path(farm)) == ERROR))
+		return (ERROR);
+	if (ret_fill_path == FAILURE)
+		return (FAILURE);
+	free_queue(farm);
+	fill_reserved(farm);
+	if (*ret_backtrack != -1)
+	{
+		path_to_delete(farm, *ret_backtrack);
+		*ret_backtrack = -1;
+		*just_deleted = 1;
+	}
+	if (*just_deleted != 1)
+	{
+		if (save_path(farm, farm->paths) == ERROR)
+			return (ERROR);
+	}
+	*just_deleted = -1;
+	return (SUCCESS);
+}
+
+/*
 ** find_paths() calls algo() and checks what it returns.
-** If it returns -2, we found the end room, so our BFS is complete. We save the
-** path in our structure and reserve the rooms.
+** If it returns -2, we found the end room, so we call end_room().
 ** If it returns another number (a room id), it means we are stucked here. We
 ** call backtrack_paths() to unreserve the room.
 */
 
 int			find_paths(t_farm *farm, int **matrice)
 {
-	int			ret_algo;
-	int			ret_fill_path;
-	static int	ret_backtrack = -1;
-	static int	just_deleted = -1;
+	int	ret_algo;
+	int	ret_backtrack = -1;
+	int	just_deleted = -1;
 
 	while ((ret_algo = algo(farm, matrice)) == -2)
-	{
-		if (init_paths(farm) == ERROR || ((ret_fill_path = fill_path(farm)) == ERROR))
-			return (ERROR);
-		if (ret_fill_path == FAILURE)
-			return (FAILURE);
-		free_queue(farm);
-		fill_reserved(farm);
-		if (ret_backtrack != -1)
-		{
-			path_to_delete(farm, ret_backtrack);
-			ret_backtrack = -1;
-			just_deleted = 1;
-		}
-		if (just_deleted != 1)
-		{
-			if (save_path(farm, farm->paths) == ERROR)
-				return (ERROR);
-		}
-		just_deleted = -1;
-	}
+		end_room(farm, &ret_backtrack, &just_deleted);
 	if (ret_algo != -2)
 	{
 		unvisit_rooms(farm);
