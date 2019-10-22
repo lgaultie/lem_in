@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/17 16:28:37 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:10:30 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	free_farm(t_farm *farm, int **matrice)
 	free_queue(farm);
 	free_paths(farm);
 	free_found_paths(farm);
-	ft_memdel((void**)&farm->released_rooms);
+	ft_memdel((void**)&farm->release);
 	ft_memdel((void**)&farm->all_rooms);
 	free_sets(farm);
 	ft_memdel((void**)&farm);
@@ -81,7 +81,7 @@ static int	init_all_rooms(t_farm *farm)
 ** moves needed for the ants to go from start to end.
 */
 
-int	init_sets(t_farm *farm)
+int			init_sets(t_farm *farm)
 {
 	t_sets	*tmp;
 	t_sets	*new;

@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/17 16:17:26 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:03:56 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,29 @@ int			in_released_rooms(t_farm *farm, int id)
 	int	i;
 
 	i = 0;
-	while (i < farm->size_released)
+	while (i < farm->size)
 	{
-		if (farm->released_rooms[i] == id)
+		if (farm->release[i] == id)
 			return (SUCCESS);
 		i++;
 	}
 	return (FAILURE);
+}
+
+static int	release(int i, t_farm *farm, t_paths *tmp)
+{
+	int		j;
+
+	j = 0;
+	i--;
+	if (i > 0)
+	{
+		farm->release[j] = tmp->path[i];
+		j++;
+		farm->all_rooms[tmp->path[i]]->visited = 0;
+		farm->all_rooms[tmp->path[i]]->reserved = 0;
+	}
+	return (i);
 }
 
 /*
@@ -40,7 +56,6 @@ static void	release_rooms_on_same_path(t_farm *farm, int id)
 {
 	t_paths	*tmp;
 	int		i;
-	int		j;
 
 	tmp = farm->paths;
 	while (tmp)
@@ -50,21 +65,11 @@ static void	release_rooms_on_same_path(t_farm *farm, int id)
 		{
 			if (tmp->path[i] == id)
 			{
-				farm->size_released = tmp->length;
-				if (!(farm->released_rooms = ft_memalloc(sizeof(int) * farm->size_released)))
+				farm->size = tmp->length;
+				if (!(farm->release = ft_memalloc(sizeof(int) * farm->size)))
 					return ;
-				j = 0;
 				while (i > 0)
-				{
-					i--;
-					if (i > 0)
-					{
-						farm->released_rooms[j] = tmp->path[i];
-						j++;
-						farm->all_rooms[tmp->path[i]]->visited = 0;
-						farm->all_rooms[tmp->path[i]]->reserved = 0;
-					}
-				}
+					i = release(i, farm, tmp);
 				break ;
 			}
 			i++;

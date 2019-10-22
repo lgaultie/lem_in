@@ -6,11 +6,33 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 17:44:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/16 17:27:42 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:26:32 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+
+/*
+** check_start_end() reviews all rooms to check if there is a start and an end.
+** It also checks if there are links for the rooms, and a valid ant number.
+*/
+
+int	check_start_end(int error, t_farm *farm)
+{
+	int		check_startend;
+	t_rooms	*tmp_rooms;
+
+	check_startend = 0;
+	tmp_rooms = farm->rooms;
+	if (farm->start)
+		check_startend++;
+	if (farm->end)
+		check_startend++;
+	if (check_startend != 2 || farm->ants <= 0)
+		error = -1;
+	ft_putchar('\n');
+	return (error);
+}
 
 /*
 ** parse() checks data for rooms and links, calls parse_rooms() and

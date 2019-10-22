@@ -1,11 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   calc_sets.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/10/04 16:03:01 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 16:03:37 by lgaultie         ###   ########.fr       */
+/*   Created: 2019/10/22 18:08:23 by lgaultie          #+#    #+#             */
+/*   Updated: 2019/10/22 18:08:34 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +53,7 @@ int	calc_ants_to_send(t_sets *tmp_set, t_paths *tmp_path)
 
 int	calc_moves(int nb_moves, int size, int len, t_farm *farm)
 {
-    nb_moves = (farm->ants + len - 2 * size) / size;
+	nb_moves = (farm->ants + len - 2 * size) / size;
 	return (nb_moves);
 }
 

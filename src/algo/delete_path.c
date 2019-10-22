@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:55:11 by christel          #+#    #+#             */
-/*   Updated: 2019/10/17 15:48:50 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 18:09:04 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** delete_path() deletes a path from its source list.
 */
 
-void    delete_path(t_sets *set, t_paths **src, t_paths *path)
+void	delete_path(t_sets *set, t_paths **src, t_paths *path)
 {
 	t_paths	*tmp;
 
