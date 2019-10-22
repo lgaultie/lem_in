@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:29:49 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 16:32:55 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 15:15:06 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 ** except for the start and end rooms.
 */
 
-void    fill_reserved(t_farm *farm)
+void	fill_reserved(t_farm *farm)
 {
 	t_paths	*tmp_paths;
 	t_rooms	*tmp_rooms;

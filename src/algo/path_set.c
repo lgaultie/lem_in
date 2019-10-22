@@ -6,7 +6,7 @@
 /*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 23:35:40 by cmouele           #+#    #+#             */
-/*   Updated: 2019/10/17 15:53:40 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 16:33:45 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** init_path_cpy_two()
 */
 
-static int	init_paths_cpy_two(t_paths *new_path, t_paths *paths)
+static int		init_paths_cpy_two(t_paths *new_path, t_paths *paths)
 {
 	int i;
 
@@ -99,7 +99,7 @@ static void		delete_set(t_paths **first_path)
 static void		compare_sets(t_paths *p_current, t_paths *p_set, t_paths *p_cpy)
 {
 	int		i;
-	int 	j;
+	int		j;
 	t_paths	*tmp_paths_cpy;
 
 	i = 0;

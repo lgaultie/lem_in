@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isnumber.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: christelle <marvin@42.fr>                  +#+  +:+       +#+        */
+/*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/29 16:54:13 by christell         #+#    #+#             */
-/*   Updated: 2019/09/29 16:54:20 by christell        ###   ########.fr       */
+/*   Created: 2019/09/29 16:54:13 by christel          #+#    #+#             */
+/*   Updated: 2019/10/22 15:10:47 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 int	ft_isnumber(char *number)
 {
 	int		i;
-	int 	len;
+	int		len;
 	long	tmp;
 
 	i = 0;

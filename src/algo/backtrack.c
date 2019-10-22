@@ -6,11 +6,12 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/17 16:17:26 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 16:47:58 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+#include <stdio.h>////
 
 /*
 ** in_released_rooms() checks if the room_id provided is in
@@ -36,33 +37,44 @@ int			in_released_rooms(t_farm *farm, int id)
 ** that are on the same path that the room id provided in the parameters.
 */
 
-static void	release_rooms_on_same_path(t_farm *farm, t_paths *path, int id)
+static void	release_rooms_on_same_path(t_farm *f, t_paths *path, int id)
 {
 	int		i;
 	int		j;
 
 	i = 0;
-	while (i++ < path->length)
+	while (i < path->length)
 	{
+		ft_putstr("i = ");
+		ft_putnbr(i);
+		ft_putstr(" et length = ");
+		ft_putnbr(path->length);
+		ft_putstr("\n");
 		if (path->path[i] == id)
 		{
-			farm->size_released = path->length;
-			if (!(farm->released_rooms = ft_memalloc(sizeof(int) * farm->size_released)))
+			f->size_released = path->length;
+			if (!(f->released_rooms = ft_memalloc(sizeof(int) * f->size_released)))
 				return ;
+				ft_putstr("malloc released_rooms de taille de ");
+				ft_putnbr(f->size_released);
+				ft_putstr("\n");
 			j = 0;
-			while (--i > 0)
+			while (i > 0)
 			{
+				i--;
 				if (i > 0)
 				{
-					farm->released_rooms[j] = path->path[i];
+					f->released_rooms[j] = path->path[i];
 					j++;
-					farm->all_rooms[path->path[i]]->visited = 0;
-					farm->all_rooms[path->path[i]]->reserved = 0;
+					f->all_rooms[path->path[i]]->visited = 0;
+					f->all_rooms[path->path[i]]->reserved = 0;
 				}
 			}
 			break ;
 		}
+		i++;
 	}
+	ft_putstr("fin fonction release\n");
 }
 
 /*
@@ -86,7 +98,8 @@ int			backtrack_paths(int room_to_deal, t_farm *farm)
 			tmp_paths = farm->paths;
 			while (tmp_paths)
 			{
-				free(farm->released_rooms);
+				ft_putstr("free released_rooms\n");
+				ft_memdel((void**)&farm->released_rooms);
 				release_rooms_on_same_path(farm, tmp_paths, room_to_deal);
 				tmp_paths = tmp_paths->next;
 			}

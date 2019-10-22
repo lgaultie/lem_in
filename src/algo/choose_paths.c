@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/17 16:03:06 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 15:14:47 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,11 @@ int			check_paths(t_farm *farm)
 
 static int	end_room(t_farm *farm, int *ret_backtrack, int *just_deleted)
 {
-	int	ret_fill_path;
+	int	ret_fill;
 
-	if (init_paths(farm) == ERROR || ((ret_fill_path = fill_path(farm)) == ERROR))
+	if (init_paths(farm) == ERROR || ((ret_fill = fill_path(farm)) == ERROR))
 		return (ERROR);
-	if (ret_fill_path == FAILURE)
+	if (ret_fill == FAILURE)
 		return (FAILURE);
 	free_queue(farm);
 	fill_reserved(farm);
@@ -103,9 +103,11 @@ static int	end_room(t_farm *farm, int *ret_backtrack, int *just_deleted)
 int			find_paths(t_farm *farm, int **matrice)
 {
 	int	ret_algo;
-	int	ret_backtrack = -1;
-	int	just_deleted = -1;
+	int	ret_backtrack;
+	int	just_deleted;
 
+	ret_backtrack = -1;
+	just_deleted = -1;
 	while ((ret_algo = algo(farm, matrice)) == -2)
 		end_room(farm, &ret_backtrack, &just_deleted);
 	if (ret_algo != -2)

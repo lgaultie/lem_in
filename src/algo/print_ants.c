@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:52:43 by christel          #+#    #+#             */
-/*   Updated: 2019/10/17 14:57:54 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 15:12:15 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ int			send_ants(t_farm *farm, t_paths *paths)
 	arrived = 0;
 	if (farm->visu == 1)
 	{
-		ft_putstr("\n· \e[35mpurple\e[0m: first step of a new ant.\n");
-		ft_putstr("· white: ant ongoing.\n· \e[32mgreen\e[0m: ant arrives.\n\n");
+		ft_putstr("\n· \e[35mpurple\e[0m: first step of a new ant.\n· ");
+		ft_putstr("white: ant ongoing.\n· \e[32mgreen\e[0m: ant arrives.\n\n");
 	}
 	while (arrived < farm->ants)
 	{
