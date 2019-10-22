@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 18:10:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:30:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	free_farm(t_farm *farm, int **matrice)
 	free_paths(farm);
 	free_found_paths(farm);
 	ft_memdel((void**)&farm->release);
-	ft_memdel((void**)&farm->all_rooms);
+	ft_memdel((void**)&farm->all);
 	free_sets(farm);
 	ft_memdel((void**)&farm);
 }
@@ -64,11 +64,11 @@ static int	init_all_rooms(t_farm *farm)
 
 	tmp = farm->rooms;
 	i = 0;
-	if (!(farm->all_rooms = ft_memalloc(sizeof(t_rooms *) * farm->total_rooms)))
+	if (!(farm->all = ft_memalloc(sizeof(t_rooms *) * farm->total_rooms)))
 		return (ERROR);
 	while (tmp)
 	{
-		farm->all_rooms[i] = tmp;
+		farm->all[i] = tmp;
 		tmp = tmp->next;
 		i++;
 	}

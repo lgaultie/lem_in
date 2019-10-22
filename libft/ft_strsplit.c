@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cmouele <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: cmouele <cmouele@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/19 08:09:23 by cmouele           #+#    #+#             */
-/*   Updated: 2018/11/19 08:32:58 by cmouele          ###   ########.fr       */
+/*   Updated: 2019/10/22 21:31:42 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_browse_words(char const *s, char c, char **word_array)
 	{
 		if (s[size_s] != c)
 		{
-			if(!(word_array[size_word] =
+			if (!(word_array[size_word] =
 			(char*)malloc(sizeof(char) * (ft_count_chars(s + size_s, c) + 1))))
 				return (-1);
 			size_s += ft_fill_words(s + size_s, c, word_array[size_word]);

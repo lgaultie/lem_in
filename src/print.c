@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 10:18:36 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/17 16:30:13 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:30:46 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void		print_tab_paths(t_farm *farm)
 			i = tmp_path->length - 1;
 			while (i > -1)
 			{
-				ft_putstr(farm->all_rooms[tmp_path->path[i]]->name);
+				ft_putstr(farm->all[tmp_path->path[i]]->name);
 				ft_putchar(' ');
 				i--;
 			}
@@ -79,7 +79,7 @@ void		print_chosen_paths(t_farm *farm, t_sets *set)
 		i = tmp_path->length - 1;
 		while (i > -1)
 		{
-			ft_putstr(farm->all_rooms[tmp_path->path[i]]->name);
+			ft_putstr(farm->all[tmp_path->path[i]]->name);
 			ft_putchar(' ');
 			i--;
 		}

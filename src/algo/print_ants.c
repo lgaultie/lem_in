@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:52:43 by christel          #+#    #+#             */
-/*   Updated: 2019/10/17 14:57:54 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:30:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,31 @@ static void	print_ants(t_farm *f, t_paths *t, int id_ant, int p)
 {
 	if (f->visu == 1)
 	{
-		if (f->all_rooms[t->path[p]]->name == f->all_rooms[t->path[t->length - 2]]->name)
+		if (f->all[t->path[p]]->name == f->all[t->path[t->length - 2]]->name)
 			ft_putstr("\e[35m");
 		else
 			ft_putstr("\e[0m");
-		if (f->all_rooms[t->path[p]]->start_end == 2)
+		if (f->all[t->path[p]]->start_end == 2)
 			ft_putstr("\e[32m");
 	}
 	ft_putchar('L');
 	ft_putnbr(id_ant + 1);
 	ft_putchar('-');
-	ft_putstr(f->all_rooms[t->path[p]]->name);
-	if (f->visu == 1 && ((f->all_rooms[t->path[p]]->start_end == 1) \
-		|| (f->all_rooms[t->path[p]]->start_end == 2)))
+	ft_putstr(f->all[t->path[p]]->name);
+	if (f->visu == 1 && ((f->all[t->path[p]]->start_end == 1) \
+		|| (f->all[t->path[p]]->start_end == 2)))
 		ft_putstr("\e[0m");
 	ft_putchar(' ');
+}
+
+int			is_arrived(int *ants, int i, t_paths *tmp, int arrived)
+{
+	if (ants[i] == tmp->length - 1)
+	{
+		tmp->left_seg++;
+		arrived++;
+	}
+	return (arrived);
 }
 
 /*
@@ -46,23 +56,11 @@ static void	print_ants(t_farm *f, t_paths *t, int id_ant, int p)
 ** room ans we don't need to increment this ants anymore.
 */
 
-int			send_ants(t_farm *farm, t_paths *paths)
+static void	send_ants2(t_farm *farm, t_paths *paths, int *ants, int arrived)
 {
-	int		*ants;
 	t_paths	*tmp;
-	int		nb_lines;
-	int		arrived;
 	int		i;
 
-	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
-		return (ERROR);
-	nb_lines = 0;
-	arrived = 0;
-	if (farm->visu == 1)
-	{
-		ft_putstr("\n· \e[35mpurple\e[0m: first step of a new ant.\n");
-		ft_putstr("· white: ant ongoing.\n· \e[32mgreen\e[0m: ant arrives.\n\n");
-	}
 	while (arrived < farm->ants)
 	{
 		tmp = paths;
@@ -73,11 +71,7 @@ int			send_ants(t_farm *farm, t_paths *paths)
 			{
 				ants[i]++;
 				print_ants(farm, tmp, i, tmp->length - 1 - ants[i]);
-				if (ants[i] == tmp->length - 1)
-				{
-					tmp->left_seg++;
-					arrived++;
-				}
+				arrived = is_arrived(ants, i, tmp, arrived);
 				if (ants[i] == 1)
 					break ;
 				i++;
@@ -85,8 +79,21 @@ int			send_ants(t_farm *farm, t_paths *paths)
 			tmp = tmp->next;
 		}
 		ft_putchar('\n');
-		nb_lines++;
 	}
 	ft_memdel((void**)&ants);
+}
+
+int			send_ants(t_farm *farm, t_paths *paths)
+{
+	int		*ants;
+
+	if (!(ants = ft_memalloc(sizeof(int) * farm->ants)))
+		return (ERROR);
+	if (farm->visu == 1)
+	{
+		ft_putstr("\n· \e[35mpurple\e[0m: first step of a new ant.\n· ");
+		ft_putstr("white: ant ongoing.\n· \e[32mgreen\e[0m: ant arrives.\n\n");
+	}
+	send_ants2(farm, paths, ants, 0);
 	return (SUCCESS);
 }

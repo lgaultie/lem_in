@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 18:03:56 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:30:50 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static int	release(int i, t_farm *farm, t_paths *tmp)
 	{
 		farm->release[j] = tmp->path[i];
 		j++;
-		farm->all_rooms[tmp->path[i]]->visited = 0;
-		farm->all_rooms[tmp->path[i]]->reserved = 0;
+		farm->all[tmp->path[i]]->visited = 0;
+		farm->all[tmp->path[i]]->reserved = 0;
 	}
 	return (i);
 }

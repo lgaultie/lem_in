@@ -6,7 +6,7 @@
 /*   By: christel <christel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/29 16:54:40 by christel          #+#    #+#             */
-/*   Updated: 2019/10/22 18:03:37 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 21:30:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ static void	visit_rooms(t_farm *farm)
 	i = 0;
 	while (i < farm->size)
 	{
-		if (farm->all_rooms[farm->release[i]]->to_reserve == 1)
+		if (farm->all[farm->release[i]]->to_reserve == 1)
 		{
-			farm->all_rooms[farm->release[i]]->visited = 1;
-			farm->all_rooms[farm->release[i]]->reserved = 1;
-			farm->all_rooms[farm->release[i]]->to_reserve = 0;
+			farm->all[farm->release[i]]->visited = 1;
+			farm->all[farm->release[i]]->reserved = 1;
+			farm->all[farm->release[i]]->to_reserve = 0;
 		}
 		i++;
 	}
