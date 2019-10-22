@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/10/04 16:30:01 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/10/22 23:10:54 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ SRCS =	main.c							\
 		$(ALGO_DIR)/path_set.c          \
 		$(ALGO_DIR)/backtrack.c         \
 		$(ALGO_DIR)/sets.c              \
-		$(ALGO_DIR)/print_ants.c
+		$(ALGO_DIR)/print_ants.c		\
+		$(ALGO_DIR)/delete_set.c
 
 OBJ = $(addprefix $(OBJDIR)/, $(SRCS:.c=.o))
 #voir GNU 8.3 Functions for File Names

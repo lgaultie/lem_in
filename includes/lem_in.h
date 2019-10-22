@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 21:30:51 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 23:10:30 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct		s_farm
 	t_paths			*paths;
 	t_paths			*found_paths;
 	t_sets			*sets;
+	t_sets			*last_set;
 }					t_farm;
 
 int					read_input(t_farm *farm, int nb, int error, int start_end);
@@ -114,7 +115,7 @@ int					in_released_rooms(t_farm *farm, int id);
 int					backtrack_paths(int block, t_farm *farm);
 void				delete_path(t_sets *set, t_paths **src, t_paths *path);
 int					unvisit(int *path, int length, t_farm *farm, int id_room);
-int					find_paths(t_farm *farm, int **matrice);
+int					find_paths(t_farm *farm, int **matrice, int algo, int r);
 int					check_paths(t_farm *farm);
 int					path_to_delete(t_farm *farm, int id_room);
 void				free_sets(t_farm *farm);
@@ -125,6 +126,8 @@ void				fill_reserved(t_farm *farm);
 int					init_sets(t_farm *farm);
 int					calc_moves(int nb_moves, int size, int len, t_farm *farm);
 int					calc_length(t_paths *tmp, int length);
+void				delete_set(t_paths **first_path);
+void				replace_or_delete(int i, int j, t_farm *f, t_paths *p_cpy);
 int					calc_ants_to_send(t_sets *tmp_set, t_paths *tmp_path);
 void				print_tab_paths(t_farm *farm);
 void				print_free_rooms(t_farm *farm);

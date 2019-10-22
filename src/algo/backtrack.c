@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 21:30:50 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/22 22:25:49 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,17 @@ static int	release(int i, t_farm *farm, t_paths *tmp)
 {
 	int		j;
 
-	j = 0;
-	i--;
-	if (i > 0)
+	while (i > 0)
 	{
-		farm->release[j] = tmp->path[i];
-		j++;
-		farm->all[tmp->path[i]]->visited = 0;
-		farm->all[tmp->path[i]]->reserved = 0;
+		j = 0;
+		i--;
+		if (i > 0)
+		{
+			farm->release[j] = tmp->path[i];
+			j++;
+			farm->all[tmp->path[i]]->visited = 0;
+			farm->all[tmp->path[i]]->reserved = 0;
+		}
 	}
 	return (i);
 }
@@ -68,13 +71,28 @@ static void	release_rooms_on_same_path(t_farm *farm, int id)
 				farm->size = tmp->length;
 				if (!(farm->release = ft_memalloc(sizeof(int) * farm->size)))
 					return ;
-				while (i > 0)
-					i = release(i, farm, tmp);
+				i = release(i, farm, tmp);
 				break ;
 			}
 			i++;
 		}
 		tmp = tmp->next;
+	}
+}
+
+/*
+** unvisit_rooms() checks all the rooms and set their `visited` attribute to 0.
+*/
+
+static void	unvisit_roomss(t_farm *farm)
+{
+	t_rooms	*tmp_rooms;
+
+	tmp_rooms = farm->rooms;
+	while (tmp_rooms)
+	{
+		tmp_rooms->visited = 0;
+		tmp_rooms = tmp_rooms->next;
 	}
 }
 
@@ -88,6 +106,7 @@ int			backtrack_paths(int room_to_deal, t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
 
+	unvisit_roomss(farm);
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{
