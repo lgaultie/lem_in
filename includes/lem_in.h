@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 17:26:11 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:08:48 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,7 @@ int					in_released_rooms(t_farm *farm, int id);
 int					backtrack_paths(int block, t_farm *farm);
 void				delete_path(t_sets *set, t_paths **src, t_paths *path);
 int					unvisit(int *path, int length, t_farm *farm, int id_room);
-int					find_paths(t_farm *farm, int ret_algo, int fill,
-						int delete, int to_delete);
+int					find_paths(t_farm *farm, int delete, int d);
 int					check_paths(t_farm *farm);
 int					path_to_delete(t_farm *farm, int id_room);
 void				free_sets(t_farm *farm);
@@ -141,5 +140,7 @@ void				print_paths(t_farm *farm);
 void				display_sets(t_farm *farm);
 void				print_chosen_paths(t_farm *farm, t_sets *set);
 void				print_nb_moves(t_sets *set);
+int					save_block_rooms(t_rooms *tmp_rooms, t_farm *farm, int i);
+int		add_rooms(t_rooms *tmp_rooms, int i, t_farm *farm, t_rooms *parent);
 
 #endif

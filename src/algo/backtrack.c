@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:25 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 17:26:40 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:08:25 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ int			backtrack_paths(int room_to_deal, t_farm *farm)
 		farm->all[farm->blocking_q->id]->visited = 0;
 		farm->all[farm->blocking_q->id]->reserved = 0;
 		block_unqueue(farm);
-		find_paths(farm, 0, 0, 1, farm->blocking_q->id);
+		find_paths(farm, 1, farm->blocking_q->id);
 	}
 	return (ERROR);
 }
