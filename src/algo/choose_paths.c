@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 22:34:38 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 18:22:39 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int			check_paths(t_farm *farm)
 static int	backtrack_error(t_farm *farm)
 {
 	if (farm->nb_paths > 0)
+	{
 		return (DEADEND);
+	}
 	return (ERROR);
 }
 
@@ -73,11 +75,14 @@ static void	free_and_fill(t_farm *farm)
 ** call backtrack_paths() to unreserve the room.
 */
 
-int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill)
+int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
+			int delete, int to_delete)
 {
 	static int	ret_backtrack = -1;
 	static int	just_deleted = -1;
 
+	if (delete == 1)
+		ret_backtrack = to_delete;
 	while ((ret_algo = algo(farm, matrice)) == -2)
 	{
 		if (init_paths(farm) == ERROR || ((fill = fill_path(farm)) == ERROR))
@@ -96,8 +101,11 @@ int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill)
 				return (ERROR);
 		just_deleted = -1;
 	}
+	delete = 0;
 	if (ret_algo != -2)
-		if ((ret_backtrack = backtrack_paths(ret_algo, farm)) == ERROR)
+	{
+		if ((ret_backtrack = backtrack_paths(ret_algo, farm, matrice)) == ERROR)
 			return (backtrack_error(farm));
+	}
 	return (SUCCESS);
 }

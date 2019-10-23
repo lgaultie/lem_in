@@ -6,11 +6,12 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 16:32:43 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:13:17 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
+#include <stdio.h>//
 
 /*
 ** init_tmp() calls queue() to add the room id to the queue. Then it updates
@@ -22,6 +23,16 @@ static int	init_tmp(t_rooms *tmp_rooms, t_rooms *parent, t_farm *farm, int i)
 {
 	if (queue(farm, i) == ERROR)
 		return (ERROR);
+	// t_queue *q = farm->queue;
+	// ft_putstr("queue:\n");
+	// while (q)
+	// {
+	// 	ft_putstr("q id: ");
+	// 	ft_putnbr(q->id);
+	// 	ft_putchar('\n');
+	// 	q = q->next;
+	// }
+	// ft_putstr("end queue:\n");
 	tmp_rooms->parent = parent;
 	tmp_rooms->visited = 1;
 	tmp_rooms->layer = parent->layer + 1;
@@ -56,6 +67,10 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room, int i)
 					if (tmp_rooms->start_end == 2)
 						return (-2);
 				}
+				if (tmp_rooms->room_id == i \
+					&& tmp_rooms->reserved == 1 && tmp_rooms->start_end != 1)
+					if (block_queue(farm, i) == ERROR)
+						return (ERROR);
 				tmp_rooms = tmp_rooms->next;
 			}
 		}

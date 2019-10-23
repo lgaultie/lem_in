@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 23:10:30 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 17:26:11 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct		s_farm
 	int				size;
 	int				*release;
 	t_rooms			**all;
+	t_queue			*blocking_q;
 	t_queue			*queue;
 	t_rooms			*rooms;
 	t_rooms			*start;
@@ -102,6 +103,7 @@ int					**matrice_create(t_farm *farm, int i);
 int					algo(t_farm *farm, int **matrice);
 int					queue(t_farm *farm, int room_id);
 int					unqueue(t_farm *farm);
+int					block_unqueue(t_farm *farm);
 void				free_matrice(t_farm *farm, int **matrice);
 void				free_rooms(t_rooms *rooms);
 void				free_queue(t_farm *farm);
@@ -112,10 +114,11 @@ int					init_paths(t_farm *farm);
 int					fill_path(t_farm *farm);
 int					save_path(t_farm *farm, t_paths *paths);
 int					in_released_rooms(t_farm *farm, int id);
-int					backtrack_paths(int block, t_farm *farm);
+int					backtrack_paths(int block, t_farm *farm, int **matrice);
 void				delete_path(t_sets *set, t_paths **src, t_paths *path);
 int					unvisit(int *path, int length, t_farm *farm, int id_room);
-int					find_paths(t_farm *farm, int **matrice, int algo, int r);
+int					find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
+						int delete, int to_delete);
 int					check_paths(t_farm *farm);
 int					path_to_delete(t_farm *farm, int id_room);
 void				free_sets(t_farm *farm);
@@ -124,6 +127,7 @@ int					allocate_sets(t_farm *farm);
 int					send_ants(t_farm *farm, t_paths *paths);
 void				fill_reserved(t_farm *farm);
 int					init_sets(t_farm *farm);
+int					block_queue(t_farm *farm, int room_id);
 int					calc_moves(int nb_moves, int size, int len, t_farm *farm);
 int					calc_length(t_paths *tmp, int length);
 void				delete_set(t_paths **first_path);
