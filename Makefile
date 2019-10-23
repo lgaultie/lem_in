@@ -6,7 +6,7 @@
 #    By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/16 14:43:23 by lgaultie          #+#    #+#              #
-#    Updated: 2019/10/22 23:10:54 by lgaultie         ###   ########.fr        #
+#    Updated: 2019/10/23 19:43:47 by lgaultie         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ PARS_DIR = parsing
 SRCS =	main.c							\
 		free.c							\
 		free_two.c						\
-		free_error.c					\
 		print.c							\
 		$(PARS_DIR)/read_input.c		\
 		$(PARS_DIR)/parsing.c			\

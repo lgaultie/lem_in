@@ -6,30 +6,11 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/04 15:42:55 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:48:08 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <lem_in.h>
-
-/*
-** free_paths() frees paths structure.
-*/
-
-void		free_paths(t_farm *farm)
-{
-	t_paths	*tmp;
-	t_paths	*new;
-
-	tmp = farm->paths;
-	while (tmp)
-	{
-		new = tmp->next;
-		ft_memdel((void**)&tmp->path);
-		ft_memdel((void**)&tmp);
-		tmp = new;
-	}
-}
 
 /*
 ** free_queue() frees queue structure.
@@ -48,6 +29,25 @@ void		free_queue(t_farm *farm)
 		tmp = new;
 	}
 	farm->queue = NULL;
+}
+
+/*
+** free_queue() frees queue structure.
+*/
+
+void		free_queue_b(t_farm *farm)
+{
+	t_queue	*tmp;
+	t_queue	*new;
+
+	tmp = farm->blocking_q;
+	while (tmp)
+	{
+		new = tmp->next;
+		ft_memdel((void**)&tmp);
+		tmp = new;
+	}
+	farm->blocking_q = NULL;
 }
 
 /*

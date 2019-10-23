@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:51:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:08:48 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:45:28 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct		s_farm
 	int				total_rooms;
 	int				size;
 	int				*release;
-	int             **matrice;
+	int				**matrice;
 	t_rooms			**all;
 	t_queue			*blocking_q;
 	t_queue			*queue;
@@ -109,7 +109,8 @@ void				free_matrice(t_farm *farm);
 void				free_rooms(t_rooms *rooms);
 void				free_queue(t_farm *farm);
 void				free_paths(t_farm *farm);
-void                free_farm(t_farm *farm);
+void				free_farm(t_farm *farm);
+void				free_queue_b(t_farm *farm);
 int					free_farm_error(t_farm *farm);
 int					free_tab_error(char **tab);
 int					init_paths(t_farm *farm);
@@ -141,6 +142,6 @@ void				display_sets(t_farm *farm);
 void				print_chosen_paths(t_farm *farm, t_sets *set);
 void				print_nb_moves(t_sets *set);
 int					save_block_rooms(t_rooms *tmp_rooms, t_farm *farm, int i);
-int		add_rooms(t_rooms *tmp_rooms, int i, t_farm *farm, t_rooms *parent);
+int					add_rooms(t_rooms *t, int i, t_farm *farm, t_rooms *p);
 
 #endif

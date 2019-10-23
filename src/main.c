@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/16 14:53:07 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/22 22:14:05 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:46:00 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 ** free_farm() frees farm.
 */
 
-void	    free_farm(t_farm *farm)
+void		free_farm(t_farm *farm)
 {
 	free_matrice(farm);
 	free_rooms(farm->rooms);
 	free_queue(farm);
+	free_queue_b(farm);
 	free_paths(farm);
 	free_found_paths(farm);
 	ft_memdel((void**)&farm->release);
