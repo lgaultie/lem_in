@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/31 11:03:23 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 18:22:39 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/23 19:21:15 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ static int	backtrack_error(t_farm *farm)
 	return (ERROR);
 }
 
-static void	free_and_fill(t_farm *farm)
+static int	free_and_fill(t_farm *farm, int fill)
 {
+	if (fill == FAILURE)
+		return (FAILURE);
 	free_queue(farm);
 	fill_reserved(farm);
+	return (SUCCESS);
 }
 
 /*
@@ -75,37 +78,31 @@ static void	free_and_fill(t_farm *farm)
 ** call backtrack_paths() to unreserve the room.
 */
 
-int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
-			int delete, int to_delete)
+int			find_paths(t_farm *farm, int **mat, int delete, int to_delete)
 {
-	static int	ret_backtrack = -1;
+	int			ret_algo;
+	int			fill;
+	static int	r = -1;
 	static int	just_deleted = -1;
 
-	if (delete == 1)
-		ret_backtrack = to_delete;
-	while ((ret_algo = algo(farm, matrice)) == -2)
+	(delete == 1) ? r = to_delete : r;
+	while ((ret_algo = algo(farm, mat)) == -2)
 	{
 		if (init_paths(farm) == ERROR || ((fill = fill_path(farm)) == ERROR))
 			return (ERROR);
-		if (fill == FAILURE)
+		if (free_and_fill(farm, fill) == FAILURE)
 			return (FAILURE);
-		free_and_fill(farm);
-		if (ret_backtrack != -1)
+		if (r != -1)
 		{
-			path_to_delete(farm, ret_backtrack);
-			ret_backtrack = -1;
+			path_to_delete(farm, r);
+			r = -1;
 			just_deleted = 1;
 		}
-		if (just_deleted != 1)
-			if (save_path(farm, farm->paths) == ERROR)
-				return (ERROR);
+		if (just_deleted != 1 && (save_path(farm, farm->paths) == ERROR))
+			return (ERROR);
 		just_deleted = -1;
 	}
 	delete = 0;
-	if (ret_algo != -2)
-	{
-		if ((ret_backtrack = backtrack_paths(ret_algo, farm, matrice)) == ERROR)
-			return (backtrack_error(farm));
-	}
-	return (SUCCESS);
+	return (ret_algo != -2 && (r = backtrack_paths(ret_algo, farm, mat)) \
+		== ERROR) ? backtrack_error(farm) : SUCCESS;
 }
