@@ -47,14 +47,14 @@ static int	init_tmp(t_rooms *tmp_rooms, t_rooms *parent, t_farm *farm, int i)
 ** When we add the end room, we have finished.
 */
 
-static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room, int i)
+static int	bfs(t_farm *farm, t_rooms *parent_room, int i)
 {
 	t_rooms	*tmp_rooms;
 
 	i = 0;
 	while (i < farm->total_rooms)
 	{
-		if (matrice[parent_room->room_id][i] == 1)
+		if (farm->matrice[parent_room->room_id][i] == 1)
 		{
 			tmp_rooms = farm->rooms;
 			while (tmp_rooms)
@@ -87,7 +87,7 @@ static int	bfs(t_farm *farm, int **matrice, t_rooms *parent_room, int i)
 ** blocking room.
 */
 
-static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
+static int	blocking_room(t_farm *farm, int last_valid_room)
 {
 	int		i;
 	t_rooms	*tmp_rooms;
@@ -95,7 +95,7 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 	i = 0;
 	while (i < farm->total_rooms)
 	{
-		if (matrice[last_valid_room][i] == 1)
+		if (farm->matrice[last_valid_room][i] == 1)
 		{
 			tmp_rooms = farm->rooms;
 			while (tmp_rooms)
@@ -115,7 +115,7 @@ static int	blocking_room(t_farm *farm, int **matrice, int last_valid_room)
 ** the queue, calling bfs(). If we are stucked, we call blocking_room().
 */
 
-static int	fill_queue(t_farm *farm, int **matrice)
+static int	fill_queue(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
 	int		check_bfs;
@@ -130,18 +130,18 @@ static int	fill_queue(t_farm *farm, int **matrice)
 			if (tmp_rooms->room_id == farm->queue->id)
 			{
 				first_of_queue = farm->queue->id;
-				check_bfs = bfs(farm, matrice, tmp_rooms, first_of_queue);
+				check_bfs = bfs(farm, tmp_rooms, first_of_queue);
 				if (check_bfs == ERROR)
 					return (ERROR);
 				if (check_bfs == -2)
 					return (-2);
 				if (check_bfs == FAILURE && !farm->queue)
-					return (blocking_room(farm, matrice, first_of_queue));
+					return (blocking_room(farm, first_of_queue));
 			}
 			tmp_rooms = tmp_rooms->next;
 		}
 	}
-	return (blocking_room(farm, matrice, first_of_queue));
+	return (blocking_room(farm, first_of_queue));
 }
 
 /*
@@ -149,7 +149,7 @@ static int	fill_queue(t_farm *farm, int **matrice)
 ** queue(), then calls check_queue() to add rooms to the queue.
 */
 
-int			algo(t_farm *farm, int **matrice)
+int			algo(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
 	int		ret_fill_queue;
@@ -158,7 +158,7 @@ int			algo(t_farm *farm, int **matrice)
 	tmp_rooms = farm->start;
 	if (queue(farm, tmp_rooms->room_id) == ERROR)
 		return (ERROR);
-	ret_fill_queue = fill_queue(farm, matrice);
+	ret_fill_queue = fill_queue(farm);
 	if (ret_fill_queue == ERROR)
 		return (ERROR);
 	return (ret_fill_queue);

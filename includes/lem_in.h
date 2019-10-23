@@ -82,6 +82,7 @@ typedef struct		s_farm
 	int				total_rooms;
 	int				size;
 	int				*release;
+	int             **matrice;
 	t_rooms			**all;
 	t_queue			*blocking_q;
 	t_queue			*queue;
@@ -100,24 +101,25 @@ int					parse_rooms(t_farm *farm, char *line, int start_end);
 int					parse_links(t_farm *farm, char *line);
 int					check_start_end(int error, t_farm *farm);
 int					**matrice_create(t_farm *farm, int i);
-int					algo(t_farm *farm, int **matrice);
+int					algo(t_farm *farm);
 int					queue(t_farm *farm, int room_id);
 int					unqueue(t_farm *farm);
 int					block_unqueue(t_farm *farm);
-void				free_matrice(t_farm *farm, int **matrice);
+void				free_matrice(t_farm *farm);
 void				free_rooms(t_rooms *rooms);
 void				free_queue(t_farm *farm);
 void				free_paths(t_farm *farm);
+void                free_farm(t_farm *farm);
 int					free_farm_error(t_farm *farm);
 int					free_tab_error(char **tab);
 int					init_paths(t_farm *farm);
 int					fill_path(t_farm *farm);
 int					save_path(t_farm *farm, t_paths *paths);
 int					in_released_rooms(t_farm *farm, int id);
-int					backtrack_paths(int block, t_farm *farm, int **matrice);
+int					backtrack_paths(int block, t_farm *farm);
 void				delete_path(t_sets *set, t_paths **src, t_paths *path);
 int					unvisit(int *path, int length, t_farm *farm, int id_room);
-int					find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
+int					find_paths(t_farm *farm, int ret_algo, int fill,
 						int delete, int to_delete);
 int					check_paths(t_farm *farm);
 int					path_to_delete(t_farm *farm, int id_room);

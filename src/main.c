@@ -16,9 +16,9 @@
 ** free_farm() frees farm.
 */
 
-static void	free_farm(t_farm *farm, int **matrice)
+void	    free_farm(t_farm *farm)
 {
-	free_matrice(farm, matrice);
+	free_matrice(farm);
 	free_rooms(farm->rooms);
 	free_queue(farm);
 	free_paths(farm);
@@ -116,7 +116,6 @@ int			main(int ac, char **av)
 {
 	int		error;
 	t_farm	*farm;
-	int		**matrice;
 
 	error = 0;
 	if (!(farm = ft_memalloc(sizeof(t_farm))))
@@ -132,9 +131,9 @@ int			main(int ac, char **av)
 	if (read_input(farm, 1, error, error) == ERROR \
 	|| init_all_rooms(farm) == ERROR \
 	|| init_sets(farm) == ERROR \
-	|| (matrice = matrice_create(farm, error)) == NULL
+	|| matrice_create(farm, error) == NULL
 	|| allocate_sets(farm) == ERROR)
 		return (free_farm_error(farm));
-	free_farm(farm, matrice);
+	free_farm(farm);
 	return (FAILURE);
 }

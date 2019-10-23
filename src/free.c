@@ -95,17 +95,17 @@ void		free_rooms(t_rooms *rooms)
 ** free_matrice() frees the matrice.
 */
 
-void		free_matrice(t_farm *farm, int **matrice)
+void		free_matrice(t_farm *farm)
 {
 	int	i;
 
 	i = 0;
 	while (i < farm->total_rooms)
 	{
-		if (matrice[i] == NULL)
+		if (farm->matrice[i] == NULL)
 			return ;
-		ft_memdel((void**)&matrice[i]);
+		ft_memdel((void**)&(farm->matrice[i]));
 		i++;
 	}
-	ft_memdel((void**)&matrice);
+	ft_memdel((void**)&(farm->matrice));
 }

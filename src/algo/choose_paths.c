@@ -75,7 +75,7 @@ static void	free_and_fill(t_farm *farm)
 ** call backtrack_paths() to unreserve the room.
 */
 
-int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
+int			find_paths(t_farm *farm, int ret_algo, int fill,
 			int delete, int to_delete)
 {
 	static int	ret_backtrack = -1;
@@ -83,7 +83,7 @@ int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
 
 	if (delete == 1)
 		ret_backtrack = to_delete;
-	while ((ret_algo = algo(farm, matrice)) == -2)
+	while ((ret_algo = algo(farm)) == -2)
 	{
 		if (init_paths(farm) == ERROR || ((fill = fill_path(farm)) == ERROR))
 			return (ERROR);
@@ -104,7 +104,7 @@ int			find_paths(t_farm *farm, int **matrice, int ret_algo, int fill,
 	delete = 0;
 	if (ret_algo != -2)
 	{
-		if ((ret_backtrack = backtrack_paths(ret_algo, farm, matrice)) == ERROR)
+		if ((ret_backtrack = backtrack_paths(ret_algo, farm)) == ERROR)
 			return (backtrack_error(farm));
 	}
 	return (SUCCESS);

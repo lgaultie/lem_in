@@ -18,8 +18,7 @@
 
 int	free_farm_error(t_farm *farm)
 {
-	free_rooms(farm->rooms);
-	ft_memdel((void**)&farm);
+    free_farm(farm);
 	ft_putendl(ERROR_MSG);
 	return (ERROR);
 }
