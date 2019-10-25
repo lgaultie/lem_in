@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:14:32 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:08:16 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:55:41 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ static int	matrice_fill(t_farm *farm)
 			room_bis = farm->rooms;
 			while (room_bis)
 			{
-				if (ft_strcmp(room_bis->name, links->name) == 0)
-					farm->matrice[room->room_id][room_bis->room_id] = 1;
+				if (room_bis->name[0] - links->name[0] == 0)
+				{
+					if (ft_strcmp(room_bis->name, links->name) == 0)
+						farm->matrice[room->room_id][room_bis->room_id] = 1;
+				}
 				room_bis = room_bis->next;
 			}
 			links = links->next;

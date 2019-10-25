@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/04 16:29:49 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:03:13 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:50:08 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			save_block_rooms(t_rooms *tmp_rooms, t_farm *farm, int i)
 }
 
 /*
-** add_rooms() if returns -2, found q whole path
+** add_rooms() if returns -2, found a whole path
 */
 
 int			add_rooms(t_rooms *tmp_rooms, int i, t_farm *farm, t_rooms *parent)
