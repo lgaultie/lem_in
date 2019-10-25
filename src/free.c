@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/18 16:35:46 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:48:08 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/25 15:12:19 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void		free_matrice(t_farm *farm)
 	int	i;
 
 	i = 0;
+	if (!farm->matrice)
+		return ;
 	while (i < farm->total_rooms)
 	{
 		if (farm->matrice[i] == NULL)

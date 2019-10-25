@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/24 10:13:58 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/23 19:02:00 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:36:11 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,23 +22,17 @@
 
 static int	bfs(t_farm *farm, t_rooms *parent, int i)
 {
-	t_rooms	*tmp_rooms;
 	int		ret;
 
 	while (i < farm->total_rooms)
 	{
 		if (farm->matrice[parent->room_id][i] == 1)
 		{
-			tmp_rooms = farm->rooms;
-			while (tmp_rooms)
-			{
-				if ((ret = add_rooms(tmp_rooms, i, farm, parent)) == ERROR \
+			if ((ret = add_rooms(farm->all[i], i, farm, parent)) == ERROR \
 				|| ret == -2)
-					return (ret);
-				if (save_block_rooms(tmp_rooms, farm, i) == ERROR)
-					return (ERROR);
-				tmp_rooms = tmp_rooms->next;
-			}
+				return (ret);
+			if (save_block_rooms(farm->all[i], farm, i) == ERROR)
+				return (ERROR);
 		}
 		i++;
 	}
@@ -56,20 +50,14 @@ static int	bfs(t_farm *farm, t_rooms *parent, int i)
 static int	blocking_room(t_farm *farm, int last_valid_room)
 {
 	int		i;
-	t_rooms	*tmp_rooms;
 
 	i = 0;
 	while (i < farm->total_rooms)
 	{
 		if (farm->matrice[last_valid_room][i] == 1)
 		{
-			tmp_rooms = farm->rooms;
-			while (tmp_rooms)
-			{
-				if (tmp_rooms->room_id == i && tmp_rooms->reserved == 1)
-					return (i);
-				tmp_rooms = tmp_rooms->next;
-			}
+			if (farm->all[i]->reserved == 1)
+				return (i);
 		}
 		i++;
 	}
@@ -83,28 +71,22 @@ static int	blocking_room(t_farm *farm, int last_valid_room)
 
 static int	fill_queue(t_farm *farm)
 {
-	t_rooms	*tmp_rooms;
 	int		check_bfs;
 	int		first_of_queue;
 
 	check_bfs = 0;
 	while (farm->queue)
 	{
-		tmp_rooms = farm->rooms;
-		while (tmp_rooms)
+		if (farm->all[farm->queue->id])
 		{
-			if (tmp_rooms->room_id == farm->queue->id)
-			{
-				first_of_queue = farm->queue->id;
-				check_bfs = bfs(farm, tmp_rooms, 0);
-				if (check_bfs == ERROR)
-					return (ERROR);
-				if (check_bfs == -2)
-					return (-2);
-				if (check_bfs == FAILURE && !farm->queue)
-					return (blocking_room(farm, first_of_queue));
-			}
-			tmp_rooms = tmp_rooms->next;
+			first_of_queue = farm->queue->id;
+			check_bfs = bfs(farm, farm->all[farm->queue->id], 0);
+			if (check_bfs == ERROR)
+				return (ERROR);
+			if (check_bfs == -2)
+				return (-2);
+			if (check_bfs == FAILURE && !farm->queue)
+				return (blocking_room(farm, first_of_queue));
 		}
 	}
 	return (blocking_room(farm, first_of_queue));

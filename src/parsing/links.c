@@ -6,7 +6,7 @@
 /*   By: lgaultie <lgaultie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/29 15:40:05 by lgaultie          #+#    #+#             */
-/*   Updated: 2019/10/16 17:27:53 by lgaultie         ###   ########.fr       */
+/*   Updated: 2019/10/25 17:14:38 by lgaultie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,21 @@ static int	add_link(t_farm *farm, char **tab)
 	tmp = farm->rooms;
 	while (tmp)
 	{
-		if ((ft_strcmp(tmp->name, tab[1])) == 0)
+		if (tmp->name[0] - tab[1][0] == 0)
 		{
-			if (new_link(tmp, tab[0]) == ERROR)
-				return (ERROR);
+			if ((ft_strcmp(tmp->name, tab[1])) == 0)
+			{
+				if (new_link(tmp, tab[0]) == ERROR)
+					return (ERROR);
+			}
 		}
-		if ((ft_strcmp(tmp->name, tab[0])) == 0)
+		if (tmp->name[0] - tab[0][0] == 0)
 		{
-			if (new_link(tmp, tab[1]) == ERROR)
-				return (ERROR);
+			if ((ft_strcmp(tmp->name, tab[0])) == 0)
+			{
+				if (new_link(tmp, tab[1]) == ERROR)
+					return (ERROR);
+			}
 		}
 		tmp = tmp->next;
 	}
@@ -83,10 +89,16 @@ static int	check_valid_room_name(char **links, t_farm *farm)
 	tmp = farm->rooms;
 	while (tmp)
 	{
-		if (ft_strcmp(tmp->name, links[0]) == 0)
-			success_1 = 1;
-		if (ft_strcmp(tmp->name, links[1]) == 0)
-			success_2 = 1;
+		if (tmp->name[0] - links[0][0] == 0)
+		{
+			if (ft_strcmp(tmp->name, links[0]) == 0)
+				success_1 = 1;
+		}
+		if (tmp->name[0] - links[1][0] == 0)
+		{
+			if (ft_strcmp(tmp->name, links[1]) == 0)
+				success_2 = 1;
+		}
 		tmp = tmp->next;
 	}
 	if (success_1 == 0 || success_2 == 0)
