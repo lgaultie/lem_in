@@ -31,6 +31,10 @@ int			in_released_rooms(t_farm *farm, int id)
 	return (FAILURE);
 }
 
+/*
+** release() put visited = 0 and reserved = 0.
+*/
+
 static int	release(int i, t_farm *farm, t_paths *tmp)
 {
 	int		j;
@@ -51,8 +55,8 @@ static int	release(int i, t_farm *farm, t_paths *tmp)
 }
 
 /*
-** release_rooms_on_same_path() put visited = 0 and reserved = 0 to the rooms
-** that are on the same path that the room id provided in the parameters.
+** release_rooms_on_same_path() goes to the rooms that are on the same path
+** that the room id provided in the parameters, and calls release().
 */
 
 static void	release_rooms_on_same_path(t_farm *farm, int id)
@@ -84,7 +88,7 @@ static void	release_rooms_on_same_path(t_farm *farm, int id)
 ** unvisit_rooms() checks all the rooms and set their `visited` attribute to 0.
 */
 
-static void	unvisit_roomss(t_farm *farm)
+static void	unvisit_rooms(t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
 
@@ -99,14 +103,15 @@ static void	unvisit_roomss(t_farm *farm)
 /*
 ** backtrack_paths() goes too the room id given in parameters, and set its
 ** visited and reserved to 0, then it calls release_rooms_on_the_same_path()
-** before returning the room id.
+** before returning the room id, or block_unqueue() and find_paths() if the
+** room was in the queue of blocking rooms.
 */
 
 int			backtrack_paths(int room_to_deal, t_farm *farm)
 {
 	t_rooms	*tmp_rooms;
 
-	unvisit_roomss(farm);
+	unvisit_rooms(farm);
 	tmp_rooms = farm->rooms;
 	while (tmp_rooms)
 	{

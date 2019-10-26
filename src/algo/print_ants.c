@@ -38,7 +38,11 @@ static void	print_ants(t_farm *f, t_paths *t, int id_ant, int p)
 	ft_putchar(' ');
 }
 
-int			is_arrived(int *ants, int i, t_paths *tmp, int arrived)
+/*
+** is_arrived() lets us know if an ant has arrived at the end room.
+*/
+
+static int	is_arrived(int *ants, int i, t_paths *tmp, int arrived)
 {
 	if (ants[i] == tmp->length - 1)
 	{
@@ -49,11 +53,12 @@ int			is_arrived(int *ants, int i, t_paths *tmp, int arrived)
 }
 
 /*
-** send_ants() creates an array of ants to track their position in the path.
-** For each round, for each path of the optimized set, we increment an id that
-** lets us know how many ants we can move, and we increment their position. If
-** the position equals the length of the path, the ants has arrived to the end
-** room ans we don't need to increment this ants anymore.
+** send_ants() and send_ants2() create an array of ants to track their position
+** in the path. For each round, for each path of the optimized set, we
+** increment an id that lets us know how many ants we can move, and we
+** increment their position. If the position equals the length of the path, the
+** ants has arrived to the end room ans we don't need to increment this ants
+** anymore.
 */
 
 static void	send_ants2(t_farm *farm, t_paths *paths, int *ants, int arrived)

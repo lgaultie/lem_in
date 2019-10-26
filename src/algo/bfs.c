@@ -14,10 +14,9 @@
 
 /*
 ** bfs() browses the matrice to see if the room id that we specified in the
-** parameters is linked to other rooms. If that is the case, and the room is
-** not visited nor reserved, we call init_tmp(). When we have found all the
-** links, we call unqueue() to unqueue the room id specified in the parameters.
-** When we add the end room, we have finished.
+** parameters is linked to other rooms. Then it calls add_rooms() and
+** save_block_rooms(). When we have found all the links, we call unqueue() to
+** unqueue the room id specified in the parameters.
 */
 
 static int	bfs(t_farm *farm, t_rooms *parent, int i)
@@ -55,10 +54,8 @@ static int	blocking_room(t_farm *farm, int last_valid_room)
 	while (i < farm->total_rooms)
 	{
 		if (farm->matrice[last_valid_room][i] == 1)
-		{
 			if (farm->all[i]->reserved == 1)
 				return (i);
-		}
 		i++;
 	}
 	return (i);
@@ -94,7 +91,7 @@ static int	fill_queue(t_farm *farm)
 
 /*
 ** algo() fills the queue starting with start room and its children, calling
-** queue(), then calls check_queue() to add rooms to the queue.
+** queue(), then calls fill_queue() to add rooms to the queue.
 */
 
 int			algo(t_farm *farm)

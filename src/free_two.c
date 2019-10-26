@@ -13,7 +13,7 @@
 #include <lem_in.h>
 
 /*
-** free_paths() frees found_paths structure.
+** free_found_paths() frees found_paths structure.
 */
 
 void	free_found_paths(t_farm *farm)

@@ -13,8 +13,8 @@
 #include <lem_in.h>
 
 /*
-** For each room, beginning by the end room, retrieve_path() take the 'parent'
-** attribute and add it to the path. Then it calls the function again with the
+** For each room, beginning by the end room, retrieve_path() takes the 'parent'
+** attribute and adds it to the path. Then it calls the function again with the
 ** room we just added. Until we reach the size of the path, that should
 ** correspond with the start room.
 */

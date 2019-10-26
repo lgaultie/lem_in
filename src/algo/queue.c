@@ -13,7 +13,7 @@
 #include <lem_in.h>
 
 /*
-** unqueue() removes room id from the queue.
+** unqueue() and block_unqueue() remove rooms ids from the queue.
 */
 
 int	unqueue(t_farm *farm)
@@ -37,7 +37,7 @@ int	block_unqueue(t_farm *farm)
 }
 
 /*
-** queue() adds room id to the queue.
+** queue() and block_queue() add rooms ids to the queue.
 */
 
 int	queue(t_farm *farm, int room_id)

@@ -41,6 +41,11 @@ void	delete_set(t_paths **first_path)
 	}
 }
 
+/* replace_or_delete() checks if we have 2 sets that have the same number of
+** rooms, keeps the set that has the lower number of rooms and deletes the
+** other.
+*/
+
 void	replace_or_delete(int i, int j, t_farm *farm, t_paths *p_cpy)
 {
 	if (i > j)

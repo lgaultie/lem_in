@@ -12,7 +12,11 @@
 
 #include <lem_in.h>
 
-int				*init_new_path(t_paths *new_path, int i, t_paths *paths)
+/*
+** init_new_path() initializes a new path in the new paths structure.
+*/
+
+static int		*init_new_path(t_paths *new_path, int i, t_paths *paths)
 {
 	if (!(new_path->path = ft_memalloc(sizeof(int) * new_path->length)))
 		return (NULL);
@@ -50,9 +54,9 @@ static t_paths	*init_paths_cpy(t_paths *paths, t_paths *first_path,
 }
 
 /*
-** save_path() saves in the sets structure the paths combinations, in an
-** incremental order. If we have 2 sets that have the same number of paths, we
-** compare them and keep the set that has the lower number of rooms.
+** save_path() and save_path2() save in the sets structure the paths
+** combinations, in an incremental order, then counts the number of rooms in
+** each set, then calls replace_or_delete().
 */
 
 void			save_path2(t_farm *farm, t_paths *paths, int i, int j)

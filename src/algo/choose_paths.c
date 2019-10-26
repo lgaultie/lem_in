@@ -48,18 +48,21 @@ int			check_paths(t_farm *farm)
 }
 
 /*
-** backtrack_error() if bactrack_error returns error, it couldn't find the
-** blocking room, if may be a dead end or another error.
+** backtrack_error() returns DEADEND code, meaning we couldn't find the
+** blocking room.
 */
 
 static int	backtrack_error(t_farm *farm)
 {
 	if (farm->nb_paths > 0)
-	{
 		return (DEADEND);
-	}
 	return (ERROR);
 }
+
+/*
+** free_and_fill() calls free_queue() to free the old queue, and
+** fill_reserved() to reserve the rooms of the new BFS.
+*/
 
 static int	free_and_fill(t_farm *farm, int fill)
 {
@@ -75,7 +78,8 @@ static int	free_and_fill(t_farm *farm, int fill)
 ** If it returns -2, we found the end room, so our BFS is complete. We save the
 ** path in our structure and reserve the rooms.
 ** If it returns another number (a room id), it means we are stucked here. We
-** call backtrack_paths() to unreserve the room.
+** call backtrack_paths() to unreserve the room, or backtrack_error() if we
+** can't find the room.
 */
 
 int			find_paths(t_farm *farm, int delete, int to_delete)

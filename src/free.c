@@ -32,7 +32,7 @@ void		free_queue(t_farm *farm)
 }
 
 /*
-** free_queue() frees queue structure.
+** free_queue_b() frees second queue structure.
 */
 
 void		free_queue_b(t_farm *farm)

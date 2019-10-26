@@ -44,7 +44,7 @@ void	delete_path(t_sets *set, t_paths **src, t_paths *path)
 
 /*
 ** path_to_delete() finds the path(s) that use(s) the room given in parameter,
-** and calls unvisit_rooms() and delete_path().
+** and calls unvisit() and delete_path().
 */
 
 int		path_to_delete(t_farm *farm, int id_room)

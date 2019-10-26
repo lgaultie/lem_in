@@ -29,8 +29,8 @@ static int	init_tmp(t_rooms *tmp_rooms, t_rooms *parent, t_farm *farm, int i)
 }
 
 /*
-** save_block_rooms() save all blocking room to prevent the algo from
-** getting lost in deadends without trying to free blocking rooms in paths
+** save_block_rooms() save all blocking rooms in a queue to prevent the algo
+** from getting lost in dead ends by calling block_queue().
 */
 
 int			save_block_rooms(t_rooms *tmp_rooms, t_farm *farm, int i)
@@ -45,7 +45,9 @@ int			save_block_rooms(t_rooms *tmp_rooms, t_farm *farm, int i)
 }
 
 /*
-** add_rooms() if returns -2, found a whole path
+** add_rooms() checks if we found a whole path. If the room isn't visited nor
+** reserved, we call init_tmp(). When we add the end room, we have finished and
+** return -2.
 */
 
 int			add_rooms(t_rooms *tmp_rooms, int i, t_farm *farm, t_rooms *parent)

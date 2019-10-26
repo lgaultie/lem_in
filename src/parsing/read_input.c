@@ -13,7 +13,7 @@
 #include <lem_in.h>
 
 /*
-** check_ants() checks if the first line is a number. If it is, this is the
+** check_nb_ants() checks if the first line is a number. If it is, this is the
 ** number of ants in the farm. If not, it returns ERROR.
 */
 
