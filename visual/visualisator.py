@@ -70,9 +70,10 @@ def create_ants(farm, pos, nb_steps):
 	ants = []
 	for ant_num in range(1, (int(farm.nb_ants) + 1)):
 		ant = Ant(ant_num)
-		ant.set_node_path(farm)
-		ant.set_location(pos, farm)
-		ant.set_journey(pos, nb_steps, farm)
+		# parse path of each ants
+		ant.parse_path(farm)
+		# calculate coordinates of each ant on its path to draw them later
+		ant.calc_journey(pos, nb_steps, farm)
 		ant.color = '#3c4245'
 		ants.append(ant)
 	return (ants)
